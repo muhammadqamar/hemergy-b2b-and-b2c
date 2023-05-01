@@ -1,0 +1,39 @@
+@import "./contribution.css";
+@import "./earning.css";
+@import "./avoided.css";
+
+.investment-card {
+  @apply font-Poppins w-full sm:w-[459px]  mx-auto h-auto p-4 md:p-6 flex flex-col items-center text-center gap-6 rounded-3xl bg-[#EFF1FF] shadow-smallshadow sm:shadow-mainshadow;
+}
+.investment-card .invest-about {
+  @apply flex flex-col gap-3 items-center py-[8px];
+}
+
+.investment-card .invest-about .investment-heading {
+  @apply font-semibold text-[28px] lg:text-[40px] leading-[34px] lg:leading-[48px] text-textcolor;
+}
+
+.investment-card .invest-about .investment-para {
+  @apply font-normal text-base text-textcolor w-full;
+}
+
+input[type="range"] {
+  @apply w-full h-3 bg-[#6b7efd] rounded-[200px] bg-no-repeat;
+  -webkit-appearance: none;
+  background-image: linear-gradient(#3ccd87, #3ccd87);
+  /* background-size: 50% 100%; */
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  @apply w-[34px] h-[34px] rounded-[50%] bg-[#6b7efd] cursor-ew-resize;
+  -webkit-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  @apply border-none bg-[transparent] shadow-[none];
+  -webkit-appearance: none;
+}
+
+.paybtn {
+  @apply w-fit h-auto  px-3 py-[6px] rounded-xl;
+}

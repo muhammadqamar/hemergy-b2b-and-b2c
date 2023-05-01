@@ -1,0 +1,66 @@
+.dashboard-container {
+  @apply w-auto min-h-screen pt-[120px] laptop:pt-20 px-6 laptop:py-8 laptop:pr-8 laptop:pl-24 bg-cardbg;
+}
+.projects-details {
+  @apply min-h-max pt-[120px] laptop:pt-8 px-6 laptop:py-8 laptop:pr-8 laptop:pl-24;
+}
+.padding-left {
+  @apply xl:pl-[298px] !important;
+}
+
+.project-detail {
+  @apply w-auto h-auto flex flex-col laptop:flex-row rounded-3xl laptop:rounded-[40px]  shadow-mdshadow overflow-hidden;
+}
+
+.project-detail .detail-img {
+  @apply w-full laptop:w-[352px] flex flex-col justify-between min-h-[162px] laptop:max-h-full  flex-shrink-0  p-4 relative;
+}
+
+.project-detail .detail-img .detail-banner-img {
+  @apply w-full h-full object-cover absolute top-0 left-0;
+}
+
+.project-detail .project-detail-about {
+  @apply w-full flex flex-col gap-6 p-8;
+}
+
+.project-detail-user {
+  @apply w-full flex items-start gap-3;
+}
+.project-detail-user .detail-user-img {
+  @apply w-[54px] h-[54px] rounded-xl object-contain;
+}
+
+.user-company {
+  @apply w-[82px] p-1 h-7 rounded-lg bg-[#f2f2f2] overflow-hidden;
+}
+.user-company img {
+  @apply w-auto h-auto object-contain;
+}
+
+.tokens-wrapper {
+  @apply w-full laptop:w-[344px] flex flex-col items-center gap-2 flex-shrink-0 bg-blue700 pt-6 px-2 pb-2 sm:p-6 rounded-3xl md:rounded-[40px];
+}
+
+.available-token {
+  @apply flex items-center justify-center gap-2;
+}
+
+.power-box {
+  @apply px-[11px] w-full py-6 flex items-center flex-col gap-2 bg-blue600 rounded-xl !important;
+}
+
+.year-box {
+  @apply w-full p-6 bg-blue400 rounded-xl;
+}
+
+.year-range input[type="range"] {
+  @apply bg-textcolor;
+}
+
+.year-range input[type="range"]::-webkit-slider-thumb {
+  @apply bg-textcolor;
+}
+.what-token {
+  @apply w-full p-4  bg-blue900 rounded-xl;
+}

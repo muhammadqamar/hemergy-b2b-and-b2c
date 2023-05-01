@@ -1,0 +1,7 @@
+.footer-wrapper {
+  @apply max-w-full text-center px-6 pt-10 md:pt-20 pb-10 font-Inter;
+}
+
+.footer-wrapper .footer-text {
+  @apply font-normal text-[16px] leading-5 text-[#4E62EE];
+}

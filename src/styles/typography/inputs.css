@@ -1,0 +1,32 @@
+.input-box {
+  @apply flex flex-col w-full gap-1;
+}
+
+.input-box .input-field {
+  @apply flex items-center justify-between w-full text-textblack;
+}
+
+.input-box .input-field .input {
+  @apply w-full p-0 px-3 py-2 m-0 outline-none rounded-xl bg-garbg;
+}
+.input-box .input-field .input:disabled {
+  @apply bg-[#ddd];
+}
+
+.checkbox {
+  @apply w-6 h-6;
+}
+
+.token-form .form-cantainer {
+  @apply flex flex-col w-full gap-6;
+}
+.token-form .form-cantainer .input-box {
+  @apply flex flex-col gap-1;
+}
+
+.token-form .form-cantainer .input-box .input-field {
+  @apply flex w-full gap-2 px-3 py-2 rounded-xl bg-garbg;
+}
+.token-form .form-cantainer .input-box .input-field input {
+  @apply w-full border-none outline-none bg-garbg;
+}

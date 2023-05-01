@@ -1,0 +1,25 @@
+.avoided-card {
+  @apply w-full h-auto p-[24px] bg-[#6B7EFD] rounded-2xl relative overflow-hidden;
+}
+
+.avoided-card::before {
+  @apply absolute right-0 bottom-0 w-[-webkit-fill-available] h-[120px] bg-no-repeat bg-right bg-contain;
+  content: "";
+  background-image: url("/images/avoided-bg.png");
+}
+
+.avoided-card .avoided-tonnes {
+  @apply flex justify-between items-center mb-[16px] relative;
+}
+
+.avoided-card .avoided-tonnes .avoided-price {
+  @apply font-semibold text-[32px] leading-[48px] text-white m-0;
+}
+
+.avoided-card .avoided-tonnes .avo-tonnes {
+  @apply font-semibold text-xl text-white;
+}
+
+.avoided-card .avoided-heading {
+  @apply font-semibold text-base leading-4 text-white text-left mb-0 relative;
+}

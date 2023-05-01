@@ -1,0 +1,118 @@
+.project-card-box {
+  @apply max-w-max h-auto bg-white shadow-mdshadow rounded-[20px] mr-5 sm:mr-7 overflow-hidden;
+}
+.card-head-img {
+  @apply w-full  flex flex-col items-start justify-between p-4 relative;
+}
+
+.card-head-img .card-bg-img {
+  @apply w-full h-full absolute top-0 left-0 object-cover;
+}
+
+.labels-frame {
+  @apply relative flex items-center justify-between gap-2 px-2 py-1 rounded-lg;
+}
+.labels-frame.wather-labels {
+  @apply bg-red600;
+}
+.labels-frame.terms-sheet-labels {
+  @apply gap-1 px-4 py-[6px] rounded-xl bg-textblack;
+}
+.labels-frame.ratio-labels {
+  @apply gap-1  bg-textcolor;
+}
+
+.labels-frame.asset-lable {
+  @apply bg-textblack;
+}
+
+.labels-frame.trending-labels {
+  @apply bg-green500;
+}
+
+.project-card-about {
+  @apply p-6 flex flex-col gap-6;
+}
+
+.solar-label {
+  @apply flex items-center justify-between gap-2 px-2 py-[6px] rounded-lg bg-cardbg;
+}
+
+.location-label {
+  @apply flex items-center justify-between gap-1;
+}
+
+.project-user-details {
+  @apply flex items-center justify-between gap-4;
+}
+
+.project-user {
+  @apply flex items-center justify-between gap-3;
+}
+
+.project-user .project-user-img {
+  @apply w-[54px] h-[54px] rounded-xl object-contain;
+}
+
+.project-tokens {
+  @apply flex items-start justify-between gap-2;
+}
+
+.usdc-earned-box {
+  @apply w-full h-auto px-4 py-6 flex items-center justify-center flex-col gap-3 rounded-md bg-cardbg;
+}
+
+.usdc-earned-box .usdc-earnes {
+  @apply flex flex-col gap-1 text-center justify-center items-center;
+}
+
+.loaction-card {
+  @apply w-[266px] h-auto bg-white rounded-[20px] overflow-hidden;
+}
+
+.loaction-card-about {
+  @apply flex flex-col gap-4 p-4;
+}
+
+.loaction-user {
+  @apply flex items-center gap-2;
+}
+
+.loaction-user .loaction-user-img {
+  @apply w-[40px] h-[40px] rounded-xl object-contain;
+}
+
+/* tran */
+.tran-card {
+  @apply flex justify-between gap-3;
+}
+
+.tran-card .tran-head {
+  @apply flex items-center gap-3;
+}
+
+.tran-card .tran-head .tran-image {
+  @apply w-10 h-10 flex items-center justify-center rounded-lg bg-blue600 p-2;
+}
+
+.tran-card .tran-from-to {
+  @apply flex items-center gap-1;
+}
+
+/* drag-&-drop-files */
+
+.drag-drop-files {
+  @apply w-full h-auto p-6 flex flex-col items-center gap-2 bg-garbg border-[1px] border-[#CCCDE1] border-dashed;
+}
+.drag-drop-files .file-heading {
+  @apply flex items-center gap-2 py-2;
+}
+
+/* form-info-box */
+.form-info-box {
+  @apply w-full h-auto flex  mb-6 items-start  gap-2 p-4 rounded-xl bg-cardbg;
+}
+
+.flex-collom {
+  @apply flex-col !important;
+}

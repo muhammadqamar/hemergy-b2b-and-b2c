@@ -1,0 +1,108 @@
+/* Hero Section */
+.hero-container-about {
+  @apply w-full bg-[#4E62EE] relative  flex items-center justify-center;
+}
+.hero-wrapper-about {
+  @apply max-w-[1440px] h-[930px]  flex  items-center justify-center text-center;
+}
+
+.hero-wrapper-about .about-hero-prep {
+  @apply font-normal text-[21px] leading-[30px]  m-0 text-white font-Poppins;
+}
+.hero-wrapper-about .about-hero-us {
+  @apply flex items-center justify-center mt-4;
+}
+.hero-wrapper-about .about-hero-us .hero-us-img {
+  @apply rounded-full bg-btncolor w-10 h-10 flex items-center justify-center;
+}
+
+/* Our Mission */
+.about-our-mission-div {
+  @apply max-w-[1440px] mx-auto font-Poppins flex items-center justify-center pr-11 md:pr-0 pt-0 md:pt-[50px] overflow-hidden;
+}
+
+@media (min-width: 499px) {
+  .about-our-mission-div {
+    gap: clamp(1px, 6vw, 105px);
+  }
+}
+
+.about-our-mission-div .about-our-mission-detail {
+  @apply text-center flex-shrink-0;
+  width: clamp(300px, 50vw, 442px);
+}
+.about-our-mission-detail .detail-header {
+  @apply font-semibold text-[32px] md:text-[48px] leading-[48px] md:leading-[62px]  m-0 text-textcolor;
+}
+.about-our-mission-detail .detail-prep {
+  @apply mt-4 font-normal text-xl   m-0 text-textcolor;
+}
+.about-our-mission-detail .detail-prep p:not(:last-child) {
+  @apply mb-8;
+}
+
+/*Impact  */
+.about-impact-section {
+  @apply w-full h-auto pt-[92px] md:pt-[160px] pb-[400px] relative;
+}
+.about-impact-section .about-impact-div {
+  @apply max-w-[1440px] mx-auto px-6 md:p-10;
+}
+.about-impact-section .about-impact-div .about-impact-header {
+  @apply font-semibold text-[32px] md:text-[48px] leading-[48px] md:leading-[62px]  m-0 text-textcolor;
+}
+.about-impact-section .about-impact-div .about-impact-text {
+  @apply font-normal  text-xl leading-[30px]  m-0 text-textcolor max-w-[480px];
+}
+.about-impact-body-div {
+  /* @apply flex items-center mt-[52px] flex-col lg:flex-row sm:flex-col; */
+  @apply mt-5 md:mt-[52px];
+}
+.about-impact-left {
+  @apply flex items-center flex-col lg:flex-row;
+}
+.about-impact-left img {
+  @apply rounded-lg w-full h-full md:w-[480px] md:h-[480px] shadow-smallshadow object-cover;
+}
+.image-list {
+  @apply flex gap-4 md:gap-2 flex-wrap justify-center lg:justify-start;
+}
+.image-list img {
+  @apply rounded-lg w-[108px] h-[80px] shadow-smallshadow;
+}
+
+.about-impact-body-div .about-impact-right {
+  @apply w-full md:w-[480px] sm:ml-[64px];
+}
+.about-impact-right .about-impact-right-header {
+  @apply font-semibold text-[32px] md:text-[64px] leading-[48px] md:leading-[76px]  mt-6 mb-6 text-textcolor md:mt-0;
+}
+.about-impact-right .about-impact-right-prep {
+  @apply font-normal  text-xl leading-[30px]  m-0 text-textcolor max-w-[480px];
+}
+.about-impact-wather-bg {
+  @apply w-full h-[233px] bg-repeat bg-center left-0 bg-auto absolute bottom-[-3px];
+  background-image: url("/images/Intersect2.svg");
+}
+
+/*About Team  */
+.about-team-section {
+  @apply pt-[160px] bg-[#D6DBFF] relative;
+}
+.about-team-board {
+  @apply absolute z-[1]  top-[-314px] px-6 w-full;
+}
+.about-team-div {
+  @apply text-center mt-[16px] pb-[160px];
+}
+.about-team-title {
+  @apply font-semibold text-[32px] md:text-[48px] leading-[48px] md:leading-[62px] m-0 text-textcolor mb-8 md:mb-[76px];
+}
+
+/* Team Card */
+.team-card {
+  @apply w-[288px] h-auto p-[24px] flex flex-col gap-6 bg-white shadow-smallshadow sm:shadow-mainshadow rounded-[20px] mx-[8px] sm:mx-[15px];
+}
+.team-card .card-body {
+  @apply flex justify-center flex-col items-center;
+}

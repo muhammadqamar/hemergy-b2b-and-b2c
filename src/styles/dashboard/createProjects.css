@@ -1,0 +1,54 @@
+.main-loaction .create-project-box {
+  @apply h-[100vh] pt-6 laptop:pt-8 p-8 w-full pl-72;
+}
+.create-project-box .cards-boxes {
+  @apply flex items-center gap-8 flex-wrap;
+}
+.cards-boxes .cards-details-api {
+  @apply flex flex-wrap w-full laptop:w-auto justify-center items-center gap-8;
+}
+.cards-details-api .card {
+  @apply w-full flex items-start gap-4 md:w-[539px] bg-white rounded-[16px] shadow-smallshadow p-6 hover:bg-[#FFDE65];
+}
+.cards-details-api .card-get-started {
+  @apply min-h-full md:min-h-[316px] items-center flex-col;
+}
+.card-get-started .details-get-started {
+  @apply text-center gap-0;
+}
+.card .create-project-text {
+  @apply mb-6;
+}
+.cards-details-api .card-token {
+  @apply min-h-full md:min-h-[316px] flex flex-col pb-10 gap-0;
+}
+.token-box {
+  @apply pb-6;
+}
+.token-box .token-flx {
+  @apply flex gap-2 items-center pb-3 last:pb-0;
+}
+.token-flx .token-text {
+  @apply font-Inter text-base text-textblack m-0;
+}
+.card .card-logo {
+  @apply bg-cardbg hover:bg-[#FFEFB5] p-[26px] rounded-2xl;
+}
+.card .card-heading {
+  @apply mb-2 font-Poppins font-semibold text-base text-textblack;
+}
+.card .products-box {
+  @apply w-full flex justify-between items-center pb-6;
+}
+.products-box .products-heading {
+  @apply leading-8 text-2xl m-0;
+}
+.products-box .coming-soon-text {
+  @apply pt-[2px] pb-[5px] px-2 bg-[#E0FBEB] text-[#19814F] rounded-full text-sm leading-5 font-medium;
+}
+.card .card-text {
+  @apply font-Inter text-base mb-4 text-textblack;
+}
+.project-card-details .project-card-btn {
+  @apply font-Inter text-textcolor font-medium py-2 px-4 border rounded-xl border-textcolor hover:bg-textcolor hover:text-white;
+}

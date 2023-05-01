@@ -1,0 +1,40 @@
+.contribute-main {
+  @apply w-full h-auto relative pt-[130px] md:pt-0 pb-[452px];
+}
+.contribute-section {
+  @apply max-w-[1440px] mx-auto pt-[14px] pl-6 pr-8 md:px-[35px] font-Poppins overflow-hidden;
+}
+
+.contribute-heading {
+  @apply flex justify-center gap-4 sm:gap-[1px] mb-[88px] md:mb-40;
+}
+
+.heart-1 {
+  @apply w-auto h-fit object-contain;
+}
+.heart-2 {
+  @apply w-auto h-fit object-contain;
+}
+
+.con-heading {
+  @apply flex-shrink-0 text-textcolor font-normal text-[32px] lg:text-[40px] leading-[48px] lg:leading-[60px] text-center;
+  width: clamp(314px, 50vw, 647px);
+}
+
+.contribute-cards {
+  @apply flex items-center justify-center flex-wrap gap-10 md:gap-16;
+}
+.contribute-cards .home_contribute_img {
+  @apply h-[52px];
+}
+.contribute-cards .contribute-card {
+  @apply w-[296px] flex flex-col items-center gap-6 text-center;
+}
+
+.contribute-cards .contribute-card .con-card-heading {
+  @apply font-semibold text-[32px] leading-[48px] text-textcolor m-0;
+}
+
+.con-card-para {
+  @apply font-normal text-[20px] leading-[30px] text-textcolor m-0;
+}

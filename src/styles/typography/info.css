@@ -1,0 +1,15 @@
+.info-box {
+  @apply flex flex-col gap-2;
+}
+.info-box .info-link {
+  @apply w-fit p-3 rounded-full bg-garbg;
+}
+.info-heading {
+  @apply font-Poppins text-textblack leading-7 font-semibold;
+}
+.info-text {
+  @apply font-Inter text-textblack font-normal leading-6 text-base;
+}
+.info-text .select-info {
+  @apply text-textcolor;
+}

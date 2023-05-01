@@ -1,0 +1,68 @@
+@import "./navbar.css";
+@import "./footer.css";
+@import "./sideBar.css";
+@import "./bgImage.css";
+
+* {
+  @apply box-border m-0 p-0;
+}
+
+.max-container {
+  @apply w-full;
+}
+
+.container {
+  @apply max-w-[1440px] mx-auto;
+}
+
+.white-frame {
+  @apply w-auto h-auto relative bg-white rounded-3xl p-6 lg:p-8 shadow-mdshadow;
+}
+
+/*cap table */
+
+.cap-table {
+  @apply w-full divide-y text-textblack divide-[#D9DBEE];
+}
+
+.cap-table tr .table-th {
+  @apply px-3 py-4;
+}
+/* dashboard-select */
+.dashboard-select select {
+  @apply min-w-[111px]   pl-3 pr-7 py-[10px] rounded-xl border-none outline-none;
+  -moz-appearance: none; /* Firefox */
+  -webkit-appearance: none; /* Safari and Chrome */
+  appearance: none;
+  background: url("/images/b_expand_more.svg") white no-repeat 95% !important;
+}
+
+/* map */
+.map-small-h {
+  @apply h-[260px] !important;
+}
+
+.gmnoprint div {
+  @apply w-auto h-auto !important;
+  background: transparent !important;
+}
+
+.gmnoprint button.gm-control-active {
+  @apply w-8 h-8 rounded-xl bg-white mb-1 !important;
+}
+.gmnoprint button.gm-control-active img {
+  @apply w-3 h-3 !important;
+}
+.gmnoprint.gm-bundled-control.gm-bundled-control-on-bottom {
+  @apply top-1 right-9  !important;
+}
+
+/* graph */
+
+.graph-select select {
+  @apply min-w-[111px]   pl-3 pr-7 py-[10px] rounded-xl border-none outline-none;
+  -moz-appearance: none; /* Firefox */
+  -webkit-appearance: none; /* Safari and Chrome */
+  appearance: none;
+  background: url("/images/b_expand_more.svg") #f4f4fa no-repeat 95% !important;
+}

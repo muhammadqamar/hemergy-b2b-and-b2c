@@ -1,0 +1,49 @@
+.btn {
+  @apply w-max flex items-center justify-center bg-btncolor rounded-xl text-white whitespace-pre;
+}
+
+.Primary {
+  @apply font-medium text-2xl  px-6 py-[10px] font-Poppins;
+}
+.secondary {
+  @apply font-medium text-base px-4 py-2 font-Inter;
+}
+
+.btn-w {
+  @apply w-full flex items-center justify-center font-Inter bg-[#6B7EFD] rounded-xl text-white p-2 font-medium text-base whitespace-pre;
+}
+
+.blue {
+  @apply w-full bg-textcolor !important;
+}
+
+.btn-border {
+  @apply w-full border border-solid  border-textcolor rounded-xl bg-white text-textcolor whitespace-pre !important;
+}
+
+.fit-width {
+  @apply w-fit mx-auto !important;
+}
+
+.icon-btn {
+  @apply p-2 rounded-[50%] mx-auto;
+}
+.hide {
+  @apply hidden lg:flex !important;
+}
+
+.tab-btn {
+  @apply w-fit whitespace-nowrap md:w-full flex items-center justify-between gap-1  text-left px-3 py-[10px] rounded-xl;
+}
+/* b2b buttons styling */
+.project-link {
+  @apply w-fit flex gap-2 justify-center items-center py-2 px-4 rounded-xl;
+}
+.project-link .link-name {
+  @apply font-Inter text-base font-medium;
+}
+/* End b2b buttons styling */
+
+.zoom-btn {
+  @apply w-8 h-8 rounded-xl bg-white flex items-center justify-center  cursor-pointer;
+}

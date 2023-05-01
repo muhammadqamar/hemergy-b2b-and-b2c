@@ -1,0 +1,21 @@
+.earning-card {
+  @apply w-full h-auto p-[24px] bg-[#83ECAD] rounded-2xl;
+}
+
+.earning-card .earning-in-yr {
+  @apply flex justify-between items-center mb-[16px];
+}
+.earning-card .earning-in-yr .earning-price {
+  @apply font-semibold text-[32px] leading-[48px] text-textcolor m-0;
+}
+
+.earning-card .earning-in-yr .earning-price sup {
+  @apply font-medium text-lg;
+}
+
+.earning-card .earning-in-yr .yr-earning {
+  @apply font-semibold text-xl text-[#92A0FF];
+}
+.earning-heading {
+  @apply font-semibold text-base leading-4 text-textcolor text-left mb-0;
+}

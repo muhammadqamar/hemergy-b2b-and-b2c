@@ -1,0 +1,45 @@
+.project-card {
+  @apply w-[288px] h-auto p-[24px] flex flex-col gap-6 bg-textcolor shadow-smallshadow sm:shadow-mainshadow rounded-[20px] mx-[8px] sm:mx-[15px];
+}
+.project-card .card-header {
+  @apply flex justify-between items-center font-Inter;
+}
+
+.project-card .card-header .card-header-wather {
+  @apply flex gap-2 items-center bg-[#FFD640] rounded-lg py-[4px] px-[8px];
+}
+
+.card-header-wather .wather-label {
+  @apply font-semibold text-[14px] leading-5 text-[#3D50D9] m-0;
+}
+
+.project-card .card-header .wather-rating {
+  @apply flex gap-1 items-center;
+}
+
+.project-card .card-header .wather-rating .wather-label.rating {
+  @apply text-white;
+}
+
+.project-card .pro-card-neading {
+  @apply font-Poppins font-semibold text-[20px] leading-5 text-left tracking-[0.02em] text-white;
+}
+
+.project-card .pro-card-text {
+  @apply font-Poppins font-normal text-[14px] text-left leading-5 text-[#D6DBFF];
+}
+
+.project-card .pro-card-user {
+  @apply flex gap-2 items-center text-left;
+}
+
+.project-card .pro-card-user .user-img {
+  @apply w-[40px] h-[40px] rounded-xl object-contain;
+}
+
+.project-card .pro-card-user .user-abouts .useer-name {
+  @apply font-Inter font-semibold text-[14px] leading-5 text-white;
+}
+.project-card .pro-card-user .user-abouts .user-cat {
+  @apply font-Poppins font-medium text-[12px] leading-[18px] text-white;
+}

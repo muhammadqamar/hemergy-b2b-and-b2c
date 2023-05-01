@@ -1,0 +1,61 @@
+.center-text {
+  @apply text-center;
+}
+
+.text-weight-medium {
+  @apply font-medium !important;
+}
+.text-weight-normal {
+  @apply font-normal !important;
+}
+
+.text-weight-semibold {
+  @apply font-semibold !important;
+}
+
+.p-2xl {
+  @apply font-Poppins font-semibold text-[40px] leading-[48px] md:text-8xl text-white;
+}
+.p-xl {
+  @apply font-Poppins font-semibold text-4xl leading-[42px];
+}
+.p-xl-semi {
+  @apply font-Poppins font-semibold text-[32px] leading-10;
+}
+.p-lg {
+  @apply font-Poppins font-semibold text-xl;
+}
+.p-md {
+  @apply font-Poppins font-semibold text-2xl;
+}
+.p-sm {
+  @apply font-Inter font-normal text-base;
+}
+.p-sm-semi {
+  @apply font-Inter font-semibold text-sm;
+}
+.p-x-sm {
+  @apply font-Inter font-normal text-xs leading-[14px];
+}
+.p-xs {
+  @apply font-Inter font-normal text-[10px]  leading-[12px];
+}
+.error {
+  @apply text-[red] !important;
+}
+
+.p-link {
+  @apply text-textcolor;
+}
+
+.pointer {
+  @apply cursor-pointer;
+}
+
+.divider {
+  @apply w-full h-[1px] bg-[#D9DBEE];
+}
+
+.ellipsis {
+  @apply text-ellipsis overflow-hidden;
+}

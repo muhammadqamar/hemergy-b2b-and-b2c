@@ -1,0 +1,58 @@
+@import "./projectDetails.css";
+@import "./createProjects.css";
+@import "./billing.css";
+
+.main-loaction {
+  @apply flex flex-col laptop:flex-row items-start bg-[#E5E5E5];
+}
+
+.main-loaction .map-location-box {
+  @apply min-h-screen w-full flex flex-col items-center pt-6 laptop:pt-12 p-6 overflow-y-auto;
+}
+
+.main-loaction .map-box .map {
+  @apply w-auto;
+}
+
+.map-cards {
+  @apply flex flex-wrap gap-[15px] justify-center md:justify-start;
+}
+.investor-project-cards {
+  @apply max-w-[1440px] mx-auto  flex items-center justify-center flex-wrap gap-[15px];
+  padding: 0 clamp(24px, 6vw, 136px);
+}
+
+@media (max-width: 644px) {
+  .investor-project-cards.desktop-card {
+    display: none;
+  }
+}
+
+@media (min-width: 644px) {
+  .investor-project-cards.mobile-card {
+    display: none;
+  }
+}
+
+.justify_content {
+  @apply justify-center !important;
+}
+
+.map-opction {
+  @apply flex justify-start gap-2 mt-3 mb-8;
+}
+
+.map-opction .map-field {
+  @apply cursor-pointer w-8 h-8 flex justify-between items-center bg-cardbg rounded-xl p-[6px];
+}
+.map-opction .input-field {
+  @apply w-[50%] sm:w-auto flex justify-between items-center gap-2 py-[6px] pl-3 pr-2 bg-cardbg rounded-xl;
+}
+
+.map-opction .input-field .input {
+  @apply w-[361px]  h-auto bg-[transparent] border-none outline-none;
+}
+
+.map-opction .input-field select {
+  @apply w-full sm:w-[166px] h-auto bg-[transparent] border-none outline-none;
+}

@@ -1,0 +1,28 @@
+.contribution-card {
+  @apply w-full h-auto p-[24px] bg-white rounded-2xl;
+}
+
+.contribution-card .contribution-rate {
+  @apply flex justify-between items-center mb-[16px];
+}
+
+.contribution-card .contribution-rate .rate-price {
+  @apply font-semibold text-[32px] leading-[48px] text-textcolor m-0;
+}
+
+.contribution-card .contribution-rate .rate-price sup {
+  @apply font-medium text-lg;
+}
+
+.contribution-card .contribution-rate .rate-lemet {
+  @apply font-semibold text-xl text-[#92A0FF];
+}
+
+.contribution-card .contribution-heading {
+  @apply font-semibold text-base leading-4 text-textcolor text-left mb-[16px];
+}
+
+.invest-calcu {
+  @apply absolute z-[1] w-full px-6 left-0 top-[-314px];
+  /* width: calc(100% - 48px); */
+}

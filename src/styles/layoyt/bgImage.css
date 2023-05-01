@@ -1,0 +1,21 @@
+.wather-haf-white-bg {
+  @apply w-full h-[93px] md:h-[233px] bg-repeat-x  bg-bottom bg-auto absolute left-0 bottom-[-3px];
+  background-image: url("/images/Intersect2.svg");
+  -webkit-background-repeat-y: no-repeat;
+  background-repeat-y: no-repeat;
+}
+.white-wather-bg {
+  @apply w-full h-[93px] md:h-[233px] bg-repeat-x  bg-bottom  bg-auto absolute left-0 bottom-[-3px];
+  background-image: url("/images/Intersect4.svg");
+  -webkit-background-repeat-y: no-repeat;
+  background-repeat-y: no-repeat;
+}
+
+@media (max-width: 768px) {
+  .wather-haf-white-bg {
+    background-image: url("/images/wather-mb.png");
+  }
+  .white-wather-bg {
+    background-image: url("/images/w-wather-mb.png");
+  }
+}

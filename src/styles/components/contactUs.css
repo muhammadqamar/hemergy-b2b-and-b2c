@@ -1,0 +1,91 @@
+.hero-container {
+  @apply w-full bg-[#4E62EE] h-auto relative;
+}
+
+.hero-wrapper {
+  @apply max-w-[1440px] flex items-start  gap-16 md:gap-7 justify-between mx-auto pt-[131px] px-[24px] md:px-[40px] lg:pl-[80px] lg:pr-[25px] pb-[250px] flex-col lg:flex-row lg:pb-[200px] xl:pb-[130px];
+}
+
+.contact-container-about {
+  @apply w-full bg-[#4E62EE] relative  mb-[590px] sm:mb-[380px] md:mb-[280px];
+}
+.contact-container-about .contact-wrapper-about {
+  @apply max-w-[1440px] h-[930px] mx-auto  flex items-start justify-center text-center pt-[157px];
+}
+.contact-container-about .contact-heading {
+  @apply font-Poppins font-semibold text-[40px] md:text-[65px] lg:text-[96px] leading-[36px] md:leading-[90px] lg:leading-[115.2px] text-white mb-4;
+}
+.contact-container-about .contact-wather-img {
+  @apply w-full h-[232px] bg-repeat bg-center bg-auto absolute bottom-0;
+  background-image: url("/images/white-wather.png");
+}
+.contact-card-box {
+  @apply w-full md:w-[767px] lg:w-[814px]  flex gap-8  flex-col md:flex-row items-start  h-auto mx-auto   text-center bg-white rounded-3xl shadow-mdshadow;
+}
+.contact-card-box .contact-left-content {
+  @apply text-left w-full md:w-[480px];
+}
+.contact-card-box .help-heading {
+  @apply font-Poppins font-semibold text-[28px] lg:text-[32px] leading-[32px] lg:leading-[38.4px] text-textblack mb-[8px];
+}
+.contact-card-box .help-para {
+  @apply font-Inter font-normal text-[16px] leading-[24px] text-gray800 mb-[32px];
+}
+/* Form style */
+.contact-card-box .names-box {
+  @apply flex flex-col sm:flex-row justify-between gap-0 sm:gap-[16px];
+}
+.label-box {
+  @apply flex flex-col mb-[32px];
+}
+.contact-card-box label {
+  @apply font-Inter font-medium text-[16px] leading-[24px] text-textblack mb-[4px];
+}
+.contact-card-box input,
+.contact-card-box select {
+  @apply font-Inter bg-garbg w-full  h-full md:h-[40px] px-[12px] py-[8px] rounded-xl focus:outline-none;
+}
+
+.contact-card-box select {
+  @apply bg-no-repeat;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("/images/b_expand_more.svg");
+  background-position: 98% 10px;
+  background-size: 25px;
+}
+
+.contact-card-box .name-input::placeholder {
+  color: #000;
+}
+.contact-card-box .birth-input {
+  @apply w-full;
+}
+.contact-card-box .birth-input::placeholder {
+  color: #000;
+}
+.contact-card-box .birth-box {
+  @apply relative;
+}
+.contact-card-box .mail-box {
+  @apply absolute right-[12px];
+}
+.contact-card-box textarea {
+  @apply focus:outline-none bg-garbg rounded-xl px-[12px] pt-[8px];
+}
+.contact-card-box .send-btn {
+  @apply font-Inter w-full md:w-[100px] h-[40px] flex items-center justify-center gap-[8px] px-[8px] py-[16px] bg-textcolor text-white rounded-xl opacity-50 !important;
+}
+.contact-right-content {
+  @apply flex flex-col items-start;
+}
+.find-heading {
+  @apply text-textcolor text-[24px] font-Poppins leading-[28.8px] font-semibold pb-[24px];
+}
+.find-flx-bx {
+  @apply flex items-center mb-[18px];
+}
+.find-sub-heading {
+  @apply font-Inter text-textcolor font-normal text-[16px] leading-[24px];
+}

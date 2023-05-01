@@ -1,0 +1,47 @@
+.side-nav-bar {
+  @apply w-screen xl:w-[266px] min-h-max laptop:min-h-[960px] laptop:w-16 bg-blue700 rounded-bl-[24px] rounded-br-[24px] laptop:rounded-bl-none  laptop:rounded-tr-[40px] laptop:rounded-br-[40px] rounded-tr-none pt-2 pb-2 laptop:py-2  pl-4 pr-5 md:pr-3 laptop:pt-10 laptop:px-[10px] laptop:pb-6 absolute z-10 left-0 top-0;
+}
+
+.expand-flex-box {
+  @apply flex items-center laptop:items-start justify-between;
+}
+.expand-side-bar-text {
+  @apply text-white hidden xl:block;
+}
+.menu-item {
+  @apply w-11 h-10 rounded-xl flex items-center justify-center hover:bg-blue600;
+}
+
+.expand-menu-item {
+  @apply flex gap-3 items-center w-auto xl:w-[242px] hover:bg-blue600 rounded-xl py-[10px] px-2 laptop:px-[12px];
+}
+.hemergy-logo-link {
+  @apply w-auto laptop:w-full flex justify-center;
+}
+.hide-links {
+  @apply hidden laptop:flex !important;
+}
+
+.active {
+  @apply bg-blue600;
+}
+
+.dash-user-img {
+  @apply rounded-[50%] w-8 h-8 overflow-hidden;
+}
+
+.dash-user-img img {
+  @apply w-auto h-auto object-contain;
+}
+
+.insite-border {
+  @apply w-8 h-8 border-green400 border-4 border-solid;
+}
+
+.mobile-side-box {
+  @apply w-[152px] rounded-3xl bg-blue700 shadow-mdshadow p-4 absolute z-10 top-16 md:top-16 right-7;
+}
+
+.mobile-side-box .mobile-dash-links {
+  @apply flex items-center gap-3 p-3;
+}

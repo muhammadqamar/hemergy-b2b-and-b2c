@@ -1,0 +1,72 @@
+.card-area {
+  @apply w-full laptop:w-[40%] min-h-max laptop:min-h-screen pt-[130px] pb-[70px] md:pb-8 px-6 md:pr-12 md:pl-12 laptop:pt-12 laptop:pr-6 laptop:pb-8 relative z-[2] rounded-br-[40px] laptop:rounded-br-[60px] laptop:rounded-bl-none rounded-bl-[40px]  rounded-tr-none laptop:rounded-tr-[60px] bg-cardbg;
+}
+
+.insight-card {
+  @apply min-h-screen pt-20 px-6 laptop:pl-[98px] laptop:pr-12 laptop:pt-12  relative ml-0 mt-[-35px] laptop:mt-0 laptop:ml-[-50px] overflow-hidden;
+}
+
+.insight-card::before {
+  @apply absolute bottom-0 right-0 w-full min-h-[100px] z-[1];
+  content: "";
+  background: linear-gradient(180deg, rgba(78, 98, 238, 0) 42.19%, #4e62ee 100%);
+}
+.project-detail-about-card {
+  @apply max-w-[429px] relative m-0 overflow-hidden;
+}
+.project-detail-about-card::before {
+  @apply absolute bottom-0 right-0 top-[30px] w-full min-h-[30px] z-[1];
+  content: "";
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 42.19%, #ffffff 100%);
+}
+
+.t-b-raidus {
+  @apply rounded-bl-[40px] laptop:rounded-bl-none rounded-tr-none laptop:rounded-tr-[60px]  rounded-br-[40px] laptop:rounded-br-[60px];
+}
+
+.transac-bg {
+  @apply w-full flex flex-col gap-6;
+}
+
+.gradient-bg {
+  @apply relative overflow-y-scroll;
+}
+
+.gradient-bg::before {
+  @apply absolute top-0 right-0 w-full h-[50px];
+  content: "";
+  background: linear-gradient(180deg, rgba(78, 98, 238, 0) 42.19%, #4e62ee 100%);
+  transform: matrix(1, 0, 0, -1, 0, 0);
+}
+
+.wallet-progress {
+  @apply w-[236px] h-[236px] mx-auto;
+}
+
+.wallet-progress .progress-about {
+  @apply flex flex-col justify-center items-center gap-1;
+}
+
+.no-tran-box {
+  @apply w-full h-auto flex items-start gap-2 rounded-xl bg-blue400 p-4;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.info-bg {
+  @apply relative w-full pl-6 laptop:pl-[112px] pb-12 pt-[130px] laptop:pt-20 laptop:py-6 pr-6 flex items-center justify-center bg-textcolor min-h-[960px];
+}
+
+.info-bg::before {
+  @apply w-full h-[93px] md:h-[233px] bg-repeat-x  bg-bottom  bg-auto absolute bottom-0 left-0;
+  content: "";
+  background-image: url("/images/Intersect2.svg");
+  -webkit-background-repeat-y: no-repeat;
+  background-repeat-y: no-repeat;
+}

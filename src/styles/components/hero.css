@@ -1,0 +1,116 @@
+.hero-container {
+  @apply w-full bg-[#4E62EE] min-h-[auto]  md:min-h-screen relative;
+}
+
+.home-hero-wrapper {
+  @apply max-w-[1440px] relative z-[1] flex items-start  gap-16 md:gap-7 justify-between mx-auto md:pt-[131px] px-[24px] laptop:px-[40px] laptop:pl-[80px]   flex-col lg:flex-row;
+}
+
+.hero-container-about {
+  @apply w-full bg-[#4E62EE] relative  flex items-center justify-center;
+}
+.hero-wrapper-about {
+  @apply max-w-[1440px] h-[930px] relative z-[1] flex items-center justify-center text-center;
+}
+.hero-investors-wrapper {
+  @apply max-w-[1440px] flex items-start  gap-16 md:gap-7 justify-center mx-auto pt-[192px] lg:pt-[131px] px-[24px] md:px-[40px] lg:pl-[80px] lg:pr-[25px]  flex-col lg:flex-row pb-[450px];
+}
+.hero-investors-wrapper .investor-project-heading {
+  @apply text-center mb-6 mt-0 md:my-8;
+}
+.hero-investors-wrapper .investor-project-heading .browse-projects {
+  @apply font-semibold text-[38px]  leading-6 text-white font-Poppins;
+}
+
+.hero-investors-wrapper .map-box .map {
+  @apply w-auto hidden lg:block;
+}
+
+.hero-investors-wrapper .investor-project-heading .browse-projects {
+  @apply text-[40px] leading-[48px] md:text-5xl font-semibold  text-white;
+}
+.hero-investors-wrapper .map-opction,
+.map-location-box .map-opction {
+  @apply flex-wrap justify-center;
+}
+.hero-investors-wrapper .map-opction .input-field input,
+.map-location-box .map-opction .input-field input {
+  @apply w-full md:w-[361px];
+}
+
+.hero-content {
+  @apply mt-0 lg:mt-[50px] flex-shrink-0;
+}
+
+@media (min-width: 992px) {
+  .hero-content {
+    width: clamp(426px, 60vw, 632px);
+  }
+}
+
+.main-heading {
+  @apply font-Poppins font-semibold text-[40px] lg:text-[64px] leading-[48px] lg:leading-[76px] text-white mb-8;
+}
+
+.sub-heading {
+  @apply font-Poppins font-normal  text-[20px] lg:text-[24px] leading-[30px] lg:leading-[36px] text-herotext;
+}
+
+.sub-heading.about-w {
+  @apply items-center flex-wrap gap-4 mt-8 mb-[82px]  lg:my-[36px];
+}
+
+.sub-heading.about-w span {
+  @apply flex items-center gap-2 font-semibold text-white font-Poppins;
+}
+
+.hero-banner-img {
+  @apply relative w-full md:w-[638px] h-[669px] hidden md:block;
+}
+
+.hero-banner-img .hero-start {
+  @apply w-full h-auto;
+}
+.hero-banner-img .hero-wather {
+  @apply absolute left-0 w-auto h-auto;
+  animation: wather 7s ease-in-out infinite;
+}
+.hero-banner-img .hero-user-card {
+  @apply absolute top-0 right-0 h-auto;
+  width: clamp(200px, 25vw, 345px);
+  animation: card 5s ease-in-out 0.5s infinite;
+}
+
+@keyframes wather {
+  0% {
+    top: 25px;
+  }
+  50% {
+    top: 79px;
+  }
+  100% {
+    top: 25px;
+  }
+}
+
+@keyframes card {
+  0% {
+    top: 225px;
+  }
+  50% {
+    top: 240px;
+  }
+  100% {
+    top: 225px;
+  }
+}
+
+.hero-banners {
+  @apply hidden h-auto ml-auto md:block;
+}
+
+@media (min-width: 992px) {
+  .hero-banners {
+    width: clamp(200px, 45vw, 675px);
+  }
+}

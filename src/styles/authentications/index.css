@@ -1,0 +1,61 @@
+.authentications-section {
+  @apply w-full min-h-[100vh] bg-textcolor relative;
+}
+
+.authentications-section .auth-header {
+  @apply flex items-center justify-center pt-11;
+}
+
+.authentications-section .auth-container {
+  @apply max-w-[1440px] gap-[88px] lg:gap-10 laptop:gap-[225px] mx-auto flex  flex-col-reverse lg:flex-row justify-center items-center lg:items-start pt-[144px] pb-[200px] lg:py-[103px] px-6;
+}
+
+.authentications-section .auth-wather {
+  @apply w-full h-[233px] bg-repeat bg-center bg-auto absolute bottom-0;
+  background-image: url("/images/auth-bg.png");
+}
+
+/* registrations  */
+.registration-box {
+  @apply relative z-[1] w-full md:w-[480px] h-auto flex flex-col gap-6 pt-12 px-4 md:px-8 pb-6 bg-white rounded-3xl shadow-lgshadow text-textblack;
+}
+.form-cantainer {
+  @apply flex flex-col;
+}
+.country-drop-list {
+  @apply border-none p-0 !important;
+}
+
+.country-drop-list span {
+  @apply p-0 m-0 !important;
+}
+.country-drop-list span span {
+  @apply mr-2 !important;
+}
+.country-drop-main {
+  @apply p-0  !important;
+}
+.wallet-option-box {
+  @apply flex items-center justify-between gap-2;
+}
+.flex-box {
+  @apply flex items-center justify-between;
+}
+
+.d-column {
+  @apply flex-col;
+}
+
+.gap-lg {
+  @apply gap-6;
+}
+.gap-sm {
+  @apply gap-4;
+}
+.gap-x-sm {
+  @apply gap-2;
+}
+
+.inbox-img {
+  @apply w-[200px] h-[200px] mx-auto bg-[#D6DBFF] rounded-[50%] justify-center overflow-hidden;
+}
