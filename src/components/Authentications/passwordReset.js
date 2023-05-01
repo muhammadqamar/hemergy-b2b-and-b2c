@@ -76,7 +76,7 @@ const ResetPassword = ({ code }) => {
           isSubmitting,
           /* and other goodies */
         }) => (
-          <form className="gap-6 form-cantainer" onSubmit={handleSubmit}>
+          <form className="form-cantainer gap-6" onSubmit={handleSubmit}>
             <div className="input-box">
               <label className="p-sm text-weight-medium">Password</label>
               <div className="input-field">

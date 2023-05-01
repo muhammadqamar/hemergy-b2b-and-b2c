@@ -25,8 +25,8 @@ const Beneficiaries = ({ setActive }) => {
           if (!values.description) {
             errors.description = 'Required';
           }
-          if (values.users?.length === 0) {
-            errors.users = 'Required';
+          if (values.users.filter(data=>data.address).length === 0) {
+            errors.users = 'Atleast 1 benficiary required';
           }
           if (!values.company) {
             errors.company = 'Required';
@@ -38,9 +38,9 @@ const Beneficiaries = ({ setActive }) => {
             beneficiaries: values,
             draftId: draft?._id,
             type: 'beneficiaries',
-            status: 'complete',
+            status: 'draft',
           });
-          if (projectInfo.status == 200) {
+          if (projectInfo.status === 200) {
             setActive(6);
             dispatch(setlBeneficiaries(values));
           }
@@ -87,14 +87,21 @@ const Beneficiaries = ({ setActive }) => {
             </p>
             {values?.users?.map((data, index) => {
               return (
-                <div className="input-box">
+                <div className=" relative input-box bg-garbg p-[20px] rounded-[10px]">
+                  <div className="absolute cursor-pointer right-3 top-1" onClick={()=>{
+                     setFieldValue(
+                      'users',
+                      values?.users?.filter((data, index2) => index2!==index)
+                    );
+                  }}>x</div>
                   <div className="input-field">
                     <div className="flex items-center justify-between gap-6">
                       <div>
-                        <label className="p-sm text-weight-medium">
+                        <label className="p-sm text-weight-medium ">
                           First name
                         </label>
                         <input
+                        style={{background:'#fff'}}
                           className="input"
                           placeholder="First name"
                           inputType="text"
@@ -104,7 +111,7 @@ const Beneficiaries = ({ setActive }) => {
                               'users',
                               values?.users?.map((data, index2) => {
                                 if (index === index2) {
-                                  return {...data, firstName: e.target.value};
+                                  return { ...data, firstName: e.target.value };
                                 } else {
                                   return data;
                                 }
@@ -118,6 +125,7 @@ const Beneficiaries = ({ setActive }) => {
                           Last name
                         </label>
                         <input
+                        style={{background:'#fff'}}
                           className="input"
                           placeholder="Last name"
                           inputType="text"
@@ -127,7 +135,35 @@ const Beneficiaries = ({ setActive }) => {
                               'users',
                               values?.users?.map((data, index2) => {
                                 if (index === index2) {
-                                  return {...data, lastName: e.target.value};
+                                  return { ...data, lastName: e.target.value };
+                                } else {
+                                  return data;
+                                }
+                              })
+                            );
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="input-field mt-[20px] w-full">
+                    <div className="w-full">
+                      <div>
+                        <label className="p-sm text-weight-medium">
+                          Wallet Address
+                        </label>
+                        <input
+                        style={{background:'#fff'}}
+                          className="w-full input"
+                          placeholder="Last name"
+                          inputType="text"
+                          name="users"
+                          onChange={(e) => {
+                            setFieldValue(
+                              'users',
+                              values?.users?.map((data, index2) => {
+                                if (index === index2) {
+                                  return { ...data, address: e.target.value };
                                 } else {
                                   return data;
                                 }
@@ -141,6 +177,7 @@ const Beneficiaries = ({ setActive }) => {
                 </div>
               );
             })}
+             {touched.users && <p className="error p-x-sm">{errors.users}</p>}
 
             <div
               onClick={() => {
@@ -154,13 +191,23 @@ const Beneficiaries = ({ setActive }) => {
               Add another beneficiary
             </div>
 
+            {isSubmitting ? (
             <Button
-              text="Preview Smart Contract"
+              type="submit"
+              bg="bg-textcolor"
+              color
+              border
+              icon="/images/loader.svg"
+            />
+          ) : (
+            <Button
+              text="Next"
               type="submit"
               disabled={isSubmitting}
               bg="bg-textcolor"
               color
             />
+          )}
           </form>
         )}
       </Formik>

@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const Index = () => {
   return (
-    <div className="w-full gap-2 flex ">
+    <div className="gap-4  flex-box">
       <div className="power-box">
         <Image src="/images/bolt.svg" alt="power" width={40} height={40} />
         <h4 className="text-white p-xl">2.3kW</h4>

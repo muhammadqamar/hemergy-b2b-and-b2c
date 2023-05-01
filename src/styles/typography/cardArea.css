@@ -1,5 +1,5 @@
 .card-area {
-  @apply w-full laptop:w-[40%] min-h-max laptop:min-h-screen pt-[130px] pb-[70px] md:pb-8 px-6 md:pr-12 md:pl-12 laptop:pt-12 laptop:pr-6 laptop:pb-8 relative z-[2] rounded-br-[40px] laptop:rounded-br-[60px] laptop:rounded-bl-none rounded-bl-[40px]  rounded-tr-none laptop:rounded-tr-[60px] bg-cardbg;
+  @apply w-full laptop:w-[40%] min-h-max laptop:min-h-screen pt-[130px] md:pt-20 pb-[70px] md:pb-8 px-6 md:px-20 laptop:pt-12 laptop:pr-6 laptop:pb-8 laptop:pl-28 relative z-[2] rounded-br-[40px] laptop:rounded-br-[60px] laptop:rounded-bl-none rounded-bl-[40px]  rounded-tr-none laptop:rounded-tr-[60px] bg-cardbg;
 }
 
 .insight-card {
@@ -9,15 +9,11 @@
 .insight-card::before {
   @apply absolute bottom-0 right-0 w-full min-h-[100px] z-[1];
   content: "";
-  background: linear-gradient(180deg, rgba(78, 98, 238, 0) 42.19%, #4e62ee 100%);
-}
-.project-detail-about-card {
-  @apply max-w-[429px] relative m-0 overflow-hidden;
-}
-.project-detail-about-card::before {
-  @apply absolute bottom-0 right-0 top-[30px] w-full min-h-[30px] z-[1];
-  content: "";
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 42.19%, #ffffff 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(78, 98, 238, 0) 42.19%,
+    #4e62ee 100%
+  );
 }
 
 .t-b-raidus {
@@ -35,7 +31,11 @@
 .gradient-bg::before {
   @apply absolute top-0 right-0 w-full h-[50px];
   content: "";
-  background: linear-gradient(180deg, rgba(78, 98, 238, 0) 42.19%, #4e62ee 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(78, 98, 238, 0) 42.19%,
+    #4e62ee 100%
+  );
   transform: matrix(1, 0, 0, -1, 0, 0);
 }
 
@@ -60,7 +60,7 @@
 }
 
 .info-bg {
-  @apply relative w-full pl-6 laptop:pl-[112px] pb-12 pt-[130px] laptop:pt-20 laptop:py-6 pr-6 flex items-center justify-center bg-textcolor min-h-[960px];
+  @apply relative w-full pl-6 laptop:pl-[112px] pb-12 pt-[130px] md:pt-20 laptop:py-6 pr-6 flex items-center justify-center bg-textcolor min-h-screen;
 }
 
 .info-bg::before {

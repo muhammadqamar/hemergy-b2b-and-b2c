@@ -3,7 +3,9 @@ import { Formik, Field } from "formik";
 import Image from "next/image";
 import axios from "axios";
 import { toast } from "react-toastify";
+import {useSelector} from 'react-redux'
 const ContactForm = () => {
+  const {user} = useSelector(state=>state?.user)
   return (
     <Formik
       initialValues={{
@@ -22,14 +24,12 @@ const ContactForm = () => {
         }
         if (!values.subject) {
           errors.subject = "Required";
-        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.subject)) {
-          errors.subject = "Invalid subject address";
         }
         return errors;
       }}
       onSubmit={async (values, { setSubmitting }) => {
         try {
-          const sendContact = await axios.post(`${process.env.NEXT_PUBLIC_API_DOMAIN}/auth/contact`, values);
+          const sendContact = await axios.post(`${process.env.NEXT_PUBLIC_API_DOMAIN}/auth/contact`, {...values, email:user?.email|| 'muhammadqamar111@gmail.com'});
           setSubmitting(false);
 
           if (sendContact?.data?.success) {
@@ -75,7 +75,7 @@ const ContactForm = () => {
               <label>Subject line</label>
               <input
                 className="birth-input"
-                type="subject"
+                type="text"
                 name="subject"
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -94,9 +94,11 @@ const ContactForm = () => {
                 onBlur={handleBlur}
                 value={values.reason}
               >
-                <option value="red">Red</option>
-                <option value="green">Green</option>
-                <option value="blue">Blue</option>
+                <option value="" disabled>Select Reason</option>
+                <option value="Investment Information">Investment Information</option>
+                <option value="Profile Information">Profile Information</option>
+                <option value="Request a Demo">Request a Demo</option>
+                <option value="Others">Others</option>
               </Field>
               <p className="error p-x-sm">{errors.reason && touched.reason && errors.reason}</p>
             </div>

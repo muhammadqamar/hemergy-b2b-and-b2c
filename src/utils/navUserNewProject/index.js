@@ -1,7 +1,7 @@
-import React from "react";
-import Image from "next/image";
-import Link from "next/link";
-import Button from "@/utils/buttons";
+import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import Button from '@/utils/buttons';
 
 export default function index({ icon, user, newProject, para }) {
   return (
@@ -10,9 +10,24 @@ export default function index({ icon, user, newProject, para }) {
         <h4 className="user-project-name">{user}</h4>
         <div className="community-project-flx">
           <div className="community-api-box">
-            <Button bg="bg-white" border icon="/images/community.svg" text="Community projects" />
-            <Button bg="bg-white" border icon="/images/code.svg" text="Developer guide" />
-            <Button bg="bg-white" border icon="/images/cloud.svg" text="Use our API" />
+            <Button
+              bg="bg-white"
+              border
+              icon="/images/community.svg"
+              text="Community projects"
+            />
+            <Button
+              bg="bg-white"
+              border
+              icon="/images/code.svg"
+              text="Developer guide"
+            />
+            <Button
+              bg="bg-white"
+              border
+              icon="/images/cloud.svg"
+              text="Use our API"
+            />
             {icon && (
               <Button
                 bg="bg-white"
@@ -25,14 +40,22 @@ export default function index({ icon, user, newProject, para }) {
           </div>
 
           {newProject && (
-            <Button color bg="bg-btncolor" icon="/images/add.svg" text="New project" shadow />
+            <Link href="./new-project" >
+              <Button
+                color
+                bg="bg-btncolor"
+                icon="/images/add.svg"
+                text="New project"
+                shadow
+              />
+            </Link>
           )}
         </div>
       </div>
       {para && (
         <p className="project-text">
-          This is your projects dashboard. Once you have created projects you will see that
-          information here
+          This is your projects dashboard. Once you have created projects you
+          will see that information here
         </p>
       )}
     </>

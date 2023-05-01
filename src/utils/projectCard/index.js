@@ -1,6 +1,7 @@
-import TabInfo from "@/utils/tabInfo";
-import UserCard from "@/utils/userCard";
-import ProjectCardThumbnail from "@/utils/projectCardThumbnail";
+import TabInfo from '@/utils/tabInfo';
+import UserCard from '@/utils/userCard';
+import ProjectCardThumbnail from '@/utils/projectCardThumbnail';
+import Link from 'next/link';
 
 export default function ProjectCard(props) {
   const {
@@ -17,18 +18,21 @@ export default function ProjectCard(props) {
     hideThumbnail,
     bg,
     Shadow,
+    location,
+    projectImage,
+    btnLink = '',
   } = props;
   return (
     <div
-      className={`hemergy-project-card rounded-[20px]  overflow-hidden text-left ${
-        w && "w-[266px]"
+      className={`hemergy-project-card rounded-[20px] h-max overflow-hidden text-left ${
+        w && 'w-[266px]'
       } `}
       style={{ boxShadow: Shadow }}
     >
       {!hideThumbnail && (
         <ProjectCardThumbnail
           h="280px"
-          bgimg={"/images/image 1.png"}
+          bgimg={projectImage}
           trending={trending}
           stock={stock}
           stockdirection={stockdirection}
@@ -36,7 +40,7 @@ export default function ProjectCard(props) {
           hemergyIcon={hemergyIcon}
         />
       )}
-      <div className={`${bg ? bg : "bg-white"} p-[18px]`}>
+      <div className={`${bg ? bg : 'bg-white'} p-[18px]`}>
         {bg ? (
           <div className="flex justify-between w-full">
             <TabInfo
@@ -49,7 +53,11 @@ export default function ProjectCard(props) {
               bold="font-semibold"
             />
             <TabInfo
-              icon={stockdirection ? "/images/Polygon 1.svg" : "/images/Polygon 1.svg"}
+              icon={
+                stockdirection
+                  ? '/images/Polygon 1.svg'
+                  : '/images/Polygon 1.svg'
+              }
               text={stock}
               color="text-white"
               w="10"
@@ -62,16 +70,17 @@ export default function ProjectCard(props) {
           <div className="">
             <TabInfo
               icon="/images/location_on.svg"
-              text="Location name"
+              text={location}
               color="text-textcolor"
               bold="font-medium"
+              textEllipsis
             />
           </div>
         )}
         {name && (
           <h1
             className={`pt-[16px] pb-[8px] ${
-              bg && "text-white"
+              bg && 'text-white'
             } text-[16px] leading-[24px] font-semibold `}
           >
             {name}
@@ -81,7 +90,7 @@ export default function ProjectCard(props) {
         {bio && (
           <p
             className={` ${
-              bg ? "text-white500" : "text-gray800"
+              bg ? 'text-white500' : 'text-gray800'
             } 0 pb-[16px] text-[14px] leading-[20px] font-normal max-w-[240px]`}
           >
             {bio}
@@ -98,14 +107,17 @@ export default function ProjectCard(props) {
             />
           </div>
         )}
+
         {viewDetailbtn && (
-          <button
-            className={`w-full rounded-xl secondary ${
-              bg ? "bg-blue400 text-white" : "bg-cardbg text-textcolor"
-            } `}
-          >
-            View details
-          </button>
+          <Link href={btnLink}>
+            <button
+              className={`w-full rounded-xl secondary ${
+                bg ? 'bg-blue400 text-white' : 'bg-cardbg text-textcolor'
+              } `}
+            >
+              View details
+            </button>
+          </Link>
         )}
       </div>
     </div>

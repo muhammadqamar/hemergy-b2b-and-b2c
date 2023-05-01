@@ -75,7 +75,7 @@
   @apply focus:outline-none bg-garbg rounded-xl px-[12px] pt-[8px];
 }
 .contact-card-box .send-btn {
-  @apply font-Inter w-full md:w-[100px] h-[40px] flex items-center justify-center gap-[8px] px-[8px] py-[16px] bg-textcolor text-white rounded-xl opacity-50 !important;
+  @apply font-Inter w-full md:w-[100px] h-[40px] flex items-center justify-center gap-[8px] px-[8px] py-[16px] bg-textcolor text-white rounded-xl  !important;
 }
 .contact-right-content {
   @apply flex flex-col items-start;

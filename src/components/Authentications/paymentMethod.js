@@ -13,14 +13,14 @@ const PaymentMethod = ({ setStep, userDetail }) => {
   return (
     <div className="registration-box">
       <div className="flex-box d-column gap-x-sm">
-        <h6 className="p-lg center-text ">Step 3 of 3</h6>
+        <h6 className="p-lg center-text ">Step 4 of 4</h6>
         <h3 className="p-xl center-text">Payment method</h3>
       </div>
       <div className="flex items-center justify-center gap-2">
-        <button className="p-sm-semi text-weight-medium paybtn text-blue700 bg-blue100 ">
+        <button className="p-sm-semi text-weight-medium paybtn  text-blue700 bg-blue100 ">
           Bank account
         </button>
-        <button className="bg-white p-sm-semi text-weight-medium paybtn text-textblack">
+        <button className="p-sm-semi text-weight-medium paybtn text-textblack bg-white">
           Connect cryptowallet
         </button>
       </div>
@@ -46,8 +46,7 @@ const PaymentMethod = ({ setStep, userDetail }) => {
           return errors;
         }}
         onSubmit={async (values, { setSubmitting }) => {
-          setStep(4);
-         // const result = await updateFinancials({ ...values, email: userDetail?.email });
+          const result = await updateFinancials({ ...values, email: userDetail?.email });
           // setSubmitting(false);
           // if (result?.data?.userFound) {
           //   dispatch(addUser(result?.data?.userFound));
@@ -73,7 +72,7 @@ const PaymentMethod = ({ setStep, userDetail }) => {
           isSubmitting,
           /* and other goodies */
         }) => (
-          <form className="gap-6 form-cantainer" onSubmit={handleSubmit}>
+          <form className="form-cantainer gap-6" onSubmit={handleSubmit}>
             <div className="input-box">
               <div className="flex items-center gap-2">
                 <label className="p-sm text-weight-medium">BIC / Swift</label>
@@ -139,14 +138,14 @@ const PaymentMethod = ({ setStep, userDetail }) => {
             </div>
             <div className="gap-4 flex-box">
               <button
-                onClick={() => setStep(3)}
+                onClick={() => setStep(2)}
                 type="button"
                 className="justify-center flex-box gap-x-sm btn-border secondary"
               >
                 Back
               </button>
               <button
-                className="btn secondary blue "
+                className="btn secondary blue opacity-[0.5]"
                 type="submit"
                 disabled={isSubmitting}
               >

@@ -31,10 +31,6 @@
 .hide {
   @apply hidden lg:flex !important;
 }
-
-.tab-btn {
-  @apply w-fit whitespace-nowrap md:w-full flex items-center justify-between gap-1  text-left px-3 py-[10px] rounded-xl;
-}
 /* b2b buttons styling */
 .project-link {
   @apply w-fit flex gap-2 justify-center items-center py-2 px-4 rounded-xl;
@@ -46,4 +42,8 @@
 
 .zoom-btn {
   @apply w-8 h-8 rounded-xl bg-white flex items-center justify-center  cursor-pointer;
+}
+
+.tab-btn {
+  @apply w-fit whitespace-nowrap md:w-full flex items-center justify-between gap-1  text-left px-3 py-[10px] rounded-xl;
 }

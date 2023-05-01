@@ -1,10 +1,10 @@
-@import "./navbar.css";
-@import "./footer.css";
-@import "./sideBar.css";
-@import "./bgImage.css";
+@import './navbar.css';
+@import './footer.css';
+@import './sideBar.css';
+@import './bgImage.css';
 
 * {
-  @apply box-border m-0 p-0;
+  @apply box-border p-0 m-0;
 }
 
 .max-container {
@@ -16,7 +16,16 @@
 }
 
 .white-frame {
-  @apply w-auto h-auto relative bg-white rounded-3xl p-6 lg:p-8 shadow-mdshadow;
+  @apply relative w-auto h-auto p-6 bg-white rounded-3xl lg:p-8 shadow-mdshadow;
+}
+
+.loader-hemergy {
+  position: fixed;
+  background-color: rgb(78, 98, 238);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 /*cap table */
@@ -34,7 +43,7 @@
   -moz-appearance: none; /* Firefox */
   -webkit-appearance: none; /* Safari and Chrome */
   appearance: none;
-  background: url("/images/b_expand_more.svg") white no-repeat 95% !important;
+  background: url('/images/b_expand_more.svg') white no-repeat 95% !important;
 }
 
 /* map */
@@ -64,5 +73,5 @@
   -moz-appearance: none; /* Firefox */
   -webkit-appearance: none; /* Safari and Chrome */
   appearance: none;
-  background: url("/images/b_expand_more.svg") #f4f4fa no-repeat 95% !important;
+  background: url('/images/b_expand_more.svg') #f4f4fa no-repeat 95% !important;
 }

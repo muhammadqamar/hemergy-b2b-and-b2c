@@ -1,73 +1,69 @@
-import Image from "next/image";
-import PowerCarbon from "@/utils/powerCarbon";
-import Link from "next/link";
+import Image from 'next/image';
+import PowerCarbon from '@/utils/powerCarbon';
 
-const Tokens = ({ showTokenInfo }) => {
+const Tokens = ({ showTokenInfo, onClick, isLoading }) => {
   return (
     <div className="tokens-wrapper">
-      <div className="w-full pt-4 px-2 pb-2 rounded-xl bg-blue600 text-white ">
-        <div className=" flex items-center justify-center gap-2 mb-4">
-          <div className="w-fit h-auto rounded-full shadow-xsmshadow ">
-            <Image src="/images/token.png" alt="token" width={32} height={32} />
-          </div>
-          <h6 className=" p-md  ">Equity tokens</h6>
-        </div>
-
-        <div className={`flex flex-col gap-2 items-center justify-between`}>
-          <div
-            className={
-              "w-full flex items-center justify-between gap-1 flex-row px-4 py-[22px] bg-textcolor rounded-lg"
-            }
-          >
-            <h5 className="p-xl">1,200</h5>
-            <p className="p-sm-semi text-weight-medium">Issued</p>
-          </div>
-          <div
-            className={
-              "w-full flex items-center justify-between gap-1 flex-row px-4 py-[22px] bg-textcolor rounded-lg"
-            }
-          >
-            <h5 className="p-xl">500</h5>
-            <p className="p-sm-semi text-weight-medium">Sold</p>
-          </div>
-          <div
-            className={
-              "w-full flex items-center justify-between gap-1 flex-row px-4 py-[22px] bg-textcolor rounded-lg"
-            }
-          >
-            <h5 className="p-xl">700</h5>
-            <p className="p-sm-semi text-weight-medium">Left</p>
-          </div>
+      {showTokenInfo && (
+        <h6 className="text-center mb-6 sm:mb-[57px] p-md ">
+          1,234 Tokens issued
+        </h6>
+      )}
+      <div className="available-token mb-6 sm:mb-[57px]">
+        <Image src="/images/token.png" alt="token" width={32} height={32} />
+        <div className="text-center">
+          <h1 className="mb-1 p-2xl">200</h1>
+          <p className="text-white p-sm-semi">Equity tokens available</p>
         </div>
       </div>
+      <button
+        onClick={onClick}
+        className="w-full md:w-[280px] mx-auto mb-4 sm:mb-6 btn secondary"
+      >
+        {isLoading ? 'Loading...' : 'Invest now'}
+      </button>
 
-      <div className="w-full mb-2 sm:mb-4 ">
+      <div className=" mb-2 sm:mb-4 ">
         <PowerCarbon />
       </div>
-      <div className=" w-full  flex items-center flex-col p-4 gap-2 bg-blue600 rounded-xl">
-        <Image src="/images/attach_money.svg" alt="power" width={40} height={40} />
-        <h4 className="text-white p-xl">2.3k</h4>
-        <p className="font-medium text-white p-x-sm">Carbon avoided</p>
-      </div>
-      <div className=" w-full  flex items-center flex-col p-4 gap-2 bg-blue600 rounded-xl">
-        <Image src="/images/trending_up_w.svg" alt="power" width={40} height={40} />
-        <h4 className="text-white p-xl">2.3kW</h4>
-        <p className="font-medium text-white p-x-sm">Carbon avoided</p>
-      </div>
-      <div className=" w-full  flex items-center flex-col p-4 gap-2 bg-blue600 rounded-xl">
-        <Image src="/images/attach_money.svg" alt="power" width={40} height={40} />
-        <h4 className="text-white p-xl">2.3k</h4>
-        <p className="font-medium text-white p-x-sm">Carbon avoided</p>
-      </div>
-      <div className=" w-full  flex items-center flex-col p-4 gap-2 bg-blue600 rounded-xl">
-        <Image src="/images/investors.svg" alt="power" width={40} height={40} />
-        <h4 className="text-white p-xl">213</h4>
-        <p className="font-medium text-white p-x-sm">Investors</p>
-      </div>
 
-      <Link href="/B2B-cap-table" className="p-sm text-white text-center p-2">
-        View Cap table
-      </Link>
+      <div className=" year-box">
+        <div className="mb-4 flex-box">
+          <div>
+            <h5 className="mb-1 text-white p-xl">15</h5>
+            <p className="font-medium text-white p-x-sm">Year</p>
+          </div>
+          <div>
+            <h5 className="mb-1 text-white p-xl">35,553</h5>
+            <p className="font-medium text-right text-white p-x-sm">USDC</p>
+          </div>
+        </div>
+        <div className="year-range">
+          <input
+            type="range"
+            min="10"
+            max="300"
+            step="5"
+            defaultValue={10}
+            style={{
+              backgroundSize: `40% , 100% `,
+            }}
+          />
+        </div>
+      </div>
+      {showTokenInfo && (
+        <div className="what-token mt-4 sm:mt-6">
+          <div className="justify-start gap-2 mb-2 flex-box">
+            <Image src="/images/info.svg" alt="info" width={24} height={24} />
+            <h5 className="font-semibold text-white p-sm">What are tokens?</h5>
+          </div>
+
+          <p className="font-normal p-sm-semi text-blue200">
+            Tokens represent part of the physical asset asset name. When you buy
+            tokens, you are investing in these.
+          </p>
+        </div>
+      )}
     </div>
   );
 };

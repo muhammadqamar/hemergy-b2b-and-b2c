@@ -1,135 +1,288 @@
-import { Formik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
-import { updateFinancials } from "@/services/user";
-import { useRouter } from "next/router";
+import { useEffect, useState } from 'react';
+import { Web3AuthNoModal } from '@web3auth/no-modal';
+import {  WALLET_ADAPTERS } from '@web3auth/base';
+import { OpenloginAdapter } from '@web3auth/openlogin-adapter';
 
-import { addUser } from "@/store/reducer/user";
+import RPC from '../../pages/api/etherRPC'; // for using web3.js
+;
+import { WalletConnectV1Adapter } from '@web3auth/wallet-connect-v1-adapter';
+//import RPC from "./ethersRPC"; // for using ethers.js
 
-const Financials = ({ setStep, userDetail }) => {
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user?.user);
-  return (
-    <div className="registration-box">
-      <div className="flex-box d-column gap-x-sm">
-        <h6 className="p-lg center-text ">Step 3 of 5</h6>
-        <h3 className="p-xl center-text">Financials</h3>
+const clientId = 'BOweQo3kUPEy3FhGecCQrT30eF99IpGky0kIrCwev_wuSbCBvCQmSHpMVQTIa2yL6p0c6FB_sC5J-cIbhBNGOKs'; // get from https://dashboard.web3auth.io
+
+function App() {
+  const [web3auth, setWeb3auth] = useState(null);
+  const [provider, setProvider] = useState(null);
+
+  useEffect(() => {
+    const init = async () => {
+      try {
+        const web3auth = new Web3AuthNoModal({
+          clientId,
+          chainConfig: {
+            chainNamespace: 'eip155',
+            chainId: '0x1',
+          },
+          // web3AuthNetwork: 'cyan',
+        });
+
+        setWeb3auth(web3auth);
+
+        const openloginAdapter = new OpenloginAdapter();
+        web3auth.configureAdapter(openloginAdapter);
+
+        const adapter = new WalletConnectV1Adapter();
+        web3auth.configureAdapter(adapter);
+
+        await web3auth.init();
+        if (web3auth.provider) {
+          setProvider(web3auth.provider);
+        }
+      } catch (error) {
+        console.error('error', error);
+      }
+    };
+
+    init();
+  }, []);
+
+  const login = async (loginProviderName) => {
+    if (!web3auth) {
+      uiConsole('web3auth not initialized yet');
+      return;
+    }
+    // const web3authProvider = await web3auth.connectTo(WALLET_ADAPTERS.WALLET_CONNECT_V1);
+    const web3authProvider = await web3auth.connectTo(WALLET_ADAPTERS.OPENLOGIN, {
+      loginProvider: loginProviderName,
+    });
+    setProvider(web3authProvider);
+  };
+
+  const authenticateUser = async () => {
+    if (!web3auth) {
+      uiConsole('web3auth not initialized yet');
+      return;
+    }
+    const idToken = await web3auth.authenticateUser();
+    uiConsole(idToken);
+  };
+
+  const getUserInfo = async () => {
+    if (!web3auth) {
+      uiConsole('web3auth not initialized yet');
+      return;
+    }
+    const user = await web3auth.getUserInfo();
+    uiConsole(user);
+  };
+
+  const logout = async () => {
+    if (!web3auth) {
+      uiConsole('web3auth not initialized yet');
+      return;
+    }
+    await web3auth.logout();
+    setProvider(null);
+  };
+
+  const getChainId = async () => {
+    if (!provider) {
+      uiConsole('provider not initialized yet');
+      return;
+    }
+    const rpc = new RPC(provider);
+    const chainId = await rpc.getChainId();
+    uiConsole(chainId);
+  };
+
+  const addChain = async () => {
+    if (!provider) {
+      uiConsole('provider not initialized yet');
+      return;
+    }
+    const newChain = {
+      chainId: '0x5',
+      displayName: 'Goerli',
+      chainNamespace: 'eip155',
+      tickerName: 'Goerli',
+      ticker: 'ETH',
+      decimals: 18,
+      rpcTarget: 'https://rpc.ankr.com/eth_goerli',
+      blockExplorer: 'https://goerli.etherscan.io',
+    };
+    await web3auth?.addChain(newChain);
+    uiConsole('New Chain Added');
+  };
+
+  const switchChain = async () => {
+    if (!provider) {
+      uiConsole('provider not initialized yet');
+      return;
+    }
+    await web3auth?.switchChain({ chainId: '0x5' });
+    uiConsole('Chain Switched');
+  };
+
+  const getAccounts = async () => {
+    if (!provider) {
+      uiConsole('provider not initialized yet');
+      return;
+    }
+    const rpc = new RPC(provider);
+    const address = await rpc.getAccounts();
+    uiConsole(address);
+  };
+
+  const getBalance = async () => {
+    if (!provider) {
+      uiConsole('provider not initialized yet');
+      return;
+    }
+    const rpc = new RPC(provider);
+    const balance = await rpc.getBalance();
+    uiConsole(balance);
+  };
+
+  const sendTransaction = async () => {
+    if (!provider) {
+      uiConsole('provider not initialized yet');
+      return;
+    }
+    const rpc = new RPC(provider);
+    const receipt = await rpc.sendTransaction();
+    uiConsole(receipt);
+  };
+
+  const signMessage = async () => {
+    if (!provider) {
+      uiConsole('provider not initialized yet');
+      return;
+    }
+    const rpc = new RPC(provider);
+    const signedMessage = await rpc.signMessage();
+    uiConsole(signedMessage);
+  };
+
+  const getPrivateKey = async () => {
+    if (!provider) {
+      uiConsole('provider not initialized yet');
+      return;
+    }
+    const rpc = new RPC(provider);
+    const privateKey = await rpc.getPrivateKey();
+    uiConsole(privateKey);
+  };
+
+  function uiConsole(...args) {
+    const el = document.querySelector('#console>p');
+    if (el) {
+      el.innerHTML = JSON.stringify(args || {}, null, 2);
+    }
+  }
+
+  const loggedInView = (
+    <>
+      <div className="flex-container">
+        <div>
+          <button onClick={getUserInfo} className="card">
+            Get User Info
+          </button>
+        </div>
+        <div>
+          <button onClick={authenticateUser} className="card">
+            Get ID Token
+          </button>
+        </div>
+        <div>
+          <button onClick={getChainId} className="card">
+            Get Chain ID
+          </button>
+        </div>
+        <div>
+          <button onClick={addChain} className="card">
+            Add Chain
+          </button>
+        </div>
+        <div>
+          <button onClick={switchChain} className="card">
+            Switch Chain
+          </button>
+        </div>
+        <div>
+          <button onClick={getAccounts} className="card">
+            Get Accounts
+          </button>
+        </div>
+        <div>
+          <button onClick={getBalance} className="card">
+            Get Balance
+          </button>
+        </div>
+        <div>
+          <button onClick={signMessage} className="card">
+            Sign Message
+          </button>
+        </div>
+        <div>
+          <button onClick={sendTransaction} className="card">
+            Send Transaction
+          </button>
+        </div>
+        <div>
+          <button onClick={getPrivateKey} className="card">
+            Get Private Key
+          </button>
+        </div>
+        <div>
+          <button onClick={logout} className="card">
+            Log Out
+          </button>
+        </div>
       </div>
-      <Formik
-        initialValues={{
-          annualTurnover: user?.financials?.annualturnover || "",
-          disposableIncome: user?.financials?.disposableIncome || "",
-        }}
-        validate={(values) => {
-          const errors = {};
+      <div id="console" style={{ whiteSpace: 'pre-line' }}>
+        <p style={{ whiteSpace: 'pre-line' }}>Logged in Successfully!</p>
+      </div>
+    </>
+  );
 
-          if (!values.annualTurnover) {
-            errors.annualTurnover = "Required";
-          }
-
-          if (!values.disposableIncome) {
-            errors.disposableIncome = "Required";
-          }
-          return errors;
-        }}
-        onSubmit={async (values, { setSubmitting }) => {
-          const result = await updateFinancials({ ...values, email: userDetail?.email });
-          setSubmitting(false);
-          if (result?.data?.userFound) {
-            dispatch(addUser(result?.data?.userFound));
-            if (
-              user?.questionnaire.filter(
-                (data) => data.question === "Are you familiar with cryptocurrencies?"
-              )[0]?.selectedAnswers
-            ) {
-              setStep(4);
-            } else {
-              setStep(5);
-            }
-          }
-        }}
-      >
-        {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting,
-          /* and other goodies */
-        }) => (
-          <form className="form-cantainer gap-6" onSubmit={handleSubmit}>
-            <div className="input-box">
-              <label className="p-sm text-weight-medium">Annual turnover</label>
-
-              <div className="input-field">
-                <p className="p-sm">€</p>
-                <input
-                  className="input p-sm"
-                  placeholder="0.00"
-                  type="number"
-                  name="annualTurnover"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.annualTurnover}
-                />
-              </div>
-              <p className=" p-x-sm text-[#6B6D88]">
-                How much income do you have after monthly expenses
-              </p>
-              <p className="error p-x-sm">
-                {errors.annualTurnover && touched.annualTurnover && errors.annualTurnover}
-              </p>
-            </div>
-
-            <div className="input-box">
-              <label className="p-sm text-weight-medium">Disposable income</label>
-              <div className="input-field">
-                <p className="p-sm">€</p>
-                <input
-                  className="input p-sm"
-                  placeholder="0.00"
-                  type="number"
-                  name="disposableIncome"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.disposableIncome}
-                />
-                <p className="flex-shrink-0 p-sm">/ m</p>
-              </div>
-              <p className=" p-x-sm text-[#6B6D88]">
-                How much income do you have after monthly expenses
-              </p>
-              <p className="error p-x-sm">
-                {errors.disposableIncome && touched.disposableIncome && errors.disposableIncome}
-              </p>
-            </div>
-
-            <div className="gap-4 flex-box">
-              <button
-                onClick={() => setStep(2)}
-                type="button"
-                className="justify-center flex-box gap-x-sm btn-border secondary"
-              >
-                Back
-              </button>
-              <button className="btn secondary blue" type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "....." : "Next"}
-              </button>
-            </div>
-
-            <p
-              onClick={() => setStep(4)}
-              className="font-medium text-center cursor-pointer p-sm text-textcolor"
-            >
-              Skip for now
-            </p>
-          </form>
-        )}
-      </Formik>
+  const unloggedInView = (
+    <div style={{ display: 'flex' }}>
+      <button onClick={() => login('google')} className="card">
+        Google Login
+      </button>
+      <button onClick={() => login('facebook')} className="card">
+        <i class="fa fa-facebook fa-fw"></i> Facebook Login
+      </button>
+      <button onClick={() => login('github')} className="card">
+        GUthub Login
+      </button>
+      <button onClick={() => login('twitter')} className="card">
+        Twitter Login
+      </button>
+      <button onClick={() => login('discord')} className="card">
+        Discord Login
+      </button>
+      <button onClick={() => login('apple')} className="card">
+        Apple Login
+      </button>
+      <button onClick={() => login('linkedin')} className="card">
+        linkedin Login
+      </button>
     </div>
   );
-};
 
-export default Financials;
+  return (
+    <div className="container">
+      <h1 className="title" style={{ marginBottom: '20px' }}>
+        <a target="_blank" href="http://web3auth.io/" rel="noreferrer">
+          Web3Auth{' '}
+        </a>
+        & ReactJS Example
+      </h1>
+
+      <div className="grid">{provider ? loggedInView : unloggedInView}</div>
+    </div>
+  );
+}
+
+export default App;

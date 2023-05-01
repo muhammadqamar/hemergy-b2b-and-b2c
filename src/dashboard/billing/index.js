@@ -8,10 +8,11 @@ import {
   updateProjectasDaft,
   deleteProjectasDaft,
 } from '@/services/coreProject';
-
+import Image from 'next/image';
 export default function index({ setActive, useDraftProject }) {
   const dispatch = useDispatch();
-  const { draft, billing } = useSelector((state) => state.addProject);
+  const { user, addProject } = useSelector((state) => state);
+  const { draft, billing } = addProject;
   return (
     <div className="billing-box">
       <Formik
@@ -57,13 +58,15 @@ export default function index({ setActive, useDraftProject }) {
                       : 'hemergy as benificiary',
                 },
               },
+              email: user?.user.email,
+              user: user?.user,
               status: 'draft',
             });
 
             if (project.status == 200) {
-              console.log(project)
+              console.log(project);
               dispatch(setBilling(values.billingMethod)),
-              dispatch(setDraftInformation(project.data?.doc));
+                dispatch(setDraftInformation(project.data?.doc));
 
               setActive(1);
             }
@@ -132,13 +135,23 @@ export default function index({ setActive, useDraftProject }) {
                 <div className="text-red600">{errors.billingMethod}</div>
               )}
             </div>
-            <Button
-              type="submit"
-              bg="bg-textcolor"
-              color
-              border
-              text="Confirm & continue"
-            />
+            {isSubmitting ? (
+              <Button
+                type="submit"
+                bg="bg-textcolor"
+                color
+                border
+                icon="/images/loader.svg"
+              />
+            ) : (
+              <Button
+                type="submit"
+                bg="bg-textcolor"
+                color
+                border
+                text="Confirm & continue"
+              />
+            )}
           </form>
         )}
       </Formik>

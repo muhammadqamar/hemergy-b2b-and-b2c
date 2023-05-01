@@ -1,7 +1,6 @@
 import { toast } from 'react-toastify';
 export const ShowError  = (error) => {
-    console.log(error)
-    toast.error( error?.message || 'Something Went Wong', {
+    toast.error( error || 'Something Went Wong', {
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,

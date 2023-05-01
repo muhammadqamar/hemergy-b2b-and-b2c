@@ -29,7 +29,7 @@ const ForgetPassword = () => {
         onSubmit={async (values, { setSubmitting }) => {
           try {
             const userFound = await axios.post(
-              `${process.env.NEXT_PUBLIC_API_DOMAIN}/auth/forgot/password?type=developer`,
+              `${process.env.NEXT_PUBLIC_API_DOMAIN}/auth/forgot/password`,
               values
             );
             setSubmitting(false);
@@ -64,7 +64,7 @@ const ForgetPassword = () => {
           isSubmitting,
           /* and other goodies */
         }) => (
-          <form className="gap-6 form-cantainer" onSubmit={handleSubmit}>
+          <form className="form-cantainer gap-6" onSubmit={handleSubmit}>
             <div className="input-box">
               <label className="p-sm text-weight-medium">Email</label>
               <div className="input-field">

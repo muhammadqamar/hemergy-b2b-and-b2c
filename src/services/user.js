@@ -3,7 +3,7 @@ import { ShowError } from "./error";
 
 const updateUser = async (data) => {
   try {
-    return await http.put(`/user/updateuser?type=developer`, data);
+    return await http.put(`/user/updateuser`, data);
   } catch (error) {
     ShowError(error?.response?.data?.status);
     // return error
@@ -12,7 +12,7 @@ const updateUser = async (data) => {
 
 const updateQuestionair = async (data) => {
   try {
-    return await http.put(`/user/questionair?type=developer`, data);
+    return await http.put(`/user/questionair`, data);
   } catch (error) {
     ShowError(error?.response?.data?.status);
     // return error
@@ -21,7 +21,7 @@ const updateQuestionair = async (data) => {
 
 const updateFinancials = async (data) => {
   try {
-    return await http.put(`/user/financials?type=developer`, data);
+    return await http.put(`/user/financials`, data);
   } catch (error) {
     ShowError(error?.response?.data?.status);
     // return error

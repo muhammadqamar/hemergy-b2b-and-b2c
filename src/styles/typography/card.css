@@ -1,5 +1,5 @@
 .project-card-box {
-  @apply max-w-max h-auto bg-white shadow-mdshadow rounded-[20px] mr-5 sm:mr-7 overflow-hidden;
+  @apply max-w-full h-auto bg-white shadow-mdshadow rounded-[20px] mr-5 sm:mr-7 overflow-hidden;
 }
 .card-head-img {
   @apply w-full  flex flex-col items-start justify-between p-4 relative;

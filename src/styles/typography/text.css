@@ -26,7 +26,7 @@
   @apply font-Poppins font-semibold text-xl;
 }
 .p-md {
-  @apply font-Poppins font-semibold text-2xl;
+  @apply font-Poppins font-semibold text-2xl text-white;
 }
 .p-sm {
   @apply font-Inter font-normal text-base;

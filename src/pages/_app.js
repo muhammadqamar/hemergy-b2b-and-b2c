@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { hotjar } from 'react-hotjar';
 import { useRouter } from 'next/router';
@@ -11,6 +10,7 @@ import { Provider, useSelector } from 'react-redux';
 import { me } from '@/services/auth';
 import { useDispatch } from 'react-redux';
 import { addUser } from '@/store/reducer/user';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { ADAPTER_EVENTS } from '@web3auth/base';
 import { setweb3authReducer } from '@/store/reducer/user';
@@ -34,6 +34,7 @@ export default function App({ Component, pageProps }) {
         <link rel="icon" href="/favi.svg" />
       </Head>
       <ToastContainer />
+
       <Provider store={store}>
         <AppPass Component={Component} pageProps={pageProps} />
       </Provider>
@@ -42,9 +43,10 @@ export default function App({ Component, pageProps }) {
 }
 
 const AppPass = ({ Component, pageProps }) => {
+
   const dispatch = useDispatch();
   const routes = useRouter();
-  const [ready, setReady] = useState(false);
+  const [ready, setReady] =  useState(false)
   const { user } = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -90,26 +92,27 @@ const AppPass = ({ Component, pageProps }) => {
     web3auth.configureAdapter(openloginAdapter);
     await web3auth.init();
     dispatch(setweb3authReducer(web3auth));
-    dispatch(addUser());
-    if (web3auth.status === 'connected') {
+    dispatch(addUser())
+    if(web3auth.status==='connected') {
       const checkToken = await me();
-      setReady(true);
-      if (checkToken.status == 200) {
+      setReady(true)
+      if (checkToken.status==200) {
         dispatch(addUser(checkToken.data.user));
 
-        if (routes.pathname === '/login') {
-          routes.push('/');
+        if (routes.pathname === "/login") {
+         routes.push("/");
         }
       } else {
-        if (routes.pathname !== '/login') {
-          routes.push('/login');
-        }
+        if (routes.pathname !== "/login") {
+          routes.push("/login");
+         }
       }
+
     } else {
-      setReady(true);
-      if (routes.pathname !== '/login') {
-        routes.push('/login');
-      }
+      setReady(true)
+      if (routes.pathname !== "/login") {
+        routes.push("/login");
+       }
     }
   };
 
@@ -122,6 +125,7 @@ const AppPass = ({ Component, pageProps }) => {
           <Image src="/images/logo_cue.svg" alt="logo" width={52} height={52} />
         </div>
       )}
+
     </div>
   );
 };

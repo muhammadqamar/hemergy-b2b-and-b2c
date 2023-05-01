@@ -1,4 +1,4 @@
-import TabInfo from "../tabInfo";
+import TabInfo from '../tabInfo';
 
 const ProjectCardThumbnail = ({
   h,
@@ -12,19 +12,21 @@ const ProjectCardThumbnail = ({
   hot,
 }) => {
   return (
-    <div className={h ? "h-[162px]" : "h-[280px]"}>
+    <div className={h ? 'h-[162px]' : 'h-[280px]'}>
       <div
         style={{
-          background: `url('${bgimg}')`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
+          backgroundImage: `url('${bgimg}')`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
         }}
         className="relative w-full h-full "
       >
         {trending && (
           <div
-            className={`absolute ${detail ? "top-[32px] left-[32px]" : "top-[16px] left-[16px]"}`}
+            className={`absolute ${
+              detail ? 'top-[32px] left-[32px]' : 'top-[16px] left-[16px]'
+            }`}
           >
             <TabInfo
               icon="/images/trending_up.svg"
@@ -40,7 +42,9 @@ const ProjectCardThumbnail = ({
 
         {hot && (
           <div
-            className={`absolute ${detail ? "top-[32px] left-[32px]" : "top-[16px] left-[16px]"}`}
+            className={`absolute ${
+              detail ? 'top-[32px] left-[32px]' : 'top-[16px] left-[16px]'
+            }`}
           >
             <TabInfo
               icon="/images/hot.svg"
@@ -56,10 +60,16 @@ const ProjectCardThumbnail = ({
 
         {stock && (
           <div
-            className={`absolute ${detail ? "top-[32px] right-[32px]" : "top-[16px] right-[16px]"}`}
+            className={`absolute ${
+              detail ? 'top-[32px] right-[32px]' : 'top-[16px] right-[16px]'
+            }`}
           >
             <TabInfo
-              icon={stockdirection ? "/images/Polygon 1.svg" : "/images/Polygon 1.svg"}
+              icon={
+                stockdirection
+                  ? '/images/Polygon 1.svg'
+                  : '/images/Polygon 1.svg'
+              }
               text={stock}
               color="text-white"
               w="10"
@@ -72,7 +82,7 @@ const ProjectCardThumbnail = ({
         {hemergyType && (
           <div
             className={`absolute ${
-              detail ? "bottom-[32px] left-[32px]" : "bottom-[16px] left-[16px]"
+              detail ? 'bottom-[32px] left-[32px]' : 'bottom-[16px] left-[16px]'
             }`}
           >
             <TabInfo

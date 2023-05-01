@@ -28,10 +28,8 @@ module.exports = {
       red600: "#EC5942",
       gray800: "#6B6D88",
       gray900: "#595C77",
-      green50: "#E0FBEB",
       green400: "#6BDB9E",
       green500: "#3CCD87",
-      green900: "#19814F",
       white500: "#D6DBFF",
     },
 
@@ -40,7 +38,6 @@ module.exports = {
       smallshadow: "11px 12px 0px rgba(0, 17, 141, 0.1)",
       lgshadow: "0px 44px 44px rgba(35, 37, 55, 0.2)",
       mdshadow: "23px 27px 0px rgba(0, 17, 141, 0.1)",
-      mdshadow2: "14px 14px 0px rgba(0, 17, 141, 0.05)",
       smshadow: "0 10px 7px -3px rgb(0, 0, 0 ,0.1), 0 4px 6px 7px rgb(0, 0, 0 , 0.1)",
       xsmshadow: "5px 0px 0px rgba(0, 17, 141, 0.2)",
       xsshadow: "6px 9px 0px rgba(0, 17, 141, 0.1)",

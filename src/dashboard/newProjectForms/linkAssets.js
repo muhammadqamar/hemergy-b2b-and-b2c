@@ -168,13 +168,23 @@ const LinkAssets = ({ setActive }) => {
               touched={touched.assetOwner}
             />
             <div className="flex items-center gap-2">
-              <Button
-                text="Next"
-                type="submit"
-                disabled={isSubmitting}
-                bg="bg-textcolor"
-                color
-              />
+            {isSubmitting ? (
+            <Button
+              type="submit"
+              bg="bg-textcolor"
+              color
+              border
+              icon="/images/loader.svg"
+            />
+          ) : (
+            <Button
+              text="Next"
+              type="submit"
+              disabled={isSubmitting}
+              bg="bg-textcolor"
+              color
+            />
+          )}
               <Button
                 text="Skip for now"
                 onClick={() => setActive(5)}

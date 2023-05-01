@@ -1,13 +1,13 @@
-@import "./projectDetails.css";
-@import "./createProjects.css";
-@import "./billing.css";
+@import './projectDetails.css';
+@import './createProjects.css';
+@import './billing.css';
 
 .main-loaction {
   @apply flex flex-col laptop:flex-row items-start bg-[#E5E5E5];
 }
 
 .main-loaction .map-location-box {
-  @apply min-h-screen w-full flex flex-col items-center pt-6 laptop:pt-12 p-6 overflow-y-auto;
+  @apply h-screen laptop:min-h-screen w-full flex flex-col items-center pt-6 laptop:pt-12 p-6 overflow-y-auto;
 }
 
 .main-loaction .map-box .map {
@@ -15,7 +15,7 @@
 }
 
 .map-cards {
-  @apply flex flex-wrap gap-[15px] justify-center md:justify-start;
+  @apply flex flex-wrap gap-[15px];
 }
 .investor-project-cards {
   @apply max-w-[1440px] mx-auto  flex items-center justify-center flex-wrap gap-[15px];

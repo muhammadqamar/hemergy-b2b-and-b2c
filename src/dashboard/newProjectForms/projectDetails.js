@@ -33,8 +33,8 @@ const ProjectDetails = ({ setActive }) => {
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
-    const reader = new FileReader();
     setImageData(file);
+    const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       setUpload(reader.result);
@@ -71,7 +71,7 @@ const ProjectDetails = ({ setActive }) => {
                 addressFinder?.geometry?.location?.lng() ||
                 projectDetails.lang ||
                 '',
-              image: upload || projectDetails.image || ""
+              image: upload || projectDetails.image || '',
             }
           : {
               projectName: '',
@@ -89,7 +89,7 @@ const ProjectDetails = ({ setActive }) => {
                 addressFinder?.address_components?.filter((data) =>
                   data?.types?.includes('country')
                 )[0]?.short_name || '',
-              image: upload || "",
+              image: upload || '',
               lat: addressFinder?.geometry?.location?.lat() || '',
               lang: addressFinder?.geometry?.location?.lng() || '',
             }
@@ -306,14 +306,23 @@ const ProjectDetails = ({ setActive }) => {
               handleImageUpload(event);
             }}
           />
-
-          <Button
-            text="Next"
-            type="submit"
-            disabled={isSubmitting}
-            bg="bg-textcolor"
-            color
-          />
+          {isSubmitting ? (
+            <Button
+              type="submit"
+              bg="bg-textcolor"
+              color
+              border
+              icon="/images/loader.svg"
+            />
+          ) : (
+            <Button
+              text="Next"
+              type="submit"
+              disabled={isSubmitting}
+              bg="bg-textcolor"
+              color
+            />
+          )}
         </form>
       )}
     </Formik>

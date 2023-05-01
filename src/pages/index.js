@@ -1,12 +1,13 @@
-// import Layout from "@/components/layout";
-import SideBar from "@/dashboard/sideBar";
-import CreateProjects from "@/dashboard/createProjects/create-projects";
+import SideBar from '@/dashboard/sideBar';
+import LocationForm from '@/dashboard/loaction';
 
-export default function CreateProjectsPage() {
+const Projects = () => {
   return (
-    <div className="min-h-[960px]">
+    <div>
       <SideBar />
-      <CreateProjects />
+      <LocationForm />
     </div>
   );
-}
+};
+
+export default Projects;

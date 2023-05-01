@@ -12,7 +12,7 @@ import LinkInvestmentVehicle from '@/dashboard/newProjectForms/linkInvestmentVeh
 import Beneficiaries from '@/dashboard/newProjectForms/beneficiaries';
 import SmartContract from '@/dashboard/newProjectForms/smartContract';
 import { useSelector } from 'react-redux';
-import { getProjectasDraft,deleteProjectasDaft } from '@/services/coreProject';
+import { getProjectasDraft,deleteProjectasDaft, createProjectonDetail } from '@/services/coreProject';
 import { useDispatch } from 'react-redux';
 import {
   applyDraftInformation,
@@ -52,6 +52,7 @@ const NewProject = () => {
   const [useDraftProject, setUseDraftProject] = useState(false)
   const dispatch = useDispatch();
   const newProject = useSelector((state) => state.addProject);
+  const {user} = useSelector((state) => state.user);
   const {
     billing,
     beneficiaries,
@@ -72,11 +73,12 @@ const NewProject = () => {
     })();
   }, []);
 
+
   return (
     <div>
       <SideBar />
       <div className="dashboard-container padding-left min-h-[960px] pb-[72px]">
-        <NavUserNewProject icon user="Hi Ahmed" newProject para />
+        <NavUserNewProject icon user={`Hi ${user?.detail?.name}`} newProject para />
         {foundDraft && active === 0 && (
           <div className="bg-white flex justify-between rounded-[10px] p-[15px] mb-[20px]">
             <p className="bold">

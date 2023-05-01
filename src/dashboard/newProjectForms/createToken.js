@@ -24,17 +24,19 @@ const typeToken = [
 
 const CreateToken = ({ setActive }) => {
   const dispatch = useDispatch();
-  const {draft, createToken} = useSelector(state=>state.addProject)
+  const { draft, createToken } = useSelector((state) => state.addProject);
   return (
     <Formik
-      initialValues={createToken || {
-        tokenName: '',
-        numberOfTokens: '',
-        tokenType: '',
-        tokenPrice: '',
-        amountToRaise: '',
-        projectMidcap: '',
-      }}
+      initialValues={
+        createToken || {
+          tokenName: '',
+          numberOfTokens: '',
+          tokenType: '',
+          tokenPrice: '',
+          amountToRaise: '',
+          projectMidcap: '',
+        }
+      }
       enableReinitialize
       validate={(values) => {
         const errors = {};
@@ -156,14 +158,23 @@ const CreateToken = ({ setActive }) => {
             touched={touched.projectMidcap}
             inputAbout="Minimum amount to start the project"
           />
-
-          <Button
-            text="Next"
-            type="submit"
-            disabled={isSubmitting}
-            bg="bg-textcolor"
-            color
-          />
+          {isSubmitting ? (
+            <Button
+              type="submit"
+              bg="bg-textcolor"
+              color
+              border
+              icon="/images/loader.svg"
+            />
+          ) : (
+            <Button
+              text="Next"
+              type="submit"
+              disabled={isSubmitting}
+              bg="bg-textcolor"
+              color
+            />
+          )}
         </form>
       )}
     </Formik>

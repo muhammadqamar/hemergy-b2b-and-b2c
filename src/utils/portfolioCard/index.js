@@ -1,6 +1,7 @@
-import Image from "next/image";
-import TabInfo from "@/utils/tabInfo";
-import UserCard from "@/utils/userCard";
+import Image from 'next/image';
+import TabInfo from '@/utils/tabInfo';
+import UserCard from '@/utils/userCard';
+import Link from 'next/link';
 
 const Index = ({
   usdc,
@@ -15,20 +16,28 @@ const Index = ({
   bgGreen,
   banner,
   hot,
+  location,
+  userName,
+  assetsName,
+  btnLink = '',
 }) => {
   return (
     <div className="project-card-box">
-      <div className={`card-head-img ${h ? "h-[106px] md:h-[372px]" : "h-[106px] md:h-[129px]"}`}>
+      <div
+        className={`card-head-img ${
+          h ? 'h-[106px] md:h-[372px]' : 'h-[106px] md:h-[129px]'
+        }`}
+      >
         <img src={banner} alt="img" className="card-bg-img" />
         <div className="w-full flex-box">
           <div className="relative">
             <TabInfo
-              icon={hot ? "/images/hot.svg" : "images/download.svg"}
-              text={hot ? "Hot" : "Terms sheet"}
+              icon={hot ? '/images/hot.svg' : 'images/download.svg'}
+              text={hot ? 'Hot' : 'Terms sheet'}
               color="text-white"
               w="20"
               h="20"
-              bg={hot ? "bg-red600" : "bg-textcolor"}
+              bg={hot ? 'bg-red600' : 'bg-textcolor'}
               bold="font-semibold"
             />
           </div>
@@ -48,7 +57,7 @@ const Index = ({
         <div className="relative">
           <TabInfo
             icon="/images/clear_day_w.svg"
-            text="Solar asset name"
+            text={assetsName}
             color="text-white"
             w="20"
             h="20"
@@ -61,7 +70,7 @@ const Index = ({
         <div className="flex-box gap-2">
           <TabInfo
             icon="/images/location_on.svg"
-            text="Location name"
+            text={location}
             color="text-textcolor"
             w="16"
             h="16"
@@ -71,7 +80,9 @@ const Index = ({
         {projectDetail && (
           <div>
             <h4 className="p-lg mb-2">{projectName}</h4>
-            <p className="p-sm-semi font-normal text-gray800">{projectDetail}</p>
+            <p className="p-sm-semi font-normal text-gray800">
+              {projectDetail}
+            </p>
           </div>
         )}
         <div className="project-user-details">
@@ -79,13 +90,18 @@ const Index = ({
             normal
             detail
             avatar="/images/user.png"
-            name="Bradley Grahams"
+            name={userName}
             designation="Project owner"
           />
 
           {token && (
             <div className="project-tokens">
-              <Image src="/images/token.png" alt="token" width={32} height={32} />
+              <Image
+                src="/images/token.png"
+                alt="token"
+                width={32}
+                height={32}
+              />
               <div>
                 <h5 className="p-xl text-textcolor mb-1">{token}</h5>
                 <p className="p-x-sm font-medium text-gray900">{tokenLabel}</p>
@@ -95,10 +111,17 @@ const Index = ({
         </div>
         {usdc && (
           <div className="usdc-earned-box">
-            <Image src="/images/payments.svg" alt="USDC" width={32} height={32} />
+            <Image
+              src="/images/payments.svg"
+              alt="USDC"
+              width={32}
+              height={32}
+            />
             <div className="usdc-earnes">
               <h4 className="p-xl font-semibold text-textcolor ">{usdc}</h4>
-              <h5 className="p-x-sm font-semibold text-textcolor">USDC Earned</h5>
+              <h5 className="p-x-sm font-semibold text-textcolor">
+                USDC Earned
+              </h5>
               <p className="p-xs text-gray900">{usdcDate}</p>
             </div>
           </div>
@@ -111,13 +134,17 @@ const Index = ({
             </button>
           )}
           {btn2 && (
-            <button
-              className={` flex items-center justify-center rounded-xl secondary w-full ${
-                bgGreen ? "text-white bg-green500" : "text-textcolor bg-cardbg"
-              } `}
-            >
-              {btn2}
-            </button>
+            <Link href={btnLink} className="w-full">
+              <button
+                className={` flex items-center justify-center rounded-xl secondary w-full ${
+                  bgGreen
+                    ? 'text-white bg-green500'
+                    : 'text-textcolor bg-cardbg'
+                } `}
+              >
+                {btn2}
+              </button>
+            </Link>
           )}
         </div>
       </div>

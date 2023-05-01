@@ -38,6 +38,21 @@ const getProjectasDraft = async (data) => {
     }
   };
 
+  const createProjectonDetail = async (data) => {
+    try {
+      return await http.postCore(`/projects`, data);
+    } catch (error) {
+      return error;
+    }
+  };
+
+  const accountKYC = async (data) => {
+    try {
+      return await http.postCore(`/accounts/sds/kyc`, data);
+    } catch (error) {
+      return error;
+    }
+  };
 
 
-export {createProjectasDraft, getProjectasDraft, updateProjectasDaft, deleteProjectasDaft};
+export {createProjectasDraft, getProjectasDraft, updateProjectasDaft, deleteProjectasDaft, createProjectonDetail, accountKYC};

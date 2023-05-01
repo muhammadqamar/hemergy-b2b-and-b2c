@@ -1,12 +1,13 @@
-import RegisterSlider from '@/components/Authentications/registerSlider';
-import LogIn from '@/components/Authentications/login';
 import Image from 'next/image';
+import RegisterSlider from '@/components/Authentications/registerSlider';
+import SignUp from '@/components/Authentications/signUp';
+import InBox from '@/components/Authentications/inBox';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useEffect } from 'react';
-import { ShowError } from '@/services/error';
+import { toast } from 'react-toastify';
 
-const Login = ({ query }) => {
-  onst[(registerState, setRegisterState)] = useState('');
+const Register = ({ query }) => {
+  const [registerState, setRegisterState] = useState('');
   useEffect(() => {
     console.log(query);
     if (query?.email) {
@@ -28,15 +29,9 @@ const Login = ({ query }) => {
     }
   }, [query]);
 
-  useEffect(() => {
-    console.log(query.success);
-    if (query.success === 'false') {
-      ShowError('Email not Exist!');
-    }
-  }, [query]);
   return (
     <div className="authentications-section">
-      <Link href="/" className="auth-header">
+      <Link href="" className="auth-header">
         <Image
           src="/images/hemergy-logo.svg"
           width={150}
@@ -47,15 +42,22 @@ const Login = ({ query }) => {
 
       <div className="auth-container">
         <RegisterSlider />
-        <LogIn query={query} />
+        {query?.success || !!registerState?.email ? (
+          <InBox
+            setRegisterState={setRegisterState}
+            registerState={registerState}
+          />
+        ) : (
+          <SignUp setRegisterState={setRegisterState} />
+        )}
       </div>
 
-      <div className="wather-haf-white-bg" />
+      <div className="auth-wather" />
     </div>
   );
 };
 
-export default Login;
+export default Register;
 
 export const getServerSideProps = (context) => {
   return {

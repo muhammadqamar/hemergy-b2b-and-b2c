@@ -13,7 +13,7 @@ const BusinessDetails = ({ setStep, userDetail }) => {
   return (
     <div className="registration-box">
       <div className="flex-box d-column gap-x-sm">
-        <h6 className="p-lg center-text ">Step 2 of 4</h6>
+        <h6 className="p-lg center-text ">Step 3 of 4</h6>
         <h3 className="p-xl center-text">Business details</h3>
       </div>
       <Formik
@@ -38,8 +38,7 @@ const BusinessDetails = ({ setStep, userDetail }) => {
           return errors;
         }}
         onSubmit={async (values, { setSubmitting }) => {
-         // const result = await updateFinancials({ ...values, email: userDetail?.email });
-          setStep(3);
+          const result = await updateFinancials({ ...values, email: userDetail?.email });
           // setSubmitting(false);
           // if (result?.data?.userFound) {
           //   dispatch(addUser(result?.data?.userFound));
@@ -65,7 +64,7 @@ const BusinessDetails = ({ setStep, userDetail }) => {
           isSubmitting,
           /* and other goodies */
         }) => (
-          <form className="gap-6 form-cantainer" onSubmit={handleSubmit}>
+          <form className="form-cantainer gap-6" onSubmit={handleSubmit}>
             <div className="input-box">
               <label className="p-sm text-weight-medium">Business name</label>
 
@@ -91,7 +90,7 @@ const BusinessDetails = ({ setStep, userDetail }) => {
                 <input
                   className="input p-sm"
                   placeholder=""
-                  type="text"
+                  type="number"
                   name="financialLegalNumber"
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -123,11 +122,13 @@ const BusinessDetails = ({ setStep, userDetail }) => {
               </p>
             </div>
 
-
+            <Link href="" className="p-sm text-weight-medium text-textcolor">
+              Enter address manually
+            </Link>
 
             <div className="gap-4 flex-box">
               <button
-                onClick={() => setStep(1)}
+                onClick={() => setStep(2)}
                 type="button"
                 className="justify-center flex-box gap-x-sm btn-border secondary"
               >
