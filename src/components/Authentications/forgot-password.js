@@ -1,27 +1,31 @@
-import { useState } from "react";
-import { Formik, Field } from "formik";
-import Image from "next/image";
-import Link from "next/link";
-import axios from "axios";
-import { toast } from "react-toastify";
-import InBox from "@/components/Authentications/inBox";
+import { useState } from 'react';
+import { Formik, Field } from 'formik';
+import Image from 'next/image';
+import Link from 'next/link';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import InBox from '@/components/Authentications/inBox';
 
 const ForgetPassword = () => {
   const [startCheckingState, setStartCheckingState] = useState(false);
-  const [registerState, setRegisterState] = useState("");
+  const [registerState, setRegisterState] = useState('');
 
   return !startCheckingState ? (
-    <div className="registration-box">
+    <div className="registration-box ">
       <h3 className="p-xl center-text">Can't connect?</h3>
-      <p className=" text-[20px] center-text">we will send a recovery link to:</p>
+      <p className=" text-[20px] center-text">
+        we will send a recovery link to:
+      </p>
       <Formik
-        initialValues={{ email: "" }}
+        initialValues={{ email: '' }}
         validate={(values) => {
           const errors = {};
           if (!values.email) {
-            errors.email = "Required";
-          } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-            errors.email = "Invalid email address";
+            errors.email = 'Required';
+          } else if (
+            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+          ) {
+            errors.email = 'Invalid email address';
           }
 
           return errors;
@@ -42,14 +46,14 @@ const ForgetPassword = () => {
             setSubmitting(false);
 
             toast.error(error?.response?.data?.status || error.message, {
-              position: "bottom-right",
+              position: 'bottom-right',
               autoClose: 5000,
               hideProgressBar: false,
               closeOnClick: true,
               pauseOnHover: true,
               draggable: true,
               progress: undefined,
-              theme: "light",
+              theme: 'light',
             });
           }
         }}
@@ -78,14 +82,26 @@ const ForgetPassword = () => {
                   value={values.email}
                 />
               </div>
-              <p className="error p-x-sm"> {errors.email && touched.email && errors.email}</p>
+              <p className="error p-x-sm">
+                {' '}
+                {errors.email && touched.email && errors.email}
+              </p>
             </div>
 
-            <button className="btn secondary blue" type="submit" disabled={isSubmitting}>
+            <button
+              className="btn secondary blue"
+              type="submit"
+              disabled={isSubmitting}
+            >
               {isSubmitting ? (
-                <Image src="/images/loader.svg" alt="google" width={20} height={20} />
+                <Image
+                  src="/images/loader.svg"
+                  alt="google"
+                  width={20}
+                  height={20}
+                />
               ) : (
-                "Send"
+                'Send'
               )}
             </button>
 
@@ -95,7 +111,7 @@ const ForgetPassword = () => {
               <div className="divider" />
             </div>
 
-            <p className=" center-text p-sm" style={{ marginBottom: "24px" }}>
+            <p className=" center-text p-sm" style={{ marginBottom: '24px' }}>
               Return to login page: &nbsp;
               <Link href="/login" className="text-weight-medium text-textcolor">
                 Sign in

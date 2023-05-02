@@ -162,8 +162,8 @@ const Signup2 = () => {
       const signer = provider.getSigner();
       const connectedAddress = await signer.getAddress();
       console.log(`Connected to wallet address: ${connectedAddress}`);
-      setWalletConneciton(true)
-      setAddressConnected(connectedAddress)
+      setWalletConneciton(true);
+      setAddressConnected(connectedAddress);
       //setAddress(connectedAddress);
     } catch (error) {
       console.error(error);
@@ -171,16 +171,28 @@ const Signup2 = () => {
   };
 
   return (
-    <div className="registration-box">
+    <div className="registration-box ">
       <div className="flex-box d-column gap-x-sm">
         <h6 className="p-lg center-text ">Step 1 of 5</h6>
         <h3 className="p-xl center-text">Connect You Wallet</h3>
       </div>
       {walletConnection ? (
         <div className="connected-app">
-          <button className="bg-[#F9705A] float-right  justify-end text-[#fff]  p-[7px] rounded-[5px] font-semibold text-[10px] leading-[20px]" onClick={logout}>logout</button>
-          <p className="font-semibold py-[15px] clear-both text-center">{addressConnected}</p>
-          <button className="bg-[#3D50D9] block mx-auto text-[#fff]  p-[10px] rounded-[5px] font-semibold text-[14px] leading-[20px] " onClick={handleSubmit}>Connect to Chains</button>
+          <button
+            className="bg-[#F9705A] float-right  justify-end text-[#fff]  p-[7px] rounded-[5px] font-semibold text-[10px] leading-[20px]"
+            onClick={logout}
+          >
+            logout
+          </button>
+          <p className="font-semibold py-[15px] clear-both text-center">
+            {addressConnected}
+          </p>
+          <button
+            className="bg-[#3D50D9] block mx-auto text-[#fff]  p-[10px] rounded-[5px] font-semibold text-[14px] leading-[20px] "
+            onClick={handleSubmit}
+          >
+            Connect to Chains
+          </button>
         </div>
       ) : (
         <div className="web3auth-connect">

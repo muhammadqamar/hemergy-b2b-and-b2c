@@ -1,44 +1,47 @@
-import { Formik } from "formik";
-import { useSelector, useDispatch } from "react-redux";
-import { updateFinancials } from "@/services/user";
-import { useRouter } from "next/router";
-import { addUser } from "@/store/reducer/user";
-import Link from "next/link";
-import Image from "next/image";
+import { Formik } from 'formik';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateFinancials } from '@/services/user';
+import { useRouter } from 'next/router';
+import { addUser } from '@/store/reducer/user';
+import Link from 'next/link';
+import Image from 'next/image';
 
-const BusinessDetails = ({ setStep, userDetail }) => {
+const BusinessDetails = ({ setStep, userDetail, profileRoute }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user?.user);
   return (
-    <div className="registration-box">
+    <div className={`registration-box ${!profileRoute && 'p-none'}`}>
       <div className="flex-box d-column gap-x-sm">
-        <h6 className="p-lg center-text ">Step 3 of 4</h6>
+        {profileRoute && <h6 className="p-lg center-text ">Step 3 of 4</h6>}
         <h3 className="p-xl center-text">Business details</h3>
       </div>
       <Formik
         initialValues={{
-          businessName: user?.financials?.businessName || "",
-          financialLegalNumber: user?.financials?.financialLegalNumber || "",
-          businessAddress: user?.financials?.businessAddress || "",
+          businessName: user?.financials?.businessName || '',
+          financialLegalNumber: user?.financials?.financialLegalNumber || '',
+          businessAddress: user?.financials?.businessAddress || '',
         }}
         validate={(values) => {
           const errors = {};
 
           if (!values.businessName) {
-            errors.businessName = "Required";
+            errors.businessName = 'Required';
           }
 
           if (!values.financialLegalNumber) {
-            errors.financialLegalNumber = "Required";
+            errors.financialLegalNumber = 'Required';
           }
           if (!values.businessAddress) {
-            errors.businessAddress = "Required";
+            errors.businessAddress = 'Required';
           }
           return errors;
         }}
         onSubmit={async (values, { setSubmitting }) => {
-          const result = await updateFinancials({ ...values, email: userDetail?.email });
+          const result = await updateFinancials({
+            ...values,
+            email: userDetail?.email,
+          });
           // setSubmitting(false);
           // if (result?.data?.userFound) {
           //   dispatch(addUser(result?.data?.userFound));
@@ -80,12 +83,16 @@ const BusinessDetails = ({ setStep, userDetail }) => {
                 />
               </div>
               <p className="error p-x-sm">
-                {errors.businessName && touched.businessName && errors.businessName}
+                {errors.businessName &&
+                  touched.businessName &&
+                  errors.businessName}
               </p>
             </div>
 
             <div className="input-box">
-              <label className="p-sm text-weight-medium">Financial / legal number thing</label>
+              <label className="p-sm text-weight-medium">
+                Financial / legal number thing
+              </label>
               <div className="input-field">
                 <input
                   className="input p-sm"
@@ -104,9 +111,16 @@ const BusinessDetails = ({ setStep, userDetail }) => {
               </p>
             </div>
             <div className="input-box">
-              <label className="p-sm text-weight-medium">Business address</label>
+              <label className="p-sm text-weight-medium">
+                Business address
+              </label>
               <div className="input-field">
-                <Image src="/images/search.svg" alt="google" width={20} height={20} />
+                <Image
+                  src="/images/search.svg"
+                  alt="google"
+                  width={20}
+                  height={20}
+                />
                 <input
                   className="input p-sm"
                   placeholder="Start typing the address"
@@ -118,7 +132,9 @@ const BusinessDetails = ({ setStep, userDetail }) => {
                 />
               </div>
               <p className="error p-x-sm">
-                {errors.businessAddress && touched.businessAddress && errors.businessAddress}
+                {errors.businessAddress &&
+                  touched.businessAddress &&
+                  errors.businessAddress}
               </p>
             </div>
 
@@ -126,18 +142,41 @@ const BusinessDetails = ({ setStep, userDetail }) => {
               Enter address manually
             </Link>
 
-            <div className="gap-4 flex-box">
+            {profileRoute === false ? (
               <button
-                onClick={() => setStep(2)}
-                type="button"
-                className="justify-center flex-box gap-x-sm btn-border secondary"
+                className="btn secondary blue"
+                type="submit"
+                disabled={isSubmitting}
               >
-                Back
+                {isSubmitting ? (
+                  <Image
+                    src="/images/loader.svg"
+                    alt="google"
+                    width={20}
+                    height={20}
+                  />
+                ) : (
+                  'Save'
+                )}
               </button>
-              <button className="btn secondary blue " type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "....." : "Next"}
-              </button>
-            </div>
+            ) : (
+              <div className="gap-4 flex-box">
+                <button
+                  onClick={() => setStep(2)}
+                  type="button"
+                  className="justify-center flex-box gap-x-sm btn-border secondary"
+                >
+                  Back
+                </button>
+                <button
+                  className="btn secondary blue "
+                  type="submit"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? '.....' : 'Next'}
+                </button>
+              </div>
+            )}
           </form>
         )}
       </Formik>

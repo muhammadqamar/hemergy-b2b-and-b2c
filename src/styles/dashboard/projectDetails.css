@@ -58,3 +58,9 @@
 .what-token {
   @apply w-full p-4  bg-blue900 rounded-xl;
 }
+
+/* b2b */
+
+.padding-left {
+  @apply xl:pl-[298px] !important;
+}

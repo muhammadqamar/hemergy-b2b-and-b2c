@@ -1,5 +1,5 @@
-import { useState } from "react";
-import Image from "next/image";
+import { useState } from 'react';
+import Image from 'next/image';
 
 const EmailVerify = ({ loader }) => {
   return (
@@ -23,7 +23,7 @@ const EmailVerify = ({ loader }) => {
                 alt="loader"
               />
             ) : (
-              ""
+              ''
             )}
           </button>
         </div>

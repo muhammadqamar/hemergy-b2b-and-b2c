@@ -1,33 +1,35 @@
-import { Formik, Field } from "formik";
-import Image from "next/image";
-import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
-import { addUser } from "@/store/reducer/user";
-import { updateQuestionair } from "@/services/user";
+import { Formik, Field } from 'formik';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useDispatch, useSelector } from 'react-redux';
+import { addUser } from '@/store/reducer/user';
+import { updateQuestionair } from '@/services/user';
 
-const InvestorProfile = ({ setStep, userDetail }) => {
+const InvestorProfile = ({ setStep, userDetail, profileRoute }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user?.user);
   return (
-    <div className="registration-box">
+    <div className={`registration-box ${!profileRoute && 'p-none'}`}>
       <div className="flex-box d-column gap-x-sm">
-        <h6 className="p-lg center-text ">Step 2 of 5</h6>
+        {profileRoute && <h6 className="p-lg center-text ">Step 2 of 5</h6>}
         <h3 className="p-xl center-text">Investor profile</h3>
       </div>
       <Formik
         initialValues={{
-          ["Are you an accredited investor?"]:
+          ['Are you an accredited investor?']:
             user?.questionnaire.filter(
-              (data) => data.question === "Are you an accredited investor?"
+              (data) => data.question === 'Are you an accredited investor?'
             )[0]?.selectedAnswers || false,
-          ["Are you familiar with cryptocurrencies?"]:
-            user?.questionnaire.filter(
-              (data) => data.question === "Are you familiar with cryptocurrencies?"
-            )[0]?.selectedAnswers || false,
-          ["Do you have knowledge about finance / financial products?"]:
+          ['Are you familiar with cryptocurrencies?']:
             user?.questionnaire.filter(
               (data) =>
-                data.question === "Do you have knowledge about finance / financial products?"
+                data.question === 'Are you familiar with cryptocurrencies?'
+            )[0]?.selectedAnswers || false,
+          ['Do you have knowledge about finance / financial products?']:
+            user?.questionnaire.filter(
+              (data) =>
+                data.question ===
+                'Do you have knowledge about finance / financial products?'
             )[0]?.selectedAnswers || false,
         }}
         validate={(values) => {
@@ -51,7 +53,7 @@ const InvestorProfile = ({ setStep, userDetail }) => {
 
           if (updateUserData?.data?.userFound) {
             dispatch(addUser(updateUserData?.data?.userFound));
-            if (values["Are you familiar with cryptocurrencies?"]) {
+            if (values['Are you familiar with cryptocurrencies?']) {
               setStep(3);
             } else {
               setStep(5);
@@ -70,9 +72,15 @@ const InvestorProfile = ({ setStep, userDetail }) => {
           /* and other goodies */
         }) => (
           <form className="form-cantainer gap-6" onSubmit={handleSubmit}>
-            <div className="form-cantainer gap-6" role="group" aria-labelledby="checkbox-group">
+            <div
+              className="form-cantainer gap-6"
+              role="group"
+              aria-labelledby="checkbox-group"
+            >
               <div className="flex-box gap-lg">
-                <p className="p-sm text-weight-medium">Are you familiar with cryptocurrencies?</p>
+                <p className="p-sm text-weight-medium">
+                  Are you familiar with cryptocurrencies?
+                </p>
                 <label
                   for="Toggle4"
                   className="w-[76px] inline-flex items-center gap-1 rounded-2xl p-1 cursor-pointer bg-garbg text-garbg"
@@ -86,9 +94,10 @@ const InvestorProfile = ({ setStep, userDetail }) => {
                   <span className="w-8 h-8  p-[6px] rounded-xl bg-garbg peer-checked:bg-btncolor">
                     <Image
                       src={
-                        values["Are you familiar with cryptocurrencies?"] === true
-                          ? "/images/check-w.svg"
-                          : "/images/check-b.svg"
+                        values['Are you familiar with cryptocurrencies?'] ===
+                        true
+                          ? '/images/check-w.svg'
+                          : '/images/check-b.svg'
                       }
                       alt="close"
                       width={20}
@@ -98,9 +107,10 @@ const InvestorProfile = ({ setStep, userDetail }) => {
                   <span className=" w-8 h-8  p-[6px] rounded-xl bg-btncolor peer-checked:bg-garbg">
                     <Image
                       src={
-                        values["Are you familiar with cryptocurrencies?"] === false
-                          ? "/images/close-w.svg"
-                          : "/images/close-b.svg"
+                        values['Are you familiar with cryptocurrencies?'] ===
+                        false
+                          ? '/images/close-w.svg'
+                          : '/images/close-b.svg'
                       }
                       alt="close"
                       width={20}
@@ -120,7 +130,9 @@ const InvestorProfile = ({ setStep, userDetail }) => {
                 userDetail={userDetail} />} */}
 
               <div className="flex-box gap-lg">
-                <p className="p-sm text-weight-medium">Are you an accredited investor?</p>
+                <p className="p-sm text-weight-medium">
+                  Are you an accredited investor?
+                </p>
                 <label
                   for="Toggle5"
                   className="w-[76px] inline-flex items-center gap-1 rounded-2xl p-1 cursor-pointer bg-garbg text-garbg"
@@ -134,9 +146,9 @@ const InvestorProfile = ({ setStep, userDetail }) => {
                   <span className="w-8 h-8  p-[6px] rounded-xl bg-garbg peer-checked:bg-btncolor">
                     <Image
                       src={
-                        values["Are you an accredited investor?"] === true
-                          ? "/images/check-w.svg"
-                          : "/images/check-b.svg"
+                        values['Are you an accredited investor?'] === true
+                          ? '/images/check-w.svg'
+                          : '/images/check-b.svg'
                       }
                       alt="close"
                       width={20}
@@ -146,9 +158,9 @@ const InvestorProfile = ({ setStep, userDetail }) => {
                   <span className=" w-8 h-8  p-[6px] rounded-xl bg-btncolor peer-checked:bg-garbg">
                     <Image
                       src={
-                        values["Are you an accredited investor?"] === false
-                          ? "/images/close-w.svg"
-                          : "/images/close-b.svg"
+                        values['Are you an accredited investor?'] === false
+                          ? '/images/close-w.svg'
+                          : '/images/close-b.svg'
                       }
                       alt="close"
                       width={20}
@@ -175,9 +187,11 @@ const InvestorProfile = ({ setStep, userDetail }) => {
                   <span className="w-8 h-8  p-[6px] rounded-xl bg-garbg peer-checked:bg-btncolor">
                     <Image
                       src={
-                        values["Do you have knowledge about finance / financial products?"] === true
-                          ? "/images/check-w.svg"
-                          : "/images/check-b.svg"
+                        values[
+                          'Do you have knowledge about finance / financial products?'
+                        ] === true
+                          ? '/images/check-w.svg'
+                          : '/images/check-b.svg'
                       }
                       alt="close"
                       width={20}
@@ -187,10 +201,11 @@ const InvestorProfile = ({ setStep, userDetail }) => {
                   <span className=" w-8 h-8  p-[6px] rounded-xl bg-btncolor peer-checked:bg-garbg">
                     <Image
                       src={
-                        values["Do you have knowledge about finance / financial products?"] ===
-                        false
-                          ? "/images/close-w.svg"
-                          : "/images/close-b.svg"
+                        values[
+                          'Do you have knowledge about finance / financial products?'
+                        ] === false
+                          ? '/images/close-w.svg'
+                          : '/images/close-b.svg'
                       }
                       alt="close"
                       width={20}
@@ -204,32 +219,56 @@ const InvestorProfile = ({ setStep, userDetail }) => {
             <div className="items-start flex-box d-column gap-x-sm">
               <h6 className="p-sm text-weight-medium ">Why are we asking?</h6>
               <h3 className="p-sm ">
-                There are different investment rules associated with accredited investors and
-                individuals who are familiar with financial products.{" "}
-                <span className="text-textcolor">Find out more</span>
+                There are different investment rules associated with accredited
+                investors and individuals who are familiar with financial
+                products. <span className="text-textcolor">Find out more</span>
               </h3>
             </div>
 
-            <div className="gap-4 flex-box">
+            {profileRoute === false ? (
               <button
-                onClick={() => setStep(1)}
-                type="button"
-                className="justify-center flex-box gap-x-sm btn-border secondary"
+                className="btn secondary blue"
+                type="submit"
+                disabled={isSubmitting}
               >
-                Back
+                {isSubmitting ? (
+                  <Image
+                    src="/images/loader.svg"
+                    alt="google"
+                    width={20}
+                    height={20}
+                  />
+                ) : (
+                  'Save'
+                )}
               </button>
-              <button className="btn secondary blue" type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "....." : "Next"}
-              </button>
-            </div>
-
-            <Link
-              href=""
-              onClick={() => setStep(5)}
-              className="font-medium text-center p-sm text-textcolor"
-            >
-              Skip for now
-            </Link>
+            ) : (
+              <>
+                <div className="gap-4 flex-box">
+                  <button
+                    onClick={() => setStep(1)}
+                    type="button"
+                    className="justify-center flex-box gap-x-sm btn-border secondary"
+                  >
+                    Back
+                  </button>
+                  <button
+                    className="btn secondary blue"
+                    type="submit"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? '.....' : 'Next'}
+                  </button>
+                </div>
+                <Link
+                  href=""
+                  onClick={() => setStep(5)}
+                  className="font-medium text-center p-sm text-textcolor"
+                >
+                  Skip for now
+                </Link>
+              </>
+            )}
           </form>
         )}
       </Formik>

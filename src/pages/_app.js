@@ -43,10 +43,9 @@ export default function App({ Component, pageProps }) {
 }
 
 const AppPass = ({ Component, pageProps }) => {
-
   const dispatch = useDispatch();
   const routes = useRouter();
-  const [ready, setReady] =  useState(false)
+  const [ready, setReady] = useState(false);
   const { user } = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -92,27 +91,26 @@ const AppPass = ({ Component, pageProps }) => {
     web3auth.configureAdapter(openloginAdapter);
     await web3auth.init();
     dispatch(setweb3authReducer(web3auth));
-    dispatch(addUser())
-    if(web3auth.status==='connected') {
+    dispatch(addUser());
+    if (web3auth.status === 'connected') {
       const checkToken = await me();
-      setReady(true)
-      if (checkToken.status==200) {
+      setReady(true);
+      if (checkToken.status == 200) {
         dispatch(addUser(checkToken.data.user));
 
-        if (routes.pathname === "/login") {
-         routes.push("/");
+        if (routes.pathname === '/login') {
+          routes.push('/');
         }
       } else {
-        if (routes.pathname !== "/login") {
-          routes.push("/login");
-         }
+        if (routes.pathname !== '/login') {
+          routes.push('/login');
+        }
       }
-
     } else {
-      setReady(true)
-      if (routes.pathname !== "/login") {
-        routes.push("/login");
-       }
+      setReady(true);
+      if (routes.pathname !== '/login') {
+        routes.push('/login');
+      }
     }
   };
 
@@ -125,7 +123,6 @@ const AppPass = ({ Component, pageProps }) => {
           <Image src="/images/logo_cue.svg" alt="logo" width={52} height={52} />
         </div>
       )}
-
     </div>
   );
 };

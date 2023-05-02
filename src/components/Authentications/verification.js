@@ -1,19 +1,19 @@
-import { useState, useMemo } from "react";
-import { Formik, Field } from "formik";
-import { usePlacesWidget } from "react-google-autocomplete";
-import Image from "next/image";
-import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
-import { updateUser } from "@/services/user";
-import { addUser } from "@/store/reducer/user";
-import ReactFlagsSelect from "react-flags-select";
-const Verification = ({ userDetail, setStep }) => {
+import { useState, useMemo } from 'react';
+import { Formik, Field } from 'formik';
+import { usePlacesWidget } from 'react-google-autocomplete';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUser } from '@/services/user';
+import { addUser } from '@/store/reducer/user';
+import ReactFlagsSelect from 'react-flags-select';
+const Verification = ({ userDetail, setStep, profileRoute }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user?.user);
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState('');
   const [addressManually, setAddressManually] = useState(false);
 
-  const [addressFinder, setAddressFinder] = useState("");
+  const [addressFinder, setAddressFinder] = useState('');
 
   const { ref } = usePlacesWidget({
     apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
@@ -21,42 +21,42 @@ const Verification = ({ userDetail, setStep }) => {
   });
 
   return (
-    <div className="relative z-[1] w-full md:w-[480px] h-auto flex flex-col gap-6 pt-12 px-4 md:px-8 pb-6 bg-white rounded-3xl shadow-lgshadow text-textblack">
+    <div className={`registration-box ${!profileRoute && 'p-none'}`}>
       <div className="flex-box d-column gap-x-sm">
-        <h6 className="p-lg center-text ">Step 1 of 5</h6>
+        {profileRoute && <h6 className="p-lg center-text ">Step 1 of 5</h6>}
 
         <h3 className="p-xl center-text">Let’s get to know you</h3>
       </div>
 
       <Formik
         initialValues={{
-          name: user?.firstName || "",
-          surname: user?.lastName || "",
-          birthDate: user?.dob || "",
-          country: user?.country || "",
+          name: user?.firstName || '',
+          surname: user?.lastName || '',
+          birthDate: user?.dob || '',
+          country: user?.country || '',
           address: user?.address || addressFinder,
-          manuallyAddress: user?.manuallyAddress || "",
+          manuallyAddress: user?.manuallyAddress || '',
         }}
         enableReinitialize
         validate={(values) => {
           const errors = {};
           if (!values.name) {
-            errors.name = "Required";
+            errors.name = 'Required';
           }
           if (!values.surname) {
-            errors.surname = "Required";
+            errors.surname = 'Required';
           }
           if (!values.birthDate) {
-            errors.birthDate = "Required";
+            errors.birthDate = 'Required';
           }
           if (!selected) {
-            errors.country = "Required";
+            errors.country = 'Required';
           }
           if (!values.address && !addressManually) {
-            errors.address = "Required";
+            errors.address = 'Required';
           }
           if (!values.manuallyAddress && addressManually) {
-            errors.manuallyAddress = "Required";
+            errors.manuallyAddress = 'Required';
           }
 
           return errors;
@@ -98,7 +98,10 @@ const Verification = ({ userDetail, setStep }) => {
                     value={values.name}
                   />
                 </div>
-                <p className="error p-x-sm"> {errors.name && touched.name && errors.name}</p>
+                <p className="error p-x-sm">
+                  {' '}
+                  {errors.name && touched.name && errors.name}
+                </p>
               </div>
 
               <div className="input-box">
@@ -148,16 +151,23 @@ const Verification = ({ userDetail, setStep }) => {
                   onSelect={(code) => setSelected(code)}
                 />
               </div>
-              <p className="error p-x-sm">{errors.country && touched.country && errors.country}</p>
+              <p className="error p-x-sm">
+                {errors.country && touched.country && errors.country}
+              </p>
             </div>
 
             <div className="input-box">
               <label className="p-sm text-weight-medium">
-                {addressManually ? "Enter address manually" : "Address finder"}
+                {addressManually ? 'Enter address manually' : 'Address finder'}
               </label>
               <>
                 <div className="input-field">
-                  <Image src="/images/search.svg" alt="google" width={20} height={20} />
+                  <Image
+                    src="/images/search.svg"
+                    alt="google"
+                    width={20}
+                    height={20}
+                  />
                   {ref && !addressManually && (
                     <input
                       className={`input p-sm`}
@@ -186,7 +196,9 @@ const Verification = ({ userDetail, setStep }) => {
                 <p className="error p-x-sm">
                   {!addressManually
                     ? errors.address && touched.address && errors.address
-                    : errors.manuallyAddress && touched.manuallyAddress && errors.manuallyAddress}
+                    : errors.manuallyAddress &&
+                      touched.manuallyAddress &&
+                      errors.manuallyAddress}
                 </p>
               </>
             </div>
@@ -207,11 +219,22 @@ const Verification = ({ userDetail, setStep }) => {
                 Address finder
               </Link>
             )}
-            <button className="btn secondary blue" type="submit" disabled={isSubmitting}>
+            <button
+              className="btn secondary blue"
+              type="submit"
+              disabled={isSubmitting}
+            >
               {isSubmitting ? (
-                <Image src="/images/loader.svg" alt="google" width={20} height={20} />
+                <Image
+                  src="/images/loader.svg"
+                  alt="google"
+                  width={20}
+                  height={20}
+                />
+              ) : profileRoute === false ? (
+                'Save'
               ) : (
-                "Next"
+                'Next'
               )}
             </button>
           </form>

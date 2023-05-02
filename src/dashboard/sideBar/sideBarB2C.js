@@ -1,13 +1,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import React from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 const SideBar = () => {
+  const { user } = useSelector((state) => state);
   const [menu, setMenu] = useState(false);
   const router = useRouter();
   const currentRoute = router.pathname;
-const { user } = useSelector((state) => state);
+
   return (
     <div className="flex-row flex-box laptop:flex-col side-nav-bar">
       <Link href="/">
@@ -77,9 +79,12 @@ const { user } = useSelector((state) => state);
               : 'dash-user-img '
           }
         >
-
-          <img src= {user?.user?.detail?.profileImage} alt="logo" width={20} height={20} />
-
+          <img
+            src={user?.user?.detail?.profileImage}
+            alt="logo"
+            width={20}
+            height={20}
+          />
         </Link>
         <a
           onClick={async () => {
@@ -134,7 +139,7 @@ const { user } = useSelector((state) => state);
           <span className="text-white p-sm text-weight-medium">Help</span>
         </Link>
         <a
-          onClick={async() => {
+          onClick={async () => {
             localStorage.removeItem('hemergy-token');
             localStorage.removeItem('hemergy-email');
 
@@ -143,7 +148,12 @@ const { user } = useSelector((state) => state);
           }}
           className="mobile-dash-links"
         >
-          <img src= {user?.user?.detail?.profileImage} alt="logo" width={20} height={20} />
+          <img
+            src={user?.user?.detail?.profileImage}
+            alt="logo"
+            width={20}
+            height={20}
+          />
           <span className="text-white p-sm text-weight-medium">Sign out</span>
         </a>
       </div>

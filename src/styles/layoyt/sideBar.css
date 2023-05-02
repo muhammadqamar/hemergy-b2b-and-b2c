@@ -33,3 +33,23 @@
 .mobile-side-box .mobile-dash-links {
   @apply flex items-center gap-3 p-3;
 }
+
+/* b2b */
+
+.expand-flex-box {
+  @apply flex items-center laptop:items-start justify-between;
+}
+
+.expand-flex-box.side-nav-bar {
+  @apply w-screen xl:w-[266px] min-h-max laptop:min-h-[960px] laptop:w-16 bg-blue700 rounded-bl-[24px] rounded-br-[24px] laptop:rounded-bl-none  laptop:rounded-tr-[40px] laptop:rounded-br-[40px] rounded-tr-none pt-2 pb-2 laptop:py-2  pl-4 pr-5 md:pr-3 laptop:pt-10 laptop:px-[10px] laptop:pb-6 absolute z-10 left-0 top-0;
+}
+
+.hemergy-logo-link {
+  @apply w-auto laptop:w-full flex justify-center;
+}
+.expand-menu-item {
+  @apply flex gap-3 items-center w-auto xl:w-[242px] hover:bg-blue600 rounded-xl py-[10px] px-2 laptop:px-[12px];
+}
+.expand-side-bar-text {
+  @apply text-white hidden xl:block;
+}

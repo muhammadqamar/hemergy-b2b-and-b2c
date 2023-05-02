@@ -12,7 +12,7 @@
 
 .authentications-section .auth-wather {
   @apply w-full h-[233px] bg-repeat bg-center bg-auto absolute bottom-0;
-  background-image: url("/images/auth-bg.png");
+  background-image: url('/images/auth-bg.png');
 }
 
 /* registrations  */
@@ -20,22 +20,25 @@
   @apply relative z-[1] w-full md:w-[480px] h-auto flex flex-col gap-6 pt-12 px-4 md:px-8 pb-6 bg-white rounded-3xl shadow-lgshadow text-textblack;
 }
 
-.web3auth-connect  {
-  display: flex;
-  gap:20px
-}
-.web3auth-connect .box  {
- flex:1;
- border:1px solid #fcfcfc;
- box-shadow: 0px 0px 15px 0px #ccc;
- padding:40px;
- display:flex;
- justify-content: center;
- align-items:center;
- border-radius: 5px;
- cursor: pointer
+.registration-box.p-none {
+  @apply p-0 shadow-[none] !important;
 }
 
+.web3auth-connect {
+  display: flex;
+  gap: 20px;
+}
+.web3auth-connect .box {
+  flex: 1;
+  border: 1px solid #fcfcfc;
+  box-shadow: 0px 0px 15px 0px #ccc;
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
 .form-cantainer {
   @apply flex flex-col;

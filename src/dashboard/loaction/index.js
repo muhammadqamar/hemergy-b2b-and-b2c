@@ -3,6 +3,7 @@ import CardArea from '../common/cardArea';
 import MainMap from '@/utils/map/mainMap';
 import { projectDetail } from '@/services/project';
 import { useEffect, useState } from 'react';
+import React from 'react';
 
 const Index = () => {
   const [userProject, setUserProject] = useState([]);
@@ -42,12 +43,18 @@ const Index = () => {
         token="200"
         tokenLabel="Available"
         hot
+        usdc={undefined}
+        usdcDate={undefined}
+        bgGreen={undefined}
+        browBtn={undefined}
+        noproject={undefined}
       />
       <div className="map-location-box">
         <MainMap
           b2bHeading
           userProject={userProject}
           setSearchData={setSearchData}
+          mapHeading={undefined}
         />
         <div className="map-cards">
           {filteredItems?.map((item, index) => (

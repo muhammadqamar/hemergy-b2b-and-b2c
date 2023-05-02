@@ -1,38 +1,40 @@
-import { useState } from "react";
-import { Formik, Field } from "formik";
-import Image from "next/image";
-import Link from "next/link";
+import { useState } from 'react';
+import { Formik, Field } from 'formik';
+import Image from 'next/image';
+import Link from 'next/link';
 
-import InBox from "@/components/Authentications/inBox";
-import { useSelector, useDispatch } from "react-redux";
-import { addUser } from "@/store/reducer/user";
-import { useRouter } from "next/router";
+import InBox from '@/components/Authentications/inBox';
+import { useSelector, useDispatch } from 'react-redux';
+import { addUser } from '@/store/reducer/user';
+import { useRouter } from 'next/router';
 
-import { investorLogin } from "@/services/auth";
+import { investorLogin } from '@/services/auth';
 
 const SignIn = () => {
   const [startCheckingState, setStartCheckingState] = useState(false);
   const user = useSelector((state) => state.user);
   const [showPass, setShowPass] = useState(false);
-  const [registerState, setRegisterState] = useState("");
+  const [registerState, setRegisterState] = useState('');
   const dispatch = useDispatch();
   const router = useRouter();
-  console.log("user", user);
+  console.log('user', user);
   return user?.isVerified || !startCheckingState ? (
     <div className="registration-box">
       <h3 className="p-xl center-text">Sign In to Hemergy</h3>
       <Formik
-        initialValues={{ email: "", password: "", checked: [] }}
+        initialValues={{ email: '', password: '', checked: [] }}
         validate={(values) => {
           const errors = {};
           if (!values.email) {
-            errors.email = "Required";
-          } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-            errors.email = "Invalid email address";
+            errors.email = 'Required';
+          } else if (
+            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+          ) {
+            errors.email = 'Invalid email address';
           }
 
           if (!values.password) {
-            errors.password = "Required";
+            errors.password = 'Required';
           }
           return errors;
         }}
@@ -40,19 +42,21 @@ const SignIn = () => {
           const userFound = await investorLogin(values);
           setSubmitting(false);
           if (userFound?.data) {
-
             setRegisterState({
               email: userFound?.data?.user?.email,
               passowrd: userFound?.data?.user?.password,
             });
             dispatch(addUser(userFound?.data?.user));
             if (userFound?.data?.user?.isVerified) {
-              localStorage.setItem("hemergy-email", userFound?.data?.user?.email);
-              localStorage.setItem("hemergy-token", userFound?.data?.token);
+              localStorage.setItem(
+                'hemergy-email',
+                userFound?.data?.user?.email
+              );
+              localStorage.setItem('hemergy-token', userFound?.data?.token);
               if (userFound?.data?.user?.firstName) {
-                router.push("/");
+                router.push('/');
               } else {
-                router.push("/on-boarding");
+                router.push('/on-boarding');
               }
             } else {
               setStartCheckingState(true);
@@ -84,7 +88,10 @@ const SignIn = () => {
                   value={values.email}
                 />
               </div>
-              <p className="error p-x-sm"> {errors.email && touched.email && errors.email}</p>
+              <p className="error p-x-sm">
+                {' '}
+                {errors.email && touched.email && errors.email}
+              </p>
             </div>
 
             <div className="input-box">
@@ -93,7 +100,7 @@ const SignIn = () => {
                 <input
                   className="input p-sm"
                   placeholder="Password"
-                  type={showPass ? "text" : "password"}
+                  type={showPass ? 'text' : 'password'}
                   name="password"
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -122,16 +129,28 @@ const SignIn = () => {
                   <p className="p-sm">Remember me</p>
                 </label> */}
               </div>
-              <Link href="/forgot-password" className="p-sm text-weight-medium p-link">
+              <Link
+                href="/forgot-password"
+                className="p-sm text-weight-medium p-link"
+              >
                 Forgot password?
               </Link>
             </div>
 
-            <button className="btn secondary blue" type="submit" disabled={isSubmitting}>
+            <button
+              className="btn secondary blue"
+              type="submit"
+              disabled={isSubmitting}
+            >
               {isSubmitting ? (
-                <Image src="/images/loader.svg" alt="google" width={20} height={20} />
+                <Image
+                  src="/images/loader.svg"
+                  alt="google"
+                  width={20}
+                  height={20}
+                />
               ) : (
-                "Sign In"
+                'Sign In'
               )}
             </button>
 
@@ -148,13 +167,21 @@ const SignIn = () => {
                 (window.location = `${process.env.NEXT_PUBLIC_API_DOMAIN}/auth/google-login`)
               }
             >
-              <Image src="/images/Google.svg" alt="google" width={20} height={20} />
+              <Image
+                src="/images/Google.svg"
+                alt="google"
+                width={20}
+                height={20}
+              />
               Sign In with Google
             </button>
 
-            <p className=" center-text p-sm" style={{ marginBottom: "24px" }}>
+            <p className=" center-text p-sm" style={{ marginBottom: '24px' }}>
               Create a new Account &nbsp;
-              <Link href="/register" className="text-weight-medium text-textcolor">
+              <Link
+                href="/register"
+                className="text-weight-medium text-textcolor"
+              >
                 Sign up
               </Link>
             </p>
