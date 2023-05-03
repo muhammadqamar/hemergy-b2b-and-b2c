@@ -38,9 +38,9 @@ const SideBar = () => {
           <Image src="/images/apps.svg" alt="logo" width={20} height={20} />
         </Link>
         <Link
-          href={`${process.env.NEXT_PUBLIC_B2B_URL}`}
+          href={`/about-hemergy`}
           className={
-            currentRoute === '/portfolio' ? 'menu-item active' : 'menu-item'
+            currentRoute === '/about-hemergy' ? 'menu-item active' : 'menu-item'
           }
         >
           <Image src="/images/hemergy.svg" alt="logo" width={20} height={20} />

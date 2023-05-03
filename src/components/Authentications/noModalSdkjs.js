@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import { privateToAddress } from 'ethereumjs-util';
 import { getSigner } from '../helpers/signer';
-import  {addUser} from "@/store/reducer/user"
+import { addUser } from '@/store/reducer/user';
 import {
   investorLoginWeb3Auth,
   investorRegister,
@@ -16,12 +16,13 @@ import {
 } from '@/services/auth';
 import RPC from '../../pages/api/etherRPC';
 import { meta, relayer } from '@/services/transaction';
+import React from 'react';
 
 function App() {
   const router = useRouter();
   const [web3auth, setWeb3auth] = useState(null);
   const [provider, setProvider] = useState(null);
-   const dispatch =  useDispatch()
+  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const formikValidation = useRef();
   const { user } = useSelector((state) => state);
@@ -57,9 +58,8 @@ function App() {
     });
     const getBuffer = (str) => Buffer.from(str, 'hex');
 
-    const endUserAddress = "0x"+privateToAddress(getBuffer(privateKey)).toString(
-      'hex'
-    );
+    const endUserAddress =
+      '0x' + privateToAddress(getBuffer(privateKey)).toString('hex');
 
     const user = await web3auth.getUserInfo();
     if (user?.email && endUserAddress) {
@@ -70,8 +70,8 @@ function App() {
       if (checkLogin.status === 200) {
         console.log(checkLogin);
         formikValidation.current?.setSubmitting(false);
-        localStorage.setItem("hemergy-email", checkLogin?.data?.user?.email);
-        localStorage.setItem("hemergy-token", checkLogin?.data?.token);
+        localStorage.setItem('hemergy-email', checkLogin?.data?.user?.email);
+        localStorage.setItem('hemergy-token', checkLogin?.data?.token);
         dispatch(addUser(checkLogin.data.user));
 
         router.push('/');
@@ -115,8 +115,6 @@ function App() {
     setProvider(web3authProvider);
   };
 
-
-
   const getAccounts = async () => {
     if (!provider) {
       console.log('provider not initialized yet');
@@ -136,26 +134,29 @@ function App() {
     providerDetail,
     user1
   ) => {
-    const accountAddress =  await getSigner(user?.web3auth, domain,
+    const accountAddress = await getSigner(
+      user?.web3auth,
+      domain,
       types,
-      message,'account')
+      message,
+      'account'
+    );
 
-      const result = await investorRegister({
-        email: user1.email,
-        detail: user1,
-        provider: providerDetail,
-        address: accountAddress,
-      });
-      if (result.status == 200) {
-        formikValidation.current?.setSubmitting(false);
-        localStorage.setItem("hemergy-email", result?.data?.user?.email);
-        localStorage.setItem("hemergy-token", result?.data?.token);
-        dispatch(addUser(result.data.user));
+    const result = await investorRegister({
+      email: user1.email,
+      detail: user1,
+      provider: providerDetail,
+      address: accountAddress,
+    });
+    if (result.status == 200) {
+      formikValidation.current?.setSubmitting(false);
+      localStorage.setItem('hemergy-email', result?.data?.user?.email);
+      localStorage.setItem('hemergy-token', result?.data?.token);
+      dispatch(addUser(result.data.user));
 
-        router.push('/');
-      }
+      router.push('/');
     }
-
+  };
 
   return (
     <>
@@ -272,7 +273,6 @@ function App() {
               <div className="divider" />
             </div>
 
-
             <div className="flex justify-center gap-[20px]">
               <button type="button" onClick={() => login('google')}>
                 <Image
@@ -317,14 +317,16 @@ function App() {
                 height={20}
               />
             </button>
-            <h3 class="text-xl font-semibold text-white">Terms of Service</h3>
-            <div class="p-6 space-y-6 text-white">
-              <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+            <h3 className="text-xl font-semibold text-white">
+              Terms of Service
+            </h3>
+            <div className="p-6 space-y-6 text-white">
+              <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                 With less than a month to go before the European Union enacts
                 new consumer privacy laws for its citizens, companies around the
                 world are updating their terms of service agreements to comply.
               </p>
-              <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+              <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                 The European Union’s General Data Protection Regulation
                 (G.D.P.R.) goes into effect on May 25 and is meant to ensure a
                 common set of data rights in the European Union. It requires
