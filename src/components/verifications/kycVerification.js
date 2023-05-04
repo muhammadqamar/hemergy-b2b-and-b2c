@@ -6,6 +6,8 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { getKYCAccessToken, kycVerified } from '@/store/actions/auth';
+import { updatekyc } from '@/services/user';
+import React from 'react';
 // import WalletConnects from "./connectors";
 
 const KycVerification = ({ setStep, userDetail, profileRoute }) => {
@@ -46,9 +48,17 @@ const KycVerification = ({ setStep, userDetail, profileRoute }) => {
       // setLoading(false);
     });
   }, []);
-  const onSumsubVerified = (payload) => {
+  const onSumsubVerified = async (payload) => {
     if (payload.reviewStatus && payload.reviewStatus === 'completed')
-      dispatch(kycVerified());
+      console.log(payload);
+    dispatch(kycVerified(payload));
+    if (payload?.reviewStatus) {
+      const result = await updatekyc({
+        kyc: payload,
+        email: user?.email,
+        endUserAddress: user?.endUserAddress,
+      });
+    }
   };
   return (
     <div className={`registration-box ${!profileRoute && 'p-none'}`}>
@@ -58,12 +68,7 @@ const KycVerification = ({ setStep, userDetail, profileRoute }) => {
       </div>
       <Formik
         initialValues={{}}
-        onSubmit={async (values, { setSubmitting }) => {
-          setTimeout(() => {
-            setSubmitting(false);
-            router.push('/projects');
-          }, 2000);
-        }}
+        onSubmit={async (values, { setSubmitting }) => {}}
       >
         {({
           values,
@@ -88,78 +93,36 @@ const KycVerification = ({ setStep, userDetail, profileRoute }) => {
                   into projects hold on our platform, please get verified
                 </p>
               </div>
-
-              <div className="flex justify-center items-center w-full">
-                {kycToken?.token ? (
-                  <SumsubWebSdk
-                    className="w-full"
-                    accessToken={kycToken?.token}
-                    updateAccessToken={() => {}}
-                    expirationHandler={() => Promise.resolve(kycToken?.token)}
-                    config={sumsubConfig}
-                    options={{ addViewportTag: false, adaptIframeHeight: true }}
-                    onMessage={(type, payload) => {
-                      onSumsubVerified(payload);
-                    }}
-                    onError={(data) => console.log('onError', data)}
-                  />
-                ) : null}
-              </div>
+              {user.kyc.reviewStatus === 'complete' ||
+              user.kyc.reviewStatus === 'completed' ? (
+                <>already verified</>
+              ) : (
+                <div className="flex justify-center items-center w-full">
+                  {kycToken?.token ? (
+                    <SumsubWebSdk
+                      className="w-full"
+                      accessToken={kycToken?.token}
+                      updateAccessToken={() => {}}
+                      expirationHandler={() => Promise.resolve(kycToken?.token)}
+                      config={sumsubConfig}
+                      options={{
+                        addViewportTag: false,
+                        adaptIframeHeight: true,
+                      }}
+                      onMessage={(type, payload) => {
+                        onSumsubVerified(payload);
+                      }}
+                      onError={(data) => console.log('onError', data)}
+                    />
+                  ) : null}
+                </div>
+              )}
 
               {/* <div className="flex  ml-2 gap-1.5">
                 <Image src="/images/computer.svg" alt="logo" width={17} height={13} />
                 <p className="p-sm-semi  text-textcolor">Desktop</p>
               </div> */}
             </div>
-
-            {profileRoute === false ? (
-              <button
-                className="btn secondary blue"
-                type="submit"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <Image
-                    src="/images/loader.svg"
-                    alt="google"
-                    width={20}
-                    height={20}
-                  />
-                ) : (
-                  'Done'
-                )}
-              </button>
-            ) : (
-              <>
-                <div className="gap-4 flex-box mb-4">
-                  <button
-                    onClick={() => setStep(4)}
-                    type="button"
-                    className="justify-center flex-box gap-x-sm btn-border secondary"
-                  >
-                    Back
-                  </button>
-                  <button
-                    className="btn secondary blue"
-                    type="submit"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? '.....' : 'Done'}
-                  </button>
-                </div>
-                <Link
-                  href=""
-                  onClick={() => {
-                    setTimeout(() => {
-                      router.push('/projects');
-                    }, 1000);
-                  }}
-                  className="font-medium text-center p-sm text-textcolor"
-                >
-                  Skip for now
-                </Link>
-              </>
-            )}
           </form>
         )}
       </Formik>

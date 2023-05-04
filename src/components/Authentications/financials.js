@@ -2,7 +2,7 @@ import { Formik } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateFinancials } from '@/services/user';
 import { useRouter } from 'next/router';
-
+import Image from 'next/image';
 import { addUser } from '@/store/reducer/user';
 
 const Financials = ({ setStep, userDetail, profileRoute }) => {
@@ -35,20 +35,22 @@ const Financials = ({ setStep, userDetail, profileRoute }) => {
         onSubmit={async (values, { setSubmitting }) => {
           const result = await updateFinancials({
             ...values,
-            email: userDetail?.email,
+            email: user?.email,
+            endUserAddress: user?.endUserAddress,
           });
           setSubmitting(false);
           if (result?.data?.userFound) {
             dispatch(addUser(result?.data?.userFound));
+            !profileRoute && setStep(4);
             if (
               user?.questionnaire.filter(
                 (data) =>
                   data.question === 'Are you familiar with cryptocurrencies?'
               )[0]?.selectedAnswers
             ) {
-              setStep(4);
+              profileRoute && setStep(4);
             } else {
-              setStep(5);
+              profileRoute && setStep(5);
             }
           }
         }}

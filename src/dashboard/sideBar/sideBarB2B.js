@@ -33,9 +33,9 @@ const SideBar = () => {
       </Link>
       <div className="flex-row gap-4 flex-box laptop:flex-col ">
         <Link
-          href="/projects/details"
+          href="/"
           className={
-            currentRoute === '/projects/details'
+            currentRoute === '/'
               ? 'expand-menu-item active'
               : 'expand-menu-item'
           }
@@ -60,9 +60,9 @@ const SideBar = () => {
           <h3 className="expand-side-bar-text">Developer</h3>
         </Link>
         <Link
-          href="/new-project"
+          href="/project-zero-state"
           className={
-            currentRoute === '/new-project'
+            currentRoute === '/project-zero-state'
               ? 'expand-menu-item active'
               : 'expand-menu-item'
           }
@@ -102,22 +102,32 @@ const SideBar = () => {
           <Image src="/images/medium.svg" alt="logo" width={20} height={20} />
           <h3 className="expand-side-bar-text">Medium</h3>
         </Link>
-        <Link href="" className="expand-menu-item hide-links">
+        <Link href="/contact" className="expand-menu-item hide-links">
           <Image src="/images/help.svg" alt="logo" width={20} height={20} />
           <h3 className="expand-side-bar-text">Get in touch</h3>
         </Link>
-        <Link href="" className="expand-menu-item justify-between">
-          <div className="flex items-center gap-3">
-            <img
-              className="rounded-xl w-8 h-8 object-cover"
-              src={user?.user?.detail?.profileImage}
-              alt="logo"
-            />
-            <h3 className="expand-side-bar-text w-[150px] text-ellipsis overflow-hidden whitespace-pre ">
-              {user?.user?.detail?.name}
-            </h3>
-          </div>
+        <div className="flex items-center gap-3 justify-between">
+          <Link
+            href="/profile"
+            className={
+              currentRoute === '/profile'
+                ? 'expand-menu-item small-link active'
+                : 'expand-menu-item small-link'
+            }
+          >
+            <div className="flex items-center gap-3 ">
+              <img
+                className="rounded-xl w-8 h-8 object-cover"
+                src={user?.user?.detail?.profileImage}
+                alt="logo"
+              />
+              <h3 className="expand-side-bar-text w-[125px] text-ellipsis overflow-hidden whitespace-pre ">
+                {user?.user?.detail?.name}
+              </h3>
+            </div>
+          </Link>
           <div
+            className="expand-menu-item log-out-icon"
             onClick={async () => {
               localStorage.removeItem('hemergy-token');
               localStorage.removeItem('hemergy-email');
@@ -134,7 +144,7 @@ const SideBar = () => {
               height={20}
             />
           </div>
-        </Link>
+        </div>
 
         <button
           onClick={() => {
@@ -164,15 +174,25 @@ const SideBar = () => {
           <Image src="/images/twitter.svg" alt="logo" width={20} height={20} />
           <span className="text-white p-sm text-weight-medium">Twitter</span>
         </Link>
-        <Link href="" className="mobile-dash-links">
+        <Link href="https://medium.com/hemergy" className="mobile-dash-links">
           <Image src="/images/medium.svg" alt="logo" width={20} height={20} />
           <span className="text-white p-sm text-weight-medium">Medium</span>
         </Link>
-        <Link href="" className="mobile-dash-links">
+        <Link href="/contact" className="mobile-dash-links">
           <Image src="/images/help.svg" alt="logo" width={20} height={20} />
           <span className="text-white p-sm text-weight-medium">Help</span>
         </Link>
-        <Link href="" className="mobile-dash-links">
+        <Link
+          href=""
+          className="mobile-dash-links"
+          onClick={async () => {
+            localStorage.removeItem('hemergy-token');
+            localStorage.removeItem('hemergy-email');
+
+            await user?.web3auth?.logout();
+            router.push('/login');
+          }}
+        >
           <Image src="/images/logout.svg" alt="logo" width={20} height={20} />
           <span className="text-white p-sm text-weight-medium">Sign out</span>
         </Link>

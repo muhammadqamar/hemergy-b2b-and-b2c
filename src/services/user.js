@@ -1,5 +1,5 @@
-import http from "./http";
-import { ShowError } from "./error";
+import http from './http';
+import { ShowError } from './error';
 
 const updateUser = async (data) => {
   try {
@@ -27,4 +27,38 @@ const updateFinancials = async (data) => {
     // return error
   }
 };
-export { updateUser, updateQuestionair, updateFinancials };
+
+const updateBusinessdetails = async (data) => {
+  try {
+    return await http.put(`/user/businessdetails`, data);
+  } catch (error) {
+    ShowError(error?.response?.data?.status);
+    // return error
+  }
+};
+
+const updateCollectionmethod = async (data) => {
+  try {
+    return await http.put(`/user/collectionmethod`, data);
+  } catch (error) {
+    ShowError(error?.response?.data?.status);
+    // return error
+  }
+};
+
+const updatekyc = async (data) => {
+  try {
+    return await http.put(`/user/kyc`, data);
+  } catch (error) {
+    ShowError(error?.response?.data?.status);
+    // return error
+  }
+};
+export {
+  updateUser,
+  updateQuestionair,
+  updateFinancials,
+  updatekyc,
+  updateBusinessdetails,
+  updateCollectionmethod,
+};

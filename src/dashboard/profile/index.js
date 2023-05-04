@@ -63,7 +63,7 @@ const Index = () => {
 
   useEffect(() => {
     setUserDetail({ email: localStorage.getItem('hemergy-email') });
-  }, []);
+  }, [user]);
 
   return (
     <div className="info-bg">
@@ -74,7 +74,7 @@ const Index = () => {
 
         <div className="flex flex-col items-start gap-8 md:flex-row ">
           <div className=" w-full md:w-[276px] flex flex-row flex-wrap md:flex-col gap-2 ">
-            {userCheck !== 'INVESTOR'
+            {localStorage.getItem('user-type') === 'developer'
               ? b2cOnBoading?.map((item, index) => (
                   <button
                     key={index}
@@ -103,7 +103,7 @@ const Index = () => {
                 ))}
           </div>
 
-          {userCheck !== 'INVESTOR' ? (
+          {localStorage.getItem('user-type') === 'developer' ? (
             <div className="">
               {step === 1 && (
                 <VerificationBox

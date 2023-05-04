@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-
+import Link from 'next/link';
 import Image from 'next/image';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -76,6 +76,7 @@ function App() {
           router.query.type?.toLowerCase() === 'developer' ||
           router.query.type?.toLowerCase() === 'investor'
         ) {
+          localStorage.setItem('user-type', router.query.type?.toLowerCase());
           router.push('/');
         } else {
           setOptions(true);
@@ -98,27 +99,6 @@ function App() {
       }
     }
   };
-
-  // const loginJWT = async (token) => {
-  //   if (!web3auth) {
-  //     uiConsole('web3auth not initialized yet');
-  //     return;
-  //   }
-
-  //   // const web3authProvider = await web3auth.connectTo(WALLET_ADAPTERS.WALLET_CONNECT_V1);
-  //   const web3authProvider = await web3auth.connectTo(
-  //     WALLET_ADAPTERS.OPENLOGIN,
-  //     {
-  //       loginProvider: 'jwt',
-  //       extraLoginOptions: {
-  //         id_token: token,
-  //         verifierIdField: 'sub', // same as your JWT Verifier ID
-  //         domain: 'http://localhost:3000',
-  //       },
-  //     }
-  //   );
-  //   setProvider(web3authProvider);
-  // };
 
   const getAccounts = async () => {
     if (!provider) {
@@ -165,6 +145,7 @@ function App() {
         router.query.type?.toLowerCase() === 'developer' ||
         router.query.type?.toLowerCase() === 'investor'
       ) {
+        localStorage.setItem('user-type', router.query.type?.toLowerCase());
         router.push('/');
       } else {
         setOptions(true);
@@ -245,7 +226,10 @@ function App() {
           isSubmitting,
           /* and other goodies */
         }) => (
-          <form className="items-center gap-6 form-cantainer" onSubmit={handleSubmit}>
+          <form
+            className="items-center gap-6 form-cantainer"
+            onSubmit={handleSubmit}
+          >
             {/* <div className="input-box">
               <label className="p-sm text-weight-medium">Email</label>
               <div className="input-field">
@@ -264,33 +248,46 @@ function App() {
                 {errors.email && touched.email && errors.email}
               </p>
             </div> */}
-            {options ?
-            <div className="flex gap-[5px]">
-              <div className=" cursor-pointer text-[30px] bold uppercase  w-[50%] flex h-[200px] rounded-[5px] border border-[#ccc] items-center justify-center">
-                Investor
+            {options ? (
+              <div className="w-full flex items-center justify-between gap-4">
+                <Link
+                  href="/"
+                  onClick={() => {
+                    localStorage.setItem('user-type', 'investor');
+                  }}
+                  className="cursor-pointer text-lg font-medium  uppercase  w-[50%] flex  p-3 rounded-[5px] border-[2px] border-textcolor items-center justify-center hover:bg-blue600 hover:text-white"
+                >
+                  Investor
+                </Link>
+                <Link
+                  href="
+                  /"
+                  onClick={() => {
+                    localStorage.setItem('user-type', 'developer');
+                  }}
+                  className="cursor-pointer text-lg font-medium  uppercase  w-[50%] flex  p-3 rounded-[5px] border-[2px] border-textcolor items-center justify-center hover:bg-blue600 hover:text-white"
+                >
+                  developer
+                </Link>
               </div>
-              <div className=" cursor-pointer text-[30px] bold uppercase  w-[50%] flex h-[200px] rounded-[5px] border border-[#ccc] items-center justify-center">
-                Developer
-              </div>
-            </div>
-             :
-            <button
-              className="btn secondary blue"
-              type="submit"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? (
-                <Image
-                  src="/images/loader.svg"
-                  alt="google"
-                  width={20}
-                  height={20}
-                />
-              ) : (
-                'Proceed'
-              )}
-            </button>
-}
+            ) : (
+              <button
+                className="btn secondary blue"
+                type="submit"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <Image
+                    src="/images/loader.svg"
+                    alt="google"
+                    width={20}
+                    height={20}
+                  />
+                ) : (
+                  'Proceed'
+                )}
+              </button>
+            )}
 
             {/* <div className="flex-box gap-x-sm">
               <div className="divider" />

@@ -53,3 +53,11 @@
 .expand-side-bar-text {
   @apply text-white hidden xl:block;
 }
+
+.small-link {
+  @apply w-auto xl:w-[200px] !important;
+}
+
+.log-out-icon {
+  @apply w-auto h-[50px] cursor-pointer !important;
+}

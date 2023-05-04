@@ -14,7 +14,11 @@ const Index = ({ children }) => {
 
   return (
     <>
-      {userCheck === 'INVESTOR' ? <SideBarB2C /> : <SideBarB2B />}
+      {localStorage.getItem('user-type') !== 'developer' ? (
+        <SideBarB2C />
+      ) : (
+        <SideBarB2B />
+      )}
       <main>{children}</main>
     </>
   );

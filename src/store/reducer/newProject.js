@@ -19,17 +19,14 @@ export const addProject = createSlice({
       state.draft = action.payload;
     },
     applyDraftInformation: (state, action) => {
-
       state.billing = action.payload?.details?.billingMethod || state.billing;
       state.projectDetails =
         action.payload?.details?.information || state.projectDetails;
-        state.createToken =
-        action.payload?.details?.tokens || state.createToken;
-        state.linkAssets =
+      state.createToken = action.payload?.details?.tokens || state.createToken;
+      state.linkAssets =
         action.payload?.details?.linkAssets || state.linkAssets;
-        state.beneficiaries =
+      state.beneficiaries =
         action.payload?.details?.beneficiaries || state.beneficiaries;
-
     },
     setProjectDetails: (state, action) => {
       state.projectDetails = action.payload;

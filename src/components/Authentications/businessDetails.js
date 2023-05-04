@@ -1,15 +1,25 @@
 import { Formik } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateFinancials } from '@/services/user';
+import { updateBusinessdetails } from '@/services/user';
 import { useRouter } from 'next/router';
 import { addUser } from '@/store/reducer/user';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePlacesWidget } from 'react-google-autocomplete';
+import { useState } from 'react';
 
 const BusinessDetails = ({ setStep, userDetail, profileRoute }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user?.user);
+  const [addressManually, setAddressManually] = useState(false);
+  const [addressFinder, setAddressFinder] = useState('');
+
+  const { ref } = usePlacesWidget({
+    apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
+    onPlaceSelected: (place) => setAddressFinder(place.formatted_address),
+  });
+
   return (
     <div className={`registration-box ${!profileRoute && 'p-none'}`}>
       <div className="flex-box d-column gap-x-sm">
@@ -18,9 +28,10 @@ const BusinessDetails = ({ setStep, userDetail, profileRoute }) => {
       </div>
       <Formik
         initialValues={{
-          businessName: user?.financials?.businessName || '',
-          financialLegalNumber: user?.financials?.financialLegalNumber || '',
-          businessAddress: user?.financials?.businessAddress || '',
+          businessName: user?.businessDetails?.businessName || '',
+          financialLegalNumber:
+            user?.businessDetails?.financialLegalNumber || '',
+          address: user?.businessDetails?.businessAddress || addressFinder,
         }}
         validate={(values) => {
           const errors = {};
@@ -32,29 +43,36 @@ const BusinessDetails = ({ setStep, userDetail, profileRoute }) => {
           if (!values.financialLegalNumber) {
             errors.financialLegalNumber = 'Required';
           }
-          if (!values.businessAddress) {
-            errors.businessAddress = 'Required';
+
+          if (!values.address && !addressManually) {
+            errors.address = 'Required';
+          }
+          if (!values.manuallyAddress && addressManually) {
+            errors.manuallyAddress = 'Required';
           }
           return errors;
         }}
         onSubmit={async (values, { setSubmitting }) => {
-          const result = await updateFinancials({
+          const result = await updateBusinessdetails({
             ...values,
             email: userDetail?.email,
+            endUserAddress: user?.endUserAddress,
           });
-          // setSubmitting(false);
-          // if (result?.data?.userFound) {
-          //   dispatch(addUser(result?.data?.userFound));
-          //   if (
-          //     user?.questionnaire.filter(
-          //       (data) => data.question === "Are you familiar with cryptocurrencies?"
-          //     )[0]?.selectedAnswers
-          //   ) {
-          //     setStep(4);
-          //   } else {
-          //     setStep(5);
-          //   }
-          // }
+          setSubmitting(false);
+          if (result?.data?.userFound) {
+            dispatch(addUser(result?.data?.userFound));
+            !profileRoute && setStep(3);
+            if (
+              user?.questionnaire.filter(
+                (data) =>
+                  data.question === 'Are you familiar with cryptocurrencies?'
+              )[0]?.selectedAnswers
+            ) {
+              profileRoute && setStep(4);
+            } else {
+              profileRoute && setStep(5);
+            }
+          }
         }}
       >
         {({
@@ -110,37 +128,66 @@ const BusinessDetails = ({ setStep, userDetail, profileRoute }) => {
                   errors.financialLegalNumber}
               </p>
             </div>
+
             <div className="input-box">
               <label className="p-sm text-weight-medium">
                 Business address
               </label>
-              <div className="input-field">
-                <Image
-                  src="/images/search.svg"
-                  alt="google"
-                  width={20}
-                  height={20}
-                />
-                <input
-                  className="input p-sm"
-                  placeholder="Start typing the address"
-                  type="address"
-                  name="businessAddress"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.businessAddress}
-                />
-              </div>
-              <p className="error p-x-sm">
-                {errors.businessAddress &&
-                  touched.businessAddress &&
-                  errors.businessAddress}
-              </p>
+              <>
+                <div className="input-field">
+                  <Image
+                    src="/images/search.svg"
+                    alt="google"
+                    width={20}
+                    height={20}
+                  />
+                  {ref && !addressManually && (
+                    <input
+                      className={`input p-sm`}
+                      ref={ref}
+                      placeholder="Start typing the address"
+                      type="text"
+                      autocomplete
+                      name="address"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.address}
+                    />
+                  )}
+                  {addressManually && (
+                    <input
+                      className="input p-sm"
+                      placeholder="Start typing the manually address"
+                      type="text"
+                      name="address"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.address}
+                    />
+                  )}
+                </div>
+                <p className="error p-x-sm">
+                  {errors.address && touched.address && errors.address}
+                </p>
+              </>
             </div>
-
-            <Link href="" className="p-sm text-weight-medium text-textcolor">
-              Enter address manually
-            </Link>
+            {!addressManually ? (
+              <Link
+                href="javascript: void(0)"
+                onClick={() => setAddressManually(true)}
+                className="p-sm text-weight-medium text-textcolor"
+              >
+                Enter address manually
+              </Link>
+            ) : (
+              <Link
+                href="javascript: void(0)"
+                onClick={() => setAddressManually(false)}
+                className="p-sm text-weight-medium text-textcolor"
+              >
+                Address finder
+              </Link>
+            )}
 
             {profileRoute === false ? (
               <button

@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateFinancials } from '@/services/user';
+import { updateCollectionmethod } from '@/services/user';
 import { useRouter } from 'next/router';
 import { addUser } from '@/store/reducer/user';
 import Link from 'next/link';
@@ -30,10 +30,10 @@ const PaymentMethod = ({ setStep, userDetail, profileRoute }) => {
       </div>
       <Formik
         initialValues={{
-          bicSwift: user?.financials?.bicSwift || '',
-          accountNoIBAN: user?.financials?.accountNoIBAN || '',
-          AdditionalWireInstructions:
-            user?.financials?.AdditionalWireInstructions || '',
+          bicSwift: user?.collectionmethod?.bicSwift || '',
+          accountNoIBAN: user?.collectionmethod?.accountNoIBAN || '',
+          additionalWireInstructions:
+            user?.collectionmethod?.additionalWireInstructions || '',
         }}
         validate={(values) => {
           const errors = {};
@@ -45,29 +45,32 @@ const PaymentMethod = ({ setStep, userDetail, profileRoute }) => {
           if (!values.accountNoIBAN) {
             errors.accountNoIBAN = 'Required';
           }
-          if (!values.AdditionalWireInstructions) {
-            errors.AdditionalWireInstructions = 'Required';
+          if (!values.additionalWireInstructions) {
+            errors.additionalWireInstructions = 'Required';
           }
           return errors;
         }}
         onSubmit={async (values, { setSubmitting }) => {
-          const result = await updateFinancials({
+          const result = await updateCollectionmethod({
             ...values,
             email: userDetail?.email,
+            endUserAddress: user?.endUserAddress,
           });
-          // setSubmitting(false);
-          // if (result?.data?.userFound) {
-          //   dispatch(addUser(result?.data?.userFound));
-          //   if (
-          //     user?.questionnaire.filter(
-          //       (data) => data.question === "Are you familiar with cryptocurrencies?"
-          //     )[0]?.selectedAnswers
-          //   ) {
-          //     setStep(4);
-          //   } else {
-          //     setStep(5);
-          //   }
-          // }
+          setSubmitting(false);
+          if (result?.data?.userFound) {
+            dispatch(addUser(result?.data?.userFound));
+            !profileRoute && setStep(4);
+            if (
+              user?.questionnaire.filter(
+                (data) =>
+                  data.question === 'Are you familiar with cryptocurrencies?'
+              )[0]?.selectedAnswers
+            ) {
+              profileRoute && setStep(4);
+            } else {
+              profileRoute && setStep(5);
+            }
+          }
         }}
       >
         {({
@@ -153,16 +156,16 @@ const PaymentMethod = ({ setStep, userDetail, profileRoute }) => {
                   className="input p-sm"
                   placeholder=""
                   type="text"
-                  name="AdditionalWireInstructions"
+                  name="additionalWireInstructions"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.AdditionalWireInstructions}
+                  value={values.additionalWireInstructions}
                 />
               </div>
               <p className="error p-x-sm">
-                {errors.AdditionalWireInstructions &&
-                  touched.AdditionalWireInstructions &&
-                  errors.AdditionalWireInstructions}
+                {errors.additionalWireInstructions &&
+                  touched.additionalWireInstructions &&
+                  errors.additionalWireInstructions}
               </p>
             </div>
             {profileRoute === false ? (

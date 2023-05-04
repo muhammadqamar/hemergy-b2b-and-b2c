@@ -47,16 +47,18 @@ const InvestorProfile = ({ setStep, userDetail, profileRoute }) => {
 
           const updateUserData = await updateQuestionair({
             questions: result,
-            email: userDetail?.email,
+            email: user?.email,
+            endUserAddress: user?.endUserAddress,
           });
           setSubmitting(false);
 
           if (updateUserData?.data?.userFound) {
             dispatch(addUser(updateUserData?.data?.userFound));
+            !profileRoute && setStep(3);
             if (values['Are you familiar with cryptocurrencies?']) {
-              setStep(3);
+              profileRoute && setStep(3);
             } else {
-              setStep(5);
+              profileRoute && setStep(5);
             }
           }
         }}

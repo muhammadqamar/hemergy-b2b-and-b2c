@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '@/services/user';
 import { addUser } from '@/store/reducer/user';
 import ReactFlagsSelect from 'react-flags-select';
-const Verification = ({ userDetail, setStep, profileRoute }) => {
+const Verification = ({ setStep, profileRoute }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user?.user);
   const [selected, setSelected] = useState('');
@@ -30,12 +30,11 @@ const Verification = ({ userDetail, setStep, profileRoute }) => {
 
       <Formik
         initialValues={{
-          name: user?.firstName || '',
-          surname: user?.lastName || '',
-          birthDate: user?.dob || '',
-          country: user?.country || '',
-          address: user?.address || addressFinder,
-          manuallyAddress: user?.manuallyAddress || '',
+          name: user?.detail?.name || '',
+          surname: user?.detail?.surname || '',
+          birthDate: user?.detail?.birthDate?.split('T')?.[0] || '',
+          country: user?.detail?.country || '',
+          address: user?.detail?.address || addressFinder,
         }}
         enableReinitialize
         validate={(values) => {
@@ -63,9 +62,10 @@ const Verification = ({ userDetail, setStep, profileRoute }) => {
         }}
         onSubmit={async (values, { setSubmitting, setFieldValue }) => {
           const result = await updateUser({
-            ...values,
+            detail: { ...user.detail, ...values },
             country: selected,
-            email: userDetail?.email,
+            email: user?.email,
+            endUserAddress: user?.endUserAddress,
           });
           if (result?.data?.userFound) {
             dispatch(addUser(result?.data?.userFound));
@@ -186,19 +186,15 @@ const Verification = ({ userDetail, setStep, profileRoute }) => {
                       className="input p-sm"
                       placeholder="Start typing the manually address"
                       type="text"
-                      name="manuallyAddress"
+                      name="address"
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      value={values.manuallyAddress}
+                      value={values.address}
                     />
                   )}
                 </div>
                 <p className="error p-x-sm">
-                  {!addressManually
-                    ? errors.address && touched.address && errors.address
-                    : errors.manuallyAddress &&
-                      touched.manuallyAddress &&
-                      errors.manuallyAddress}
+                  {errors.address && touched.address && errors.address}
                 </p>
               </>
             </div>
