@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
-import { WALLET_ADAPTERS } from '@web3auth/base';
+
 import Image from 'next/image';
 import { useSelector, useDispatch } from 'react-redux';
-import { ethers } from 'ethers';
+
 import { Formik } from 'formik';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
@@ -15,13 +15,14 @@ import {
   createCoreAccount,
 } from '@/services/auth';
 import RPC from '../../pages/api/etherRPC';
-import { meta, relayer } from '@/services/transaction';
+
 import React from 'react';
 
 function App() {
   const router = useRouter();
   const [web3auth, setWeb3auth] = useState(null);
   const [provider, setProvider] = useState(null);
+  const [options, setOptions] = useState(null);
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const formikValidation = useRef();
@@ -33,6 +34,8 @@ function App() {
     }
   }, [user?.web3auth]);
 
+  useEffect(() => {}, [router.query?.type]);
+
   const parseEvent = (contractInterface, log) => {
     const event = contractInterface.interface.parseLog(log);
     return event;
@@ -43,13 +46,9 @@ function App() {
       console.log('web3auth not initialized yet');
       return;
     }
+    console.log(web3auth);
     formikValidation.current?.setSubmitting(true);
-    const web3authProvider = await web3auth.connectTo(
-      WALLET_ADAPTERS.OPENLOGIN,
-      {
-        loginProvider: loginProviderName,
-      }
-    );
+    const web3authProvider = await web3auth.connect();
 
     setProvider(web3authProvider);
 
@@ -73,8 +72,14 @@ function App() {
         localStorage.setItem('hemergy-email', checkLogin?.data?.user?.email);
         localStorage.setItem('hemergy-token', checkLogin?.data?.token);
         dispatch(addUser(checkLogin.data.user));
-
-        router.push('/');
+        if (
+          router.query.type?.toLowerCase() === 'developer' ||
+          router.query.type?.toLowerCase() === 'investor'
+        ) {
+          router.push('/');
+        } else {
+          setOptions(true);
+        }
       } else {
         const signerInformation = await createCoreAccount({
           endUserAddress: endUserAddress,
@@ -94,26 +99,26 @@ function App() {
     }
   };
 
-  const loginJWT = async (token) => {
-    if (!web3auth) {
-      uiConsole('web3auth not initialized yet');
-      return;
-    }
+  // const loginJWT = async (token) => {
+  //   if (!web3auth) {
+  //     uiConsole('web3auth not initialized yet');
+  //     return;
+  //   }
 
-    // const web3authProvider = await web3auth.connectTo(WALLET_ADAPTERS.WALLET_CONNECT_V1);
-    const web3authProvider = await web3auth.connectTo(
-      WALLET_ADAPTERS.OPENLOGIN,
-      {
-        loginProvider: 'jwt',
-        extraLoginOptions: {
-          id_token: token,
-          verifierIdField: 'sub', // same as your JWT Verifier ID
-          domain: 'http://localhost:3000',
-        },
-      }
-    );
-    setProvider(web3authProvider);
-  };
+  //   // const web3authProvider = await web3auth.connectTo(WALLET_ADAPTERS.WALLET_CONNECT_V1);
+  //   const web3authProvider = await web3auth.connectTo(
+  //     WALLET_ADAPTERS.OPENLOGIN,
+  //     {
+  //       loginProvider: 'jwt',
+  //       extraLoginOptions: {
+  //         id_token: token,
+  //         verifierIdField: 'sub', // same as your JWT Verifier ID
+  //         domain: 'http://localhost:3000',
+  //       },
+  //     }
+  //   );
+  //   setProvider(web3authProvider);
+  // };
 
   const getAccounts = async () => {
     if (!provider) {
@@ -147,6 +152,8 @@ function App() {
       detail: user1,
       provider: providerDetail,
       address: accountAddress,
+      //   isInvestor:router.query.type?.toLowerCase()!=="developer"? true : undefined,
+      //   isDeveloper:router.query.type?.toLowerCase()==="developer"? true : undefined
     });
     if (result.status == 200) {
       formikValidation.current?.setSubmitting(false);
@@ -154,7 +161,14 @@ function App() {
       localStorage.setItem('hemergy-token', result?.data?.token);
       dispatch(addUser(result.data.user));
 
-      router.push('/');
+      if (
+        router.query.type?.toLowerCase() === 'developer' ||
+        router.query.type?.toLowerCase() === 'investor'
+      ) {
+        router.push('/');
+      } else {
+        setOptions(true);
+      }
     }
   };
 
@@ -168,13 +182,13 @@ function App() {
             '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})'
           );
           const errors = {};
-          if (!values.email) {
-            errors.email = 'Required';
-          } else if (
-            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-          ) {
-            errors.email = 'Invalid email address';
-          }
+          // if (!values.email) {
+          //   errors.email = 'Required';
+          // } else if (
+          //   !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+          // ) {
+          //   errors.email = 'Invalid email address';
+          // }
 
           // if (!values.password) {
           //   errors.password = 'Required';
@@ -201,7 +215,8 @@ function App() {
             //  // setRegisterState(values);
             //  loginJWT(register?.data.token)
             // }
-            loginJWT('register?.data.token');
+            login();
+            //loginJWT('register?.data.token');
             // if (updateUser?.data?.userFound) {
             //   setStep(3)
             // }
@@ -230,8 +245,8 @@ function App() {
           isSubmitting,
           /* and other goodies */
         }) => (
-          <form className="gap-6 form-cantainer" onSubmit={handleSubmit}>
-            <div className="input-box">
+          <form className="items-center gap-6 form-cantainer" onSubmit={handleSubmit}>
+            {/* <div className="input-box">
               <label className="p-sm text-weight-medium">Email</label>
               <div className="input-field">
                 <input
@@ -248,8 +263,17 @@ function App() {
                 {' '}
                 {errors.email && touched.email && errors.email}
               </p>
+            </div> */}
+            {options ?
+            <div className="flex gap-[5px]">
+              <div className=" cursor-pointer text-[30px] bold uppercase  w-[50%] flex h-[200px] rounded-[5px] border border-[#ccc] items-center justify-center">
+                Investor
+              </div>
+              <div className=" cursor-pointer text-[30px] bold uppercase  w-[50%] flex h-[200px] rounded-[5px] border border-[#ccc] items-center justify-center">
+                Developer
+              </div>
             </div>
-
+             :
             <button
               className="btn secondary blue"
               type="submit"
@@ -266,14 +290,15 @@ function App() {
                 'Proceed'
               )}
             </button>
+}
 
-            <div className="flex-box gap-x-sm">
+            {/* <div className="flex-box gap-x-sm">
               <div className="divider" />
               <p className="p-sm">or</p>
               <div className="divider" />
-            </div>
+            </div> */}
 
-            <div className="flex justify-center gap-[20px]">
+            {/* <div className="flex justify-center gap-[20px]">
               <button type="button" onClick={() => login('google')}>
                 <Image
                   src="/images/Google.svg"
@@ -298,7 +323,7 @@ function App() {
                   height={50}
                 />
               </button>
-            </div>
+            </div> */}
           </form>
         )}
       </Formik>
