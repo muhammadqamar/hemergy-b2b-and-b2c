@@ -6,7 +6,7 @@ export default function UserCard({ bg, normal, detail, avatar, name, designation
         alt="user"
         className={`${
           detail ? "w-[54px] h-[54px]" : "w-[40px] h-[40px]"
-        }  bg-no-repeat bg-cover bg-center shrink-0`}
+        }  bg-no-repeat bg-cover bg-center shrink-0 rounded-[10px]`}
       />
       <div>
         <div className="flex items-center justify-between gap-1">
@@ -26,11 +26,11 @@ export default function UserCard({ bg, normal, detail, avatar, name, designation
               {designation}
             </h6>
           </div>
-          {company && (
+          {/* {company && (
             <div className="user-company">
               <img src="/images/kg-logo.svg" alt="company" />
             </div>
-          )}
+          )} */}
         </div>
         {bio && <p className="font-normal text-[14px] leading-[20px]  text-gray800">{bio}</p>}
       </div>

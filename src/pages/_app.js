@@ -3,18 +3,19 @@ import { hotjar } from 'react-hotjar';
 import { useRouter } from 'next/router';
 import { ToastContainer } from 'react-toastify';
 import { store } from '@/store/store';
-
+import { ethers } from 'ethers';
 import { Web3Auth } from '@web3auth/modal';
-import {  CHAIN_NAMESPACES } from '@web3auth/base';
+import { CHAIN_NAMESPACES } from '@web3auth/base';
 import { OpenloginAdapter } from '@web3auth/openlogin-adapter';
 import { Provider, useSelector } from 'react-redux';
 import { me } from '@/services/auth';
 import { useDispatch } from 'react-redux';
-import { addUser } from '@/store/reducer/user';
+import { addUser, setSignerToRedux } from '@/store/reducer/user';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { ADAPTER_EVENTS } from '@web3auth/base';
 import { setweb3authReducer } from '@/store/reducer/user';
+import Hemergy from '@hemergy/core-sdk'
 
 import '@/styles/globals.css';
 import 'slick-carousel/slick/slick.css';
@@ -57,10 +58,13 @@ const AppPass = ({ Component, pageProps }) => {
     const web3auth = new Web3Auth({
       clientId: process.env.NEXT_PUBLIC_CLIENTID_WEB3AUTH,
       chainConfig: {
-        chainNamespace: CHAIN_NAMESPACES.OTHER,
-        displayName: 'Chain Name',
-        ticker: 'TKR',
-        tickerName: 'Ticker Name',
+        chainNamespace: CHAIN_NAMESPACES.OTHER, // SOLANA, OTHER
+        chainId: "31337",
+        rpcTarget: "http://34.162.229.194:8545",
+        displayName: "Ethereum Mainnet",
+
+        ticker: "ETH",
+        tickerName: "Ethereum",
       },
       uiConfig: {
         theme: 'light',
@@ -71,35 +75,38 @@ const AppPass = ({ Component, pageProps }) => {
       modalZIndex: '99998',
     });
     web3auth.on(ADAPTER_EVENTS.CONNECTED, async (data) => {
-      console.log('connected to wallet', web3auth);
+      // console.log('connected to wallet', data);
     });
 
     const openloginAdapter = new OpenloginAdapter({
       adapterSettings: {
         network: 'testnet',
         uxMode: 'popup', // also support popup
-        // loginConfig: {
-        //   jwt: {
-        //     name: 'test',
-        //     verifier: 'hemergyweb3auth',
-        //     typeOfLogin: 'jwt',
-        //     clientId: process.env.NEXT_PUBLIC_CLIENTID_WEB3AUTH,
-        //   },
-        //   google: {
-        //     name: 'testgoogle',
-        //     verifier: 'hemergygoogleweb3', // Please create a verifier on the developer dashboard and pass the name here
-        //     typeOfLogin: 'google', // Pass on the login provider of the verifier you've created
-        //     clientId:
-        //       '502195534544-p526a6dhnh79571jnf8460ll0o2qb9q5.apps.googleusercontent.com', // Pass on the clientId of the login provider here - Please note this differs from the Web3Auth ClientID. This is the JWT Client ID
-        //   },
-        // },
+
       },
     });
 
     web3auth.configureAdapter(openloginAdapter);
     await web3auth.initModal();
+
+    if (web3auth?.status == 'connected') {
+      // const web3authProvider = await web3auth.connect();
+      // const ethersProvider = new ethers.providers.Web3Provider(
+      //   web3authProvider
+      // );
+      // const signer =  ethersProvider.getSigner();
+
+      // const address = await signer?.getAddress();
+      // console.log('address on ethers', address)
+
+      // const account = await hemergy?.createAccount();
+      // console.log('account infotmation', account)
+
+
+    }
     dispatch(setweb3authReducer(web3auth));
     dispatch(addUser());
+
     if (web3auth.status === 'connected') {
       const checkToken = await me();
       setReady(true);

@@ -1,18 +1,18 @@
 import Image from 'next/image';
 import PowerCarbon from '@/utils/powerCarbon';
 
-const Tokens = ({ showTokenInfo, onClick, isLoading }) => {
+const Tokens = ({ showTokenInfo, onClick, isLoading, projectData }) => {
   return (
     <div className="tokens-wrapper">
       {showTokenInfo && (
         <h6 className="text-center mb-6 sm:mb-[57px] p-md ">
-          1,234 Tokens issued
+          {projectData?.tokens?.numberOfTokens} issued
         </h6>
       )}
       <div className="available-token mb-6 sm:mb-[57px]">
         <Image src="/images/token.png" alt="token" width={32} height={32} />
         <div className="text-center">
-          <h1 className="mb-1 p-2xl">200</h1>
+          <h1 className="mb-1 p-2xl"> {projectData?.tokens?.tokenPrice}</h1>
           <p className="text-white p-sm-semi">Equity tokens available</p>
         </div>
       </div>
@@ -23,7 +23,7 @@ const Tokens = ({ showTokenInfo, onClick, isLoading }) => {
         {isLoading ? 'Loading...' : 'Invest now'}
       </button>
 
-      <div className=" mb-2 sm:mb-4 ">
+      <div className="mb-2 sm:mb-4">
         <PowerCarbon />
       </div>
 
@@ -52,7 +52,7 @@ const Tokens = ({ showTokenInfo, onClick, isLoading }) => {
         </div>
       </div>
       {showTokenInfo && (
-        <div className="what-token mt-4 sm:mt-6">
+        <div className="mt-4 what-token sm:mt-6">
           <div className="justify-start gap-2 mb-2 flex-box">
             <Image src="/images/info.svg" alt="info" width={24} height={24} />
             <h5 className="font-semibold text-white p-sm">What are tokens?</h5>

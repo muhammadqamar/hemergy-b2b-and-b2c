@@ -7,7 +7,7 @@
 }
 
 .authentications-section .auth-container {
-  @apply max-w-[1440px] gap-[88px] lg:gap-10 laptop:gap-[225px] mx-auto flex  flex-col-reverse lg:flex-row justify-center items-center lg:items-start pt-[144px] pb-[200px] lg:py-[103px] px-6;
+  @apply max-w-[1440px] gap-[88px] lg:gap-10 laptop:gap-[225px] mx-auto flex  flex-col-reverse lg:flex-row justify-center items-center  pt-[144px] pb-[200px] lg:py-[103px] px-6;
 }
 
 .authentications-section .auth-wather {

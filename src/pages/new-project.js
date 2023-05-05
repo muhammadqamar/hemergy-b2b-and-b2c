@@ -12,7 +12,11 @@ import LinkInvestmentVehicle from '@/dashboard/newProjectForms/linkInvestmentVeh
 import Beneficiaries from '@/dashboard/newProjectForms/beneficiaries';
 import SmartContract from '@/dashboard/newProjectForms/smartContract';
 import { useSelector } from 'react-redux';
-import { getProjectasDraft,deleteProjectasDaft, createProjectonDetail } from '@/services/coreProject';
+import {
+  getProjectasDraft,
+  deleteProjectasDaft,
+  createProjectonDetail,
+} from '@/services/coreProject';
 import { useDispatch } from 'react-redux';
 import {
   applyDraftInformation,
@@ -47,12 +51,12 @@ const tabs = [
 ];
 
 const NewProject = () => {
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(1);
   const [foundDraft, setFoundDraft] = useState();
-  const [useDraftProject, setUseDraftProject] = useState(false)
+  const [useDraftProject, setUseDraftProject] = useState(false);
   const dispatch = useDispatch();
   const newProject = useSelector((state) => state.addProject);
-  const {user} = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user);
   const {
     billing,
     beneficiaries,
@@ -73,12 +77,16 @@ const NewProject = () => {
     })();
   }, []);
 
-
-  return (
+  return localStorage.getItem('user-type') === 'developer' ? (
     <div>
       <SideBar />
       <div className="dashboard-container padding-left min-h-[960px] pb-[72px]">
-        <NavUserNewProject icon user={`Hi ${user?.detail?.name}`} newProject para />
+        <NavUserNewProject
+          icon
+          user={`Hi ${user?.detail?.name}`}
+          newProject
+          para
+        />
         {foundDraft && active === 0 && (
           <div className="bg-white flex justify-between rounded-[10px] p-[15px] mb-[20px]">
             <p className="bold">
@@ -87,10 +95,9 @@ const NewProject = () => {
             <div className="flex gap-[10px]">
               <button
                 onClick={() => {
-
                   dispatch(applyDraftInformation(draft));
                   setFoundDraft(false);
-                  setUseDraftProject(true)
+                  setUseDraftProject(true);
                 }}
                 className="bg-textcolor rounded-[5px] py-[5px] px-[15px] text-white bold  "
               >
@@ -98,7 +105,7 @@ const NewProject = () => {
               </button>
               <button
                 onClick={() => {
-                  deleteProjectasDaft(draft?._id)
+                  deleteProjectasDaft(draft?._id);
                   setFoundDraft(false);
                 }}
                 className="bg-[red] rounded-[5px] py-[5px] px-[15px] text-white bold  "
@@ -194,25 +201,37 @@ const NewProject = () => {
 
               {active === 0 && (
                 <div className="w-full">
-                  <Billing setActive={setActive} useDraftProject={useDraftProject} />
+                  <Billing
+                    setActive={setActive}
+                    useDraftProject={useDraftProject}
+                  />
                 </div>
               )}
 
               {active === 1 && (
                 <div className="w-full">
-                  <ProjectDetailForm setActive={setActive} useDraftProject={useDraftProject} />
+                  <ProjectDetailForm
+                    setActive={setActive}
+                    useDraftProject={useDraftProject}
+                  />
                 </div>
               )}
 
               {active === 2 && (
                 <div className="w-full">
-                  <CreateToken setActive={setActive} useDraftProject={useDraftProject} />
+                  <CreateToken
+                    setActive={setActive}
+                    useDraftProject={useDraftProject}
+                  />
                 </div>
               )}
 
               {active === 3 && (
                 <div className="w-full">
-                  <LinkAssets setActive={setActive} useDraftProject={useDraftProject} />
+                  <LinkAssets
+                    setActive={setActive}
+                    useDraftProject={useDraftProject}
+                  />
                 </div>
               )}
 
@@ -223,7 +242,10 @@ const NewProject = () => {
               )} */}
               {active === 5 && (
                 <div className="w-full">
-                  <Beneficiaries setActive={setActive} useDraftProject={useDraftProject} />
+                  <Beneficiaries
+                    setActive={setActive}
+                    useDraftProject={useDraftProject}
+                  />
                 </div>
               )}
 
@@ -240,6 +262,8 @@ const NewProject = () => {
         )}
       </div>
     </div>
+  ) : (
+    ''
   );
 };
 

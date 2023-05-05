@@ -40,7 +40,7 @@ const Register = ({ query }) => {
         />
       </Link>
 
-      <div className="auth-container items-center">
+      <div className="items-center auth-container" >
         <RegisterSlider />
         {query?.success || !!registerState?.email ? (
           <InBox

@@ -7,6 +7,7 @@ import { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DrogAndDropFile from '@/utils/drogAndDropFiles';
 import UpLoadFileAbout from '@/utils/upLoadFIleAbout';
+import Autocomplete from 'react-google-autocomplete';
 
 import { setProjectDetails } from '@/store/reducer/newProject';
 import Link from 'next/link';
@@ -14,18 +15,26 @@ import Image from 'next/image';
 import { updateProjectasDaft } from '@/services/coreProject';
 
 const ProjectDetails = ({ setActive }) => {
+  const [projectName, setProjectName] = useState('');
+  const [projctDescription, setProjctDescription] = useState('');
+  const [projectPostal, setProjectPostal] = useState('');
+
+  const [address1, setAddress1] = useState('');
+  const [address2, setAddress2] = useState('');
+  const [city, setCity] = useState('');
+
   const [selected, setSelected] = useState('');
   const [addressManually, setAddressManually] = useState(false);
   const [addressFinder, setAddressFinder] = useState('');
   const dispatch = useDispatch();
   const { draft, projectDetails } = useSelector((state) => state.addProject);
-  const { ref } = usePlacesWidget({
-    apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
-    onPlaceSelected: (place) => {
-      console.log(place);
-      setAddressFinder(place);
-    },
-  });
+  // const { ref } = usePlacesWidget({
+  //   apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
+  //   onPlaceSelected: (place) => {
+  //     console.log(place)
+  //     setAddressFinder(place);
+  //   },
+  // });
 
   const [imageData, setImageData] = useState('');
   const [upload, setUpload] = useState('');
@@ -74,21 +83,21 @@ const ProjectDetails = ({ setActive }) => {
               image: upload || projectDetails.image || '',
             }
           : {
-              projectName: '',
-              projectDescription: '',
+              projectName: projectName,
+              projectDescription: projctDescription,
 
               manuallyAddress: '',
-              addressLine1: addressFinder?.formatted_address || '',
-              addressLine2: '',
+              addressLine1: addressFinder?.formatted_address || address1,
+              addressLine2: address2,
               city:
                 addressFinder?.address_components?.filter((data) =>
                   data?.types?.includes('administrative_area_level_1')
-                )[0]?.long_name || '',
-              postalCode: '',
+                )[0]?.long_name || city,
+              postalCode: projectPostal,
               country:
                 addressFinder?.address_components?.filter((data) =>
                   data?.types?.includes('country')
-                )[0]?.short_name || '',
+                )[0]?.short_name || selected,
               image: upload || '',
               lat: addressFinder?.geometry?.location?.lat() || '',
               lang: addressFinder?.geometry?.location?.lng() || '',
@@ -158,7 +167,9 @@ const ProjectDetails = ({ setActive }) => {
             placeholder="Project name"
             inputType="text"
             name="projectName"
-            onChange={handleChange}
+            onChange={(e) => {
+              setProjectName(e.target.value);
+            }}
             onBlur={handleBlur}
             value={values.projectName}
             errors={errors.projectName}
@@ -171,7 +182,9 @@ const ProjectDetails = ({ setActive }) => {
             placeholder="Project description ..."
             inputType="text"
             name="projectDescription"
-            onChange={handleChange}
+            onChange={(e) => {
+              setProjctDescription(e.target.value);
+            }}
             onBlur={handleBlur}
             value={values.projectDescription}
             errors={errors.projectDescription}
@@ -183,22 +196,30 @@ const ProjectDetails = ({ setActive }) => {
               {addressManually ? 'Enter address manually' : 'Address finder'}
             </label>
             <>
-              <div className="input-field">
+              <div className="input-field" style={{justifyContent:"flex-start"}}>
+                <>
                 <Image
                   src="/images/search.svg"
                   alt="google"
                   width={20}
                   height={20}
                 />
-
-                <input
+                <Autocomplete
+                  apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}
+                  onPlaceSelected={(place) => {
+                    console.log(place);
+                    setAddressFinder(place);
+                  }}
+                />
+                </>
+                {/* <input
                   className={`input p-sm`}
                   ref={ref}
                   placeholder="Start typing the address"
                   type="text"
                   autocomplete
                   disabled={addressManually ? true : false}
-                />
+                /> */}
               </div>
             </>
           </div>
@@ -228,7 +249,10 @@ const ProjectDetails = ({ setActive }) => {
                 selectButtonClassName="country-drop-list"
                 selected={values?.country}
                 fullWidth={true}
-                onSelect={(code) => setFieldValue('country', code)}
+                onSelect={(code) => {
+                  setFieldValue('country', code);
+                  setSelected(code);
+                }}
                 disabled={!addressManually ? true : false}
               />
             </div>
@@ -243,7 +267,10 @@ const ProjectDetails = ({ setActive }) => {
             placeholder="Address line 1"
             inputType="text"
             name="addressLine1"
-            onChange={handleChange}
+            onChange={(e) => {
+              setFieldValue('addressLine1', e.target.value);
+              setAddress1(e.target.value);
+            }}
             onBlur={handleBlur}
             value={values.addressLine1}
             errors={errors.addressLine1}
@@ -255,7 +282,10 @@ const ProjectDetails = ({ setActive }) => {
             placeholder="Address line 2"
             inputType="text"
             name="addressLine2"
-            onChange={handleChange}
+            onChange={(e) => {
+              setFieldValue('addressLine2', e.target.value);
+              setAddress2(e.target.value);
+            }}
             onBlur={handleBlur}
             value={values.addressLine2}
             errors={errors.addressLine2}
@@ -267,7 +297,10 @@ const ProjectDetails = ({ setActive }) => {
             placeholder="City"
             inputType="text"
             name="city"
-            onChange={handleChange}
+            onChange={(e) => {
+              setFieldValue('city', e.target.value);
+              setCity(e.target.value);
+            }}
             onBlur={handleBlur}
             value={values.city}
             errors={errors.city}
@@ -279,11 +312,14 @@ const ProjectDetails = ({ setActive }) => {
             placeholder="Postal code"
             inputType="number"
             name="postalCode"
-            onChange={handleChange}
             onBlur={handleBlur}
             value={values.postalCode}
             errors={errors.postalCode}
             touched={touched.postalCode}
+            onChange={(e) => {
+              setFieldValue('postalCode', e.target.value);
+              setProjectPostal(e.target.value);
+            }}
           />
           <DrogAndDropFile
             onClick={() => {

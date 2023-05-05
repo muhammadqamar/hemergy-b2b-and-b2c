@@ -1,17 +1,28 @@
 import Tokens from './tokens';
 import TabInfo from '@/utils/tabInfo';
 import UserCard from '@/utils/userCard';
-import { investProject } from '@/services/transaction';
+import { investProject, requestMint } from '@/services/transaction';
 import { useSelector } from 'react-redux';
 import { getSigner } from '@/components/helpers/signer';
 import { useState } from 'react';
+import Hemergy from '@hemergy/core-sdk'
+import { useEffect } from 'react';
+import { ethers } from 'ethers';
 
 const Index = ({ projectData }) => {
   const [isLoading, setIsLoading] = useState(false);
   const state = useSelector((state) => state);
+
+  var hemergy
+  console.log('sdk hemergy', hemergy)
+  useEffect(async ()=>{
+    if( state.user.web3auth) {
+
+    }
+  },[state.user.web3auth])
   return (
     <div className="dashboard-container">
-      <div className="project-detail bg-white">
+      <div className="bg-white project-detail">
         <div className="detail-img">
           <div
             className="detail-banner-img "
@@ -49,7 +60,7 @@ const Index = ({ projectData }) => {
         </div>
 
         <div className="project-detail-about">
-          <div className="flex-box gap-2">
+          <div className="gap-2 flex-box">
             <TabInfo
               icon="/images/clear_day.svg"
               text={projectData?.details?.linkAssets?.assetType}
@@ -70,13 +81,23 @@ const Index = ({ projectData }) => {
             />
           </div>
           <div>
-            <h3 className="p-xl-semi mb-4">
+            <h3 className="mb-4 p-xl-semi">
               {projectData?.details?.information?.projectName}
             </h3>
             <p className="p-sm text-gray800">
               {projectData?.details?.information?.projectDescription}
             </p>
           </div>
+
+            <UserCard
+
+              company
+              avatar={projectData?.user?.detail?.profileImage}
+              detail
+              name={projectData?.user?.detail?.name}
+              designation="Project Owner"
+            />
+
           {projectData?.details?.beneficiaries?.users?.map((item, index) => (
             <UserCard
               key={index}
@@ -85,40 +106,48 @@ const Index = ({ projectData }) => {
               detail
               name={item.firstName}
               designation="Beneficiaries"
-              bio="  It is a long established fact that a reader will be distracted by the readable
-            content of a page when looking at its layout. The point of using Lorem Ipsum is that
-            it has a more-or-less normal distribution of letters, as opposed to using 
-            "
             />
           ))}
         </div>
         <Tokens
           showTokenInfo
           isLoading={isLoading}
+          projectData={projectData?.details}
           onClick={async () => {
             setIsLoading(true);
-            try {
-              const signerInformation = await investProject({
-                endUserAddress: state.user.user?.endUserAddress,
-                projectAddress: projectData?.projectAddress,
-                amount: 10000,
-                investorAccountAddress: state.user.user?.accountAddress,
-              });
-              const investaddress = await getSigner(
-                state.user.web3auth,
-                signerInformation.data?.domain,
-                {
-                  ForwardRequest: signerInformation.data?.ForwardRequest,
-                },
-                signerInformation.data?.request,
-                'project'
-              );
-              console.log('investaddress,', investaddress);
-            } catch (error) {
-              console.error('error', error);
-            } finally {
-              setIsLoading(false);
-            }
+            const e = await state.user.web3auth.connect()
+            console.log(e)
+          const ethersProvider = new ethers.providers.Web3Provider(
+            e
+          );
+          const signer =  ethersProvider.getSigner();
+           const hemergy =  new Hemergy({ baseURL: 'https://dev-core.hemergy.com', signer:state.user?.signer });
+            console.log(hemergy)
+            hemergy.investInProject(projectData?.projectAddress)
+            // try {
+            // const getMint = await requestMint();
+            // const signerInformation = await investProject({
+            //   endUserAddress: state.user.user?.endUserAddress,
+            //   projectAddress: projectData?.projectAddress,
+            //   amount: 10000,
+            //   investorAccountAddress: state.user.user?.accountAddress,
+            // });
+
+            // const investaddress = await getSigner(
+            //   state.user.web3auth,
+            //   signerInformation.data?.domain,
+            //   {
+            //     ForwardRequest: signerInformation.data?.ForwardRequest,
+            //   },
+            //   signerInformation.data?.request,
+            //   'project'
+            // );
+            // console.log('investaddress,', investaddress);
+            // } catch (error) {
+            //   console.error('error', error);
+            // } finally {
+            //   setIsLoading(false);
+            // }
           }}
         />
       </div>

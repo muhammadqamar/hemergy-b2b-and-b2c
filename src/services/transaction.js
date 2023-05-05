@@ -30,5 +30,16 @@ const meta = async () => {
 };
 
 
+const requestMint = async () => {
+  try {
+    return await http.postCore(`/bank/mint`);
+  } catch (error) {
+    ShowError(error?.response?.data?.status);
+    return error;
+  }
+};
 
-export { relayer, meta, investProject };
+
+
+
+export { relayer, meta, investProject, requestMint };

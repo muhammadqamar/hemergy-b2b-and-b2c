@@ -6,7 +6,7 @@ import TrendingCard from "@/utils/trendingCard";
 import Map from "@/utils/map/Map";
 import { useEffect, useState } from "react";
 import positions from "@/utils/map/positionData";
-import BarChart from "react-bar-chart";
+// import BarChart from "react-bar-chart";
 
 export default function SmartContract() {
   const [positionData, setPositionData] = useState([]);
@@ -41,10 +41,10 @@ export default function SmartContract() {
     <>
       <SideBar />
       <div className="dashboard-container padding-left">
-        <div className="flex justify-between items-center flex-wrap bg-btncolor rounded-xl py-3 px-4 mb-8 gap-4">
+        <div className="flex flex-wrap items-center justify-between gap-4 px-4 py-3 mb-8 bg-btncolor rounded-xl">
           <div className="flex items-start gap-2 pl-0 laptop:pl-[106px]">
             <Image src="/images/verification-warning.svg" alt="warning" width={20} height={20} />
-            <p className="font-Inter font-normal text-sm text-white leading-5 ">
+            <p className="text-sm font-normal leading-5 text-white font-Inter ">
               Your projects are not public. Your projects will remain in draft until you complete your verification
             </p>
           </div>
@@ -52,7 +52,7 @@ export default function SmartContract() {
         </div>
         <NavUserNewProject icon user="Project dashboard" />
 
-        <div className="flex items-center flex-wrap justify-between gap-4 my-8">
+        <div className="flex flex-wrap items-center justify-between gap-4 my-8">
           <div className="flex items-center gap-3">
             <label className="p-sm text-weight-semibold text-textblack">View period:</label>
             <div className="dashboard-select">
@@ -74,9 +74,9 @@ export default function SmartContract() {
           </div>
         </div>
 
-        <div className="flex items-center flex-wrap laptop:flex-nowrap gap-8 my-8">
+        <div className="flex flex-wrap items-center gap-8 my-8 laptop:flex-nowrap">
           <div className="bar-chart w-full p-6  bg-white h-[420px] rounded-xl shadow-mdshadow2 hidden lg:block">
-            <div className="flex gap-2 items-center justify-between mb-4">
+            <div className="flex items-center justify-between gap-2 mb-4">
               <h4 className="p-lg ">Tot. Produced 4,567 kWh</h4>
               <div className="flex items-center gap-2">
                 <div className="graph-select">
@@ -97,21 +97,22 @@ export default function SmartContract() {
                 </div>
               </div>
             </div>
-            <BarChart ylabel="Quantity" borderWidth={borderWidth} background={background} width={600} height={316} margin={margin} data={data} onBarClick={handleBarClick} />
+            {/* <BarChart ylabel="Quantity" borderWidth={borderWidth} background={background} width={600} height={316} margin={margin} data={data} onBarClick={handleBarClick} />
+          */}
           </div>
 
           <div className=" flex flex-col gap-8 w-full md:w-[46%]">
-            <div className="w-full bg-white p-4 rounded-xl  shadow-mdshadow2 text-textblack">
+            <div className="w-full p-4 bg-white rounded-xl shadow-mdshadow2 text-textblack">
               <div className="flex items-center justify-center gap-2 mb-2">
                 <Image src="/images/token.png" alt="token" width={23} height={23} />
                 <h6 className="p-lg ">Tokens</h6>
               </div>
               <div className="flex items-center justify-between gap-4">
-                <div className="w-full rounded-lg p-2 text-center bg-garbg">
+                <div className="w-full p-2 text-center rounded-lg bg-garbg">
                   <h6 className="p-xl-semi ">1,234</h6>
                   <p className="p-sm-semi text-weight-medium">Issued</p>
                 </div>
-                <div className="w-full rounded-lg p-2 text-center bg-garbg">
+                <div className="w-full p-2 text-center rounded-lg bg-garbg">
                   <h6 className="p-xl-semi ">234</h6>
                   <p className="p-sm-semi text-weight-medium">Sold</p>
                 </div>
@@ -126,12 +127,12 @@ export default function SmartContract() {
         <div className="flex items-center justify-between gap-2 mb-8">
           <h6 className="p-lg ">Your projects</h6>
 
-          <div className="flex items-center gap-1 p-1 rounded-2xl bg-white">
-            <button className="w-8 h-8 rounded-xl flex items-center justify-center bg-blue100">
+          <div className="flex items-center gap-1 p-1 bg-white rounded-2xl">
+            <button className="flex items-center justify-center w-8 h-8 rounded-xl bg-blue100">
               <Image src="/images/table_rows.svg" alt="table_rows" width={20} height={20} />
               {/*  <Image src='/images/table_rows_black.svg' alt='table_rows' width={20} height={20} />*/}
             </button>
-            <button className="w-8 h-8 rounded-xl flex items-center justify-center bg-white">
+            <button className="flex items-center justify-center w-8 h-8 bg-white rounded-xl">
               <Image src="/images/grid_view.svg" alt="grid_view" width={20} height={20} />
               {/*  <Image src='/images/grid_view_blue.svg' alt='grid_view_blue' width={20} height={20} />*/}
             </button>
@@ -141,29 +142,29 @@ export default function SmartContract() {
         <div className="w-full bg-white rounded-[20px] shadow-mdshadow2 overflow-x-scroll md:overflow-x-visible">
           <table className="cap-table">
             <tr>
-              <th className="table-th p-sm-semi text-left">Name</th>
-              <th className="table-th p-sm-semi text-left">Asset name</th>
-              <th className="table-th p-sm-semi text-right">Asset type</th>
-              <th className="table-th p-sm-semi text-left">Location</th>
-              <th className="table-th p-sm-semi text-left">Status</th>
-              <th className="table-th p-sm-semi text-left">Midcap?</th>
-              <th className="table-th p-sm-semi text-right">Tokens produced</th>
-              <th className="table-th p-sm-semi text-right">Tokens sold</th>
+              <th className="text-left table-th p-sm-semi">Name</th>
+              <th className="text-left table-th p-sm-semi">Asset name</th>
+              <th className="text-right table-th p-sm-semi">Asset type</th>
+              <th className="text-left table-th p-sm-semi">Location</th>
+              <th className="text-left table-th p-sm-semi">Status</th>
+              <th className="text-left table-th p-sm-semi">Midcap?</th>
+              <th className="text-right table-th p-sm-semi">Tokens produced</th>
+              <th className="text-right table-th p-sm-semi">Tokens sold</th>
             </tr>
 
             <tr>
-              <td className="table-th p-sm-semi text-textcolor text-left">Something entered</td>
-              <td className="table-th p-sm-semi text-weight-normal text-left">Something entered</td>
-              <td className="table-th p-sm-semi text-weight-normal text-left">
+              <td className="text-left table-th p-sm-semi text-textcolor">Something entered</td>
+              <td className="text-left table-th p-sm-semi text-weight-normal">Something entered</td>
+              <td className="text-left table-th p-sm-semi text-weight-normal">
                 <Image src={"/images/sun-b.svg"} alt="icon" width={16} height={16} />
               </td>
-              <td className="table-th p-sm-semi text-weight-normal text-left">Something entered</td>
-              <td className="table-th p-sm-semi text-weight-normal text-left">
+              <td className="text-left table-th p-sm-semi text-weight-normal">Something entered</td>
+              <td className="text-left table-th p-sm-semi text-weight-normal">
                 <p className=" w-fit px-2 py-[2px] rounded-3xl bg-[#E0FBEB] text-[#19814F]">Fundraising</p>
               </td>
-              <td className="table-th p-sm-semi text-weight-normal text-left"></td>
-              <td className="table-th p-sm-semi text-weight-normal text-right">0</td>
-              <td className="table-th p-sm-semi text-weight-normal text-right">0</td>
+              <td className="text-left table-th p-sm-semi text-weight-normal"></td>
+              <td className="text-right table-th p-sm-semi text-weight-normal">0</td>
+              <td className="text-right table-th p-sm-semi text-weight-normal">0</td>
             </tr>
           </table>
         </div>

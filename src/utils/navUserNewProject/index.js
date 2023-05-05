@@ -16,12 +16,14 @@ export default function index({ icon, user, newProject, para }) {
               icon="/images/community.svg"
               text="Community projects"
             />
+            <a target="_blank" href="https://dev-core.hemergy.com/docs/#/" >
             <Button
               bg="bg-white"
               border
               icon="/images/code.svg"
               text="Developer guide"
             />
+            </a>
             <Button
               bg="bg-white"
               border
