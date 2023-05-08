@@ -117,11 +117,11 @@ const Index = ({ projectData }) => {
             setIsLoading(true);
             const e = await state.user.web3auth.connect()
             console.log(e)
-          const ethersProvider = new ethers.providers.Web3Provider(
+          const signer = new ethers.providers.Web3Provider(
             e
           );
           const signer =  ethersProvider.getSigner();
-           const hemergy =  new Hemergy({ baseURL: 'https://dev-core.hemergy.com', signer:state.user?.signer });
+           const hemergy =  new Hemergy({ baseURL: 'https://dev-core.hemergy.com', signer });
             console.log(hemergy)
             hemergy.investInProject(projectData?.projectAddress)
             // try {

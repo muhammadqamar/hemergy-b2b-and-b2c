@@ -1,5 +1,5 @@
 import React from 'react';
-import { Map, Marker, GoogleApiWrapper } from 'react-google-maps';
+import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
 import { positions } from './positionData';
 
 const mapStyle = [
