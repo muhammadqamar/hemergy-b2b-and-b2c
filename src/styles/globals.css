@@ -21,3 +21,18 @@ font-family: 'Poppins', sans-serif; */
   display: flex;
   justify-content: center;
 }
+
+.w3a-parent-container #w3a-modal .w3a-header__logo img {
+  height: auto;
+  width: 17.5rem !important;
+  margin-left: 135px;
+}
+
+.w3a-footer {
+  display: none !important;
+}
+
+.w3a-spinner-power {
+  display: none !important;
+}
+

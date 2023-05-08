@@ -5,7 +5,7 @@ import { investProject, requestMint } from '@/services/transaction';
 import { useSelector } from 'react-redux';
 import { getSigner } from '@/components/helpers/signer';
 import { useState } from 'react';
-import Hemergy from '@hemergy/core-sdk'
+import Hemergy from '@hemergy/core-sdk';
 import { useEffect } from 'react';
 import { ethers } from 'ethers';
 
@@ -13,13 +13,12 @@ const Index = ({ projectData }) => {
   const [isLoading, setIsLoading] = useState(false);
   const state = useSelector((state) => state);
 
-  var hemergy
-  console.log('sdk hemergy', hemergy)
-  useEffect(async ()=>{
-    if( state.user.web3auth) {
+ ;
 
+  useEffect(async () => {
+    if (state.user.web3auth) {
     }
-  },[state.user.web3auth])
+  }, [state.user.web3auth]);
   return (
     <div className="dashboard-container">
       <div className="bg-white project-detail">
@@ -89,14 +88,13 @@ const Index = ({ projectData }) => {
             </p>
           </div>
 
-            <UserCard
-
-              company
-              avatar={projectData?.user?.detail?.profileImage}
-              detail
-              name={projectData?.user?.detail?.name}
-              designation="Project Owner"
-            />
+          <UserCard
+            company
+            avatar={projectData?.user?.detail?.profileImage}
+            detail
+            name={projectData?.user?.detail?.name}
+            designation="Project Owner"
+          />
 
           {projectData?.details?.beneficiaries?.users?.map((item, index) => (
             <UserCard
@@ -115,15 +113,21 @@ const Index = ({ projectData }) => {
           projectData={projectData?.details}
           onClick={async () => {
             setIsLoading(true);
-            const e = await state.user.web3auth.connect()
-            console.log(e)
-          const ethersProvider = new ethers.providers.Web3Provider(
-            e
-          );
-          const signer =  ethersProvider.getSigner();
-           const hemergy =  new Hemergy({ baseURL: 'https://dev-core.hemergy.com', signer});
-            console.log(hemergy)
-            hemergy.investInProject(projectData?.projectAddress)
+            const e = await state.user.web3auth.connect();
+
+            const ethersProvider = new ethers.providers.Web3Provider(e);
+            const signer =await  ethersProvider.getSigner();
+            console.log('signer address', await signer.getAddress())
+            const hemergy = new Hemergy({
+              baseURL: 'https://dev-core.hemergy.com',
+              signer,
+            });
+
+            const isKYCed = await hemergy.isKYCed(state.user.user?.accountAddress);
+            await hemergy.mint(state.user.user?.accountAddress);
+
+            console.log(projectData?.projectAddress,state.user.user?.accountAddress);
+            await hemergy.investInProject(projectData?.projectAddress,state.user.user?.accountAddress, 1000)
             // try {
             // const getMint = await requestMint();
             // const signerInformation = await investProject({
