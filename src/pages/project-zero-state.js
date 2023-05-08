@@ -3,7 +3,7 @@ import SideBar from "@/dashboard/sideBar";
 import NavUserNewProject from "@/utils/navUserNewProject";
 import Button from "@/utils/buttons";
 import TrendingCard from "@/utils/trendingCard";
-import Map from "@/utils/map/Map";
+// import Map from "@/utils/map/Map";
 import { useEffect, useState } from "react";
 import positions from "@/utils/map/positionData";
 // import BarChart from "react-bar-chart";
@@ -67,7 +67,7 @@ export default function SmartContract() {
           <Button color bg="bg-btncolor" icon="/images/add.svg" text="New project" shadow />
         </div>
         <div className="w-full h-[260px] rounded-[20px] bg-blue100 relative  overflow-hidden">
-          <Map positionCoords={positionData} smallH />
+          {/* <Map positionCoords={positionData} smallH /> */}
 
           <div className="absolute left-4 bottom-4">
             <TrendingCard wFit heading="Produced" ratio="0" ratioName="dREC" icon="/images/trending_up.svg" />

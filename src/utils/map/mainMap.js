@@ -1,4 +1,4 @@
-import Map from './Map';
+//import Map from './Map';
 import { positions } from './positionData';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -71,7 +71,7 @@ const MainMap = ({ mapHeading, b2bHeading, userProject, setSearchData }) => {
           mapHeading ? 'hidden md:block' : 'hidden lg:block'
         }`}
       >
-        <Map positionCoords={positionData} />
+        {/* <Map positionCoords={positionData} /> */}
       </div>
 
       {mapHeading && (
