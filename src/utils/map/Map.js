@@ -1,5 +1,5 @@
 import React from 'react';
-import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
+import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import { positions } from './positionData';
 
 const mapStyle = [
@@ -241,50 +241,74 @@ const mapStyle = [
     ],
   },
 ];
-
+const OPTIONS = {
+  minZoom: 2,
+  maxZoom: 2,
+}
+const containerStyle = {
+  width: '100%',
+  height: '100%',
+};
+const center = {
+  lat: 39.745,
+  lng: 75.523
+};
 const MapContainer = (props) => {
-  const {h, positionCoords} =  props
-  const _mapLoaded = (mapProps, map) => {
+  const { h, positionCoords } = props;
+
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
+  });
+
+  const coords = { lat: 24.223592, lng: 18.984375 };
+  const [map, setMap] = React.useState(null);
+
+  const onLoad = React.useCallback(function callback(map) {
+    // This is just an example of getting and using the map instance!!! don't just blindly copy!
+    map.setZoom(1.8)
+    const bounds = new window.google.maps.LatLngBounds(center);
+    map.fitBounds(bounds);
+
+    console.log(map)
     map.setOptions({
       styles: mapStyle,
     });
-  };
-  const coords = { lat: 24.223592, lng: 18.984375 };
-  console.log(props)
+
+    setMap(map);
+  }, []);
   return (
-    <div
-      className={`relative w-full ${h ? 'h-[547px]' : 'h-[439px]'}`}
-    >
-      {props.google &&
-      <Map
+    <div className={`relative w-full ${h ? 'h-[547px]' : 'h-[439px]'}`}>
+      {isLoaded && (
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          zoom={1.8}
+          initialCenter={coords}
+          streetViewControl={false}
+          mapTypeControl={false}
+          fullscreenControl={false}
+          zoomControl={false}
+          onLoad={onLoad}
+          styles={mapStyle}
+          options = {OPTIONS}
 
-        google={props.google}
-        zoom={2}
-        initialCenter={coords}
-        streetViewControl={false}
-        mapTypeControl={false}
-        fullscreenControl={false}
-        zoomControl={false}
-        onReady={(mapProps, map) => _mapLoaded(mapProps, map)}
-      >
-
-        {positionCoords?.map((data) => {
-          return (
-            <Marker
-              position={data.coords}
-              icon={{
-                url: data.icon,
-                //   anchor: new google.maps.Point(32, 32),
-                //   scaledSize: new google.maps.Size(64, 64),
-              }}
-            />
-          );
-        })}
-      </Map>}
+        >
+          {positionCoords?.map((data) => {
+            return (
+              <Marker
+                position={data.coords}
+                icon={{
+                  url: data.icon,
+                  //   anchor: new google.maps.Point(32, 32),
+                  //   scaledSize: new google.maps.Size(64, 64),
+                }}
+              />
+            );
+          })}
+        </GoogleMap>
+      )}
     </div>
   );
 };
 
-export default GoogleApiWrapper({
-  apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
-})(MapContainer);
+export default MapContainer;
