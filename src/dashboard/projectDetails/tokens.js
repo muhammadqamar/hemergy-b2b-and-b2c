@@ -20,7 +20,7 @@ const Tokens = ({ showTokenInfo, onClick, isLoading, projectData }) => {
         onClick={onClick}
         className="w-full md:w-[280px] mx-auto mb-4 sm:mb-6 btn secondary"
       >
-        {isLoading ? 'Loading...' : 'Invest now'}
+        {isLoading ? <img src="/images/loader.svg" /> : 'Invest now'}
       </button>
 
       <div className="mb-2 sm:mb-4">

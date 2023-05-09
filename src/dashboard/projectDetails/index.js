@@ -8,12 +8,11 @@ import { useState } from 'react';
 import Hemergy from '@hemergy/core-sdk';
 import { useEffect } from 'react';
 import { ethers } from 'ethers';
-
+import { toast } from 'react-toastify';
+import { updateuserprojects } from '@/services/user';
 const Index = ({ projectData }) => {
   const [isLoading, setIsLoading] = useState(false);
   const state = useSelector((state) => state);
-
- ;
 
   useEffect(async () => {
     if (state.user.web3auth) {
@@ -116,42 +115,49 @@ const Index = ({ projectData }) => {
             const e = await state.user.web3auth.connect();
 
             const ethersProvider = new ethers.providers.Web3Provider(e);
-            const signer =await  ethersProvider.getSigner();
-            console.log('signer address', await signer.getAddress())
+            const signer = await ethersProvider.getSigner();
+            console.log('signer address', await signer.getAddress());
             const hemergy = new Hemergy({
               baseURL: 'https://dev-core.hemergy.com',
               signer,
             });
 
-            const isKYCed = await hemergy.isKYCed(state.user.user?.accountAddress);
-            await hemergy.mint(state.user.user?.accountAddress);
+            try {
+              await hemergy.mint(state.user.user?.accountAddress);
+              const invest = await hemergy.investInProject(
+                projectData?.projectAddress,
+                state.user.user?.accountAddress,
+                1000
+              );
+              if (state.user.user?.projectsasInvestor) {
+              await updateuserprojects('projectsasInvestor', {
+                email: state.user?.user?.email,
+                endUserAddress: state.user?.user?.endUserAddress,
+                projectAddress: [...state.user.user?.projectsasInvestor,{projectAddress:projectData?.projectAddress, amount:"123", time: new Date()}],
+              });
+            } else {
+              await updateuserprojects('projectsasInvestor', {
+                email: state.user?.user?.email,
+                endUserAddress: state.user?.user?.endUserAddress,
+                projectAddress: [{projectAddress:projectData?.projectAddress, amount:"123", time: new Date()}],
+              });
+            }
+              setIsLoading(false);
+              toast.success('You have successfully Invested in this Project', {
+                position: 'bottom-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'light',
+              });
+            } catch (e) {
+              setIsLoading(false);
+            }
 
-            console.log(projectData?.projectAddress,state.user.user?.accountAddress);
-            await hemergy.investInProject(projectData?.projectAddress,state.user.user?.accountAddress, 1000)
-            // try {
-            // const getMint = await requestMint();
-            // const signerInformation = await investProject({
-            //   endUserAddress: state.user.user?.endUserAddress,
-            //   projectAddress: projectData?.projectAddress,
-            //   amount: 10000,
-            //   investorAccountAddress: state.user.user?.accountAddress,
-            // });
 
-            // const investaddress = await getSigner(
-            //   state.user.web3auth,
-            //   signerInformation.data?.domain,
-            //   {
-            //     ForwardRequest: signerInformation.data?.ForwardRequest,
-            //   },
-            //   signerInformation.data?.request,
-            //   'project'
-            // );
-            // console.log('investaddress,', investaddress);
-            // } catch (error) {
-            //   console.error('error', error);
-            // } finally {
-            //   setIsLoading(false);
-            // }
           }}
         />
       </div>
