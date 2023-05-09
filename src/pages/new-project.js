@@ -51,7 +51,7 @@ const tabs = [
 ];
 
 const NewProject = () => {
-  const [active, setActive] = useState(1);
+  const [active, setActive] = useState(0);
   const [foundDraft, setFoundDraft] = useState();
   const [useDraftProject, setUseDraftProject] = useState(false);
   const dispatch = useDispatch();
@@ -131,6 +131,9 @@ const NewProject = () => {
                         ? 'text-textcolor bg-cardbg'
                         : 'text-textblack bg-white'
                     } `}
+                    onClick={()=>{
+                      setActive(i)
+                    }}
                   >
                     {item.name}
                     <span>
@@ -240,7 +243,7 @@ const NewProject = () => {
                   <LinkInvestmentVehicle setActive={setActive} useDraftProject={useDraftProject} />
                 </div>
               )} */}
-              {active === 5 && (
+              {active === 4 && (
                 <div className="w-full">
                   <Beneficiaries
                     setActive={setActive}

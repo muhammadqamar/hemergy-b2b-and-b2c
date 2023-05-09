@@ -67,7 +67,7 @@ const Index = () => {
               }
               hemergyIcon="/images/air.svg"
               user={{
-                name: item?.details?.beneficiaries?.users[0]?.firstName,
+                name: item?.details?.beneficiaries?.users?.[0]?.firstName,
                 designation: 'Project Manager',
                 bio: '',
                 avatar: '/images/user.png',
