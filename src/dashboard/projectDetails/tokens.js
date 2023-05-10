@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import PowerCarbon from '@/utils/powerCarbon';
 
-const Tokens = ({ showTokenInfo, onClick, isLoading, projectData }) => {
+const Tokens = ({ showTokenInfo, onClick, projectData }) => {
   return (
     <div className="tokens-wrapper">
       {showTokenInfo && (
@@ -20,7 +20,7 @@ const Tokens = ({ showTokenInfo, onClick, isLoading, projectData }) => {
         onClick={onClick}
         className="w-full md:w-[280px] mx-auto mb-4 sm:mb-6 btn secondary"
       >
-        {isLoading ? 'Loading...' : 'Invest now'}
+        {'Invest now'}
       </button>
 
       <div className="mb-2 sm:mb-4">

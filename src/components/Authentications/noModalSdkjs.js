@@ -2,8 +2,8 @@ import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSelector, useDispatch } from 'react-redux';
-import { ethers } from "ethers";
-import Hemergy from '@hemergy/core-sdk'
+import { ethers } from 'ethers';
+import Hemergy from '@hemergy/core-sdk';
 import { Formik } from 'formik';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
@@ -45,20 +45,20 @@ function App() {
     formikValidation.current?.setSubmitting(true);
     const web3authProvider = await web3auth.connect();
 
-  //   const ethersProvider = new ethers.providers.Web3Provider(
-  //     web3authProvider
-  //   );
-  //   const ethSigner = ethersProvider.getSigner();
-  //   console.log(ethSigner)
-  //   const address = await ethSigner.getAddress();
-  //   console.log('address on ethers', address)
-  //   const hemergy =  new Hemergy({ baseURL: 'https://dev-core.hemergy.com', ethSigner });
-  //   console.log('sdk hemergy', hemergy)
-  //   // const account = await hemergy.createAccount();
-  //   // console.log('account infotmation', account)
-  //  // dispatch(setSignerToRedux(hemergy))
-  //   console.log('ethSigner', ethSigner)
-  //   setProvider(web3authProvider);
+    //   const ethersProvider = new ethers.providers.Web3Provider(
+    //     web3authProvider
+    //   );
+    //   const ethSigner = ethersProvider.getSigner();
+    //   console.log(ethSigner)
+    //   const address = await ethSigner.getAddress();
+    //   console.log('address on ethers', address)
+    //   const hemergy =  new Hemergy({ baseURL: 'https://dev-core.hemergy.com', ethSigner });
+    //   console.log('sdk hemergy', hemergy)
+    //   // const account = await hemergy.createAccount();
+    //   // console.log('account infotmation', account)
+    //  // dispatch(setSignerToRedux(hemergy))
+    //   console.log('ethSigner', ethSigner)
+    //   setProvider(web3authProvider);
 
     const privateKey = await web3authProvider.request({
       method: 'private_key',
@@ -189,7 +189,7 @@ function App() {
                   onClick={() => {
                     localStorage.setItem('user-type', 'investor');
                   }}
-                  className="cursor-pointer text-lg font-medium  uppercase  w-[50%] flex  p-3 rounded-[5px] border-[2px] border-textcolor items-center justify-center hover:bg-blue600 hover:text-white"
+                  className="cursor-pointer text-lg font-medium  uppercase  w-[50%] flex  p-3 rounded-[5px] border-[2px] border-textcolor text-textcolor items-center justify-center hover:bg-blue600 hover:text-white"
                 >
                   Investor
                 </Link>
@@ -199,7 +199,7 @@ function App() {
                   onClick={() => {
                     localStorage.setItem('user-type', 'developer');
                   }}
-                  className="cursor-pointer text-lg font-medium  uppercase  w-[50%] flex  p-3 rounded-[5px] border-[2px] border-textcolor items-center justify-center hover:bg-blue600 hover:text-white"
+                  className="cursor-pointer text-lg font-medium  uppercase text-textcolor w-[50%] flex  p-3 rounded-[5px] border-[2px] border-textcolor items-center justify-center hover:bg-blue600 hover:text-white"
                 >
                   developer
                 </Link>

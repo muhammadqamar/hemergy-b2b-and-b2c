@@ -1,37 +1,37 @@
-import Image from "next/image";
-import Detail from "./detail";
-import CreditCard from "./creditCard";
-import { useState } from "react";
+import Image from 'next/image';
+import Detail from './detail';
+import CreditCard from './creditCard';
+import { useState } from 'react';
 
 const data = [
   {
-    icon: "/images/token.png",
-    title: "These are equity tokens",
-    desc: "You will get your capital back when you sell your tokens. You will be able to sell them through the platform.",
+    icon: '/images/token.png',
+    title: 'These are equity tokens',
+    desc: 'You will get your capital back when you sell your tokens. You will be able to sell them through the platform.',
   },
   {
-    icon: "/images/currency_exchange.svg",
-    title: "Returns calculated every 15 minutes",
-    desc: "Something about returns blahblah is that it has a more-or-less normal distribution of letters",
+    icon: '/images/currency_exchange.svg',
+    title: 'Returns calculated every 15 minutes',
+    desc: 'Something about returns blahblah is that it has a more-or-less normal distribution of letters',
   },
   {
-    icon: "/images/w-search.svg",
-    title: "Your investment is transparent",
-    desc: "Because you purchase is tokenised using blockchain technology, you will be able to see exactly where the money is going",
+    icon: '/images/w-search.svg',
+    title: 'Your investment is transparent',
+    desc: 'Because you purchase is tokenised using blockchain technology, you will be able to see exactly where the money is going',
   },
   {
-    icon: "/images/w-search.svg",
-    title: "Withdraw returns whenever",
-    desc: "Your returns will be held in our cryptowallet, and you can withdraw to your account at any time. Alternatively you can link your own cryptowallet and returns will be deposited there directly as they become available. ",
+    icon: '/images/w-search.svg',
+    title: 'Withdraw returns whenever',
+    desc: 'Your returns will be held in our cryptowallet, and you can withdraw to your account at any time. Alternatively you can link your own cryptowallet and returns will be deposited there directly as they become available. ',
   },
 ];
 
-const Index = () => {
-  const [active, setActive] = useState("card");
+const Index = ({ projectData }) => {
+  const [active, setActive] = useState('card');
   return (
     <section className="dashboard-container">
       <div className="project-detail bg-blue700">
-        <Detail />
+        <Detail projectData={projectData} />
         <div className="w-full flex flex-col md:flex-row justify-between gap-6 p-6 laptop:p-8">
           <div className="flex flex-col gap-6 max-w-[617px]">
             <h2 className="p-md">What you need to know</h2>
@@ -90,7 +90,7 @@ const Index = () => {
                 // onChange={(e) => setmoco(e.target.value)}
                 style={{
                   // backgroundSize: `  ${(moco / 300) * 100}%   , ${((300 - moco) / 300) * 100}% `,
-                  backgroundSize: "80%,100%",
+                  backgroundSize: '80%,100%',
                 }}
               />
             </div>
@@ -101,33 +101,33 @@ const Index = () => {
 
               <div className="flex items-center flex-wrap justify-center gap-2 mb-6">
                 <button
-                  onClick={() => setActive("card")}
+                  onClick={() => setActive('card')}
                   className={`secondary flex items-center justify-center rounded-xl text-white ${
-                    active === "card" ? "bg-textcolor" : "bg-blue700"
+                    active === 'card' ? 'bg-textcolor' : 'bg-blue700'
                   }`}
                 >
                   Credit card
                 </button>
                 <button
-                  onClick={() => setActive("back")}
+                  onClick={() => setActive('back')}
                   className={`secondary flex items-center justify-center rounded-xl text-white ${
-                    active === "back" ? "bg-textcolor" : "bg-blue700"
+                    active === 'back' ? 'bg-textcolor' : 'bg-blue700'
                   }`}
                 >
                   Bank transfer
                 </button>
                 <button
-                  onClick={() => setActive("crypto")}
+                  onClick={() => setActive('crypto')}
                   className={`secondary flex items-center justify-center rounded-xl text-white ${
-                    active === "crypto" ? "bg-textcolor" : "bg-blue700"
+                    active === 'crypto' ? 'bg-textcolor' : 'bg-blue700'
                   }`}
                 >
                   Cryptowallet
                 </button>
               </div>
-              {active === "card" && (
+              {active === 'card' && (
                 <div>
-                  <CreditCard />
+                  <CreditCard projectData={projectData} />
                 </div>
               )}
             </div>

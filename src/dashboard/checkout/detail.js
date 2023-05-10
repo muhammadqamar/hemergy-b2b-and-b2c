@@ -1,24 +1,24 @@
-import ProjectCardThumbnail from "@/utils/projectCardThumbnail";
-import TabInfo from "@/utils/tabInfo";
-import UserCard from "@/utils/userCard";
+import ProjectCardThumbnail from '@/utils/projectCardThumbnail';
+import TabInfo from '@/utils/tabInfo';
+import UserCard from '@/utils/userCard';
 
-const Detail = () => {
+const Detail = ({ projectData }) => {
   return (
     <div className="w-full laptop:w-[369px] flex-shrink-0 bg-white">
       <ProjectCardThumbnail
         h="198px"
-        bgimg={"/images/image 1.png"}
+        bgimg={projectData?.details?.information?.image}
         hot
         stock="435"
         stockdirection
-        hemergyType="Solar asset name"
+        hemergyType={projectData?.details?.linkAssets?.assetType}
         hemergyIcon="/images/clear_day_w.svg"
       />
       <div className="p-6 flex flex-col items-start gap-6">
         <div>
           <TabInfo
             icon="/images/location_on.svg"
-            text="Location name"
+            text={projectData?.details?.information.city}
             color="text-textcolor"
             w="20"
             h="20"
@@ -26,20 +26,24 @@ const Detail = () => {
           />
         </div>
         <div>
-          <h1 className="mb-4 p-xl-semi text-textblack">Project name</h1>
+          <h1 className="mb-4 p-xl-semi text-textblack">
+            {projectData?.details?.information?.projectName}
+          </h1>
           <p className="text-gray800 p-sm">
-            It is a long established fact that a reader will be distracted by
-            the readable content of a page when looking at its layout. The point
-            of using Lorem Ipsum i...
+            {projectData?.details?.information?.projectDescription}
           </p>
         </div>
         <div>
-          <UserCard
-            normal
-            avatar="/images/user.png"
-            name="Bradley Grahams"
-            designation="Project owner"
-          />
+          {projectData?.details?.beneficiaries?.users?.map((item, index) => (
+            <UserCard
+              key={index}
+              company
+              avatar="/images/user.png"
+              detail
+              name={item.firstName}
+              designation="Beneficiaries"
+            />
+          ))}
         </div>
       </div>
     </div>

@@ -58,7 +58,7 @@ const CardArea = ({
                 usdc={usdc}
                 usdcDate={usdcDate}
                 hot={hot}
-                userName={item?.details?.beneficiaries?.users[0]?.firstName}
+                // userName={item?.details?.beneficiaries?.users[0]?.firstName}
               />
             </div>
           ))}

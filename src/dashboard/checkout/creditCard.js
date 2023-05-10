@@ -1,42 +1,65 @@
-import { Formik } from "formik";
-import Image from "next/image";
+import { Formik } from 'formik';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { getSigner } from '@/components/helpers/signer';
+import Hemergy from '@hemergy/core-sdk';
+import { ethers } from 'ethers';
 
-const CreditCard = () => {
+const CreditCard = ({ projectData }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const state = useSelector((state) => state);
+  var hemergy;
+
+  useEffect(async () => {
+    if (state.user.web3auth) {
+    }
+  }, [state.user.web3auth]);
+
   return (
     <div className="token-form">
       <Formik
-        initialValues={{ cardNumber: "", month: "", year: "", nameoncard: "", cvv: "" }}
+        initialValues={{
+          cardNumber: '',
+          month: '',
+          year: '',
+          nameoncard: '',
+          cvv: '',
+        }}
         validate={(values) => {
           const errors = {};
 
           if (!values.cardNumber) {
-            errors.cardNumber = "Required";
+            errors.cardNumber = 'Required';
           }
 
           if (!values.month) {
-            errors.month = "Required";
+            errors.month = 'Required';
           }
           if (!values.year) {
-            errors.year = "Required";
+            errors.year = 'Required';
           }
           if (!values.nameoncard) {
-            errors.nameoncard = "Required";
+            errors.nameoncard = 'Required';
           }
           if (!values.cvv) {
-            errors.cvv = "Required";
+            errors.cvv = 'Required';
           }
           return errors;
         }}
         onSubmit={async (values, { setSubmitting }) => {
           try {
-            const updateUser = await axios.put(`${process.env.NEXT_PUBLIC_API_DOMAIN}/user/financials`, {
-              ...values,
-              email: userDetail?.email || "muhammadqamar111@gmail.com",
-            });
+            const updateUser = await axios.put(
+              `${process.env.NEXT_PUBLIC_API_DOMAIN}/user/financials`,
+              {
+                ...values,
+                email: userDetail?.email || 'muhammadqamar111@gmail.com',
+              }
+            );
             setSubmitting(false);
             console.log(updateUser);
             if (updateUser?.data?.userFound) {
-              router.push("/projects");
+              router.push('/projects');
             }
           } catch (error) {
             setSubmitting(false);
@@ -55,7 +78,9 @@ const CreditCard = () => {
         }) => (
           <form className="form-cantainer gap-6" onSubmit={handleSubmit}>
             <div className="input-box">
-              <label className="p-sm text-weight-medium text-white">Card number</label>
+              <label className="p-sm text-weight-medium text-white">
+                Card number
+              </label>
               <div className="input-field">
                 <input
                   className="p-sm"
@@ -66,7 +91,12 @@ const CreditCard = () => {
                   onBlur={handleBlur}
                   value={values.cardNumber}
                 />
-                <Image src="/images/credit_card.svg" alt="Credit Card" width={20} height={20} />
+                <Image
+                  src="/images/credit_card.svg"
+                  alt="Credit Card"
+                  width={20}
+                  height={20}
+                />
               </div>
               <p className="error p-x-sm">
                 {errors.cardNumber && touched.cardNumber && errors.cardNumber}
@@ -74,7 +104,9 @@ const CreditCard = () => {
             </div>
 
             <div className="input-box">
-              <label className="p-sm text-weight-medium text-white">Expiry date</label>
+              <label className="p-sm text-weight-medium text-white">
+                Expiry date
+              </label>
               <div className="w-full flex gap-4">
                 <div className="w-full">
                   <div className="input-field">
@@ -88,7 +120,9 @@ const CreditCard = () => {
                       value={values.month}
                     />
                   </div>
-                  <p className="error p-x-sm">{errors.month && touched.month && errors.month}</p>
+                  <p className="error p-x-sm">
+                    {errors.month && touched.month && errors.month}
+                  </p>
                 </div>
                 <div className="w-[155px]">
                   <div className="input-field">
@@ -104,13 +138,17 @@ const CreditCard = () => {
                       value={values.year}
                     />
                   </div>
-                  <p className="error p-x-sm">{errors.year && touched.year && errors.year}</p>
+                  <p className="error p-x-sm">
+                    {errors.year && touched.year && errors.year}
+                  </p>
                 </div>
               </div>
             </div>
             <div className="w-full flex gap-4">
               <div className="input-box">
-                <label className="p-sm text-weight-medium text-white">Name on card</label>
+                <label className="p-sm text-weight-medium text-white">
+                  Name on card
+                </label>
                 <div className="input-field">
                   <input
                     className="p-sm"
@@ -128,7 +166,9 @@ const CreditCard = () => {
               </div>
 
               <div className="input-box w-[129px]">
-                <label className="p-sm text-weight-medium text-white">CVV</label>
+                <label className="p-sm text-weight-medium text-white">
+                  CVV
+                </label>
                 <div className="input-field">
                   <input
                     className="p-sm"
@@ -140,22 +180,72 @@ const CreditCard = () => {
                     value={values.cvv}
                   />
                 </div>
-                <p className="error p-x-sm">{errors.cvv && touched.cvv && errors.cvv}</p>
+                <p className="error p-x-sm">
+                  {errors.cvv && touched.cvv && errors.cvv}
+                </p>
               </div>
             </div>
 
             <div className="gap-4 flex-box ">
-              <button
+              {/* <button
                 className="p-lg text-weight-medium text-white rounded-xl px-2 py-3 w-full bg-red600"
                 type="submit"
                 disabled={isSubmitting}
               >
-                Buy now € 143.56
-              </button>
+                Buy now
+              </button> */}
             </div>
           </form>
         )}
       </Formik>
+      <button
+        className="p-lg text-weight-medium text-white rounded-xl px-2 py-3 w-full bg-red600"
+        onClick={async () => {
+          try {
+            setIsLoading(true);
+            const e = await state.user.web3auth.connect();
+            console.log(e);
+            const ethersProvider = new ethers.providers.Web3Provider(e);
+            const signer = ethersProvider.getSigner();
+            const hemergy = new Hemergy({
+              baseURL: 'https://dev-core.hemergy.com',
+              signer,
+            });
+            console.log(hemergy);
+            hemergy.investInProject(projectData?.projectAddress);
+          } catch (error) {
+            console.error('error', error);
+          } finally {
+            setIsLoading(false);
+          }
+          // try {
+          // const getMint = await requestMint();
+          // const signerInformation = await investProject({
+          //   endUserAddress: state.user.user?.endUserAddress,
+          //   projectAddress: projectData?.projectAddress,
+          //   amount: 10000,
+          //   investorAccountAddress: state.user.user?.accountAddress,
+          // });
+
+          // const investaddress = await getSigner(
+          //   state.user.web3auth,
+          //   signerInformation.data?.domain,
+          //   {
+          //     ForwardRequest: signerInformation.data?.ForwardRequest,
+          //   },
+          //   signerInformation.data?.request,
+          //   'project'
+          // );
+          // console.log('investaddress,', investaddress);
+          // } catch (error) {
+          //   console.error('error', error);
+          // } finally {
+          //   setIsLoading(false);
+          // }
+        }}
+      >
+        {isLoading ? 'Loading...' : 'Buy now'}
+      </button>
     </div>
   );
 };
