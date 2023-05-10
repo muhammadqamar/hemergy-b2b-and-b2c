@@ -33,7 +33,7 @@ const CardArea = ({
   return (
     <div className="card-area">
       <div className="mb-8 text-center lg:text-left">
-        <h2 className="p-xl-semi lg:p-xl mb-3">{areaHeading}</h2>
+        <h2 className="mb-3 p-xl-semi lg:p-xl">{areaHeading}</h2>
         <p className="p-sm text-gray900">{areaDesc}</p>
       </div>
 
@@ -45,7 +45,7 @@ const CardArea = ({
                 h={h}
                 btnLink={`./projects/${item._id}`}
                 banner={
-                  item?.details?.information?.image || './images/bgslider.png'
+                  item?.details?.information?.image || '/images/not-img.png'
                 }
                 projectName={item?.details?.information?.projectName}
                 projectDetail={item?.details?.information?.projectDescription}
@@ -66,7 +66,7 @@ const CardArea = ({
       </div>
       {browBtn && (
         <div className="flex-box mt-11">
-          <button className="btn-border fit-width bg-white secondary">
+          <button className="bg-white btn-border fit-width secondary">
             Browse all projects
           </button>
         </div>
@@ -81,7 +81,7 @@ const CardArea = ({
             height={264}
           />
           <div className="">
-            <h3 className="p-xl-semi text-textblack mb-2">
+            <h3 className="mb-2 p-xl-semi text-textblack">
               You have no projects
             </h3>
             <p className="p-sm text-gray900">

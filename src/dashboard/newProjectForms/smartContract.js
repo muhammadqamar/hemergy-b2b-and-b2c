@@ -7,6 +7,8 @@ import { getSigner } from '@/components/helpers/signer';
 import { updateProjectasDaft } from '@/services/coreProject';
 import { updateuserprojects } from '@/services/user';
 import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import Hemergy from '@hemergy/core-sdk';
+import { ethers } from 'ethers';
 
 // Create styles
 const styles = StyleSheet.create({
@@ -18,7 +20,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     textAlign: 'center',
-    fontFamily: 'Oswald'
+    fontFamily: 'Oswald',
   },
   author: {
     fontSize: 12,
@@ -28,13 +30,13 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 18,
     margin: 12,
-    fontFamily: 'Oswald'
+    fontFamily: 'Oswald',
   },
   text: {
     margin: 12,
     fontSize: 14,
     textAlign: 'justify',
-    fontFamily: 'Times-Roman'
+    fontFamily: 'Times-Roman',
   },
   image: {
     marginVertical: 15,
@@ -78,49 +80,132 @@ const SmartContract = () => {
             }
             onClick={async () => {
               setliveLoader('loading');
-              const result = await createProjectonDetail({
-                endUserAddress: user?.user?.endUserAddress,
-                projectHolder: user?.user?.accountAddress,
-                beneficiaries: addProject.beneficiaries?.users?.map(
-                  (data) => data.address
-                ),
+              const e = await user.web3auth.connect();
+
+              const ethersProvider = new ethers.providers.Web3Provider(e);
+              const signer = await ethersProvider.getSigner();
+              console.log('signer address', await signer.getAddress());
+              const hemergy = new Hemergy({
+                baseURL: 'https://dev-core.hemergy.com',
+                signer,
               });
-              if (result.status === 200) {
-                const reprojectAddresss = await getSigner(
-                  user.web3auth,
-                  result.data?.domain,
-                  {
-                    ForwardRequest: result.data?.ForwardRequest,
-                  },
-                  result.data?.request,
-                  'project'
-                );
-                const project = await updateProjectasDaft({
+
+              const project = await hemergy.createProject(
+                user.user?.accountAddress
+              );
+              if (project) {
+                try {
+                  addProject.beneficiaries?.users.forEach(async (element) => {
+                    if (element.address) {
+                      try {
+                      await hemergy.addProjectBeneficiaries(
+                        project,
+                        element.address
+                      );
+                      }catch(e){}
+                    }
+                  });
+                } catch (e) {}
+                await updateProjectasDaft({
                   status: 'complete',
-                  projectAddress: reprojectAddresss,
+                  projectAddress: project,
                   draftId: addProject?.draft?._id,
                 });
                 if (user.user?.projectsasDevloper) {
                   await updateuserprojects('projectsasDevloper', {
                     email: user?.user?.email,
                     endUserAddress: user?.user?.endUserAddress,
-                    projectAddress: [
-                      ...user.user?.projectsasDevloper,
-                      reprojectAddresss,
-                    ],
+                    projectAddress: [...user.user?.projectsasDevloper, project],
                   });
                 } else {
                   await updateuserprojects('projectsasDevloper', {
                     email: user?.user?.email,
                     endUserAddress: user?.user?.endUserAddress,
-                    projectAddress: [reprojectAddresss],
+                    projectAddress: [project],
                   });
                 }
+                setliveLoader();
+                // if (result.status === 200) {
+                //   const reprojectAddresss = await getSigner(
+                //     user.web3auth,
+                //     result.data?.domain,
+                //     {
+                //       ForwardRequest: result.data?.ForwardRequest,
+                //     },
+                //     result.data?.request,
+                //     'project'
+                //   );
+                //    await updateProjectasDaft({
+                //     status: 'complete',
+                //     projectAddress: project,
+                //     draftId: addProject?.draft?._id,
+                //   });
+                //   if (user.user?.projectsasDevloper) {
+                //     await updateuserprojects('projectsasDevloper', {
+                //       email: user?.user?.email,
+                //       endUserAddress: user?.user?.endUserAddress,
+                //       projectAddress: [
+                //         ...user.user?.projectsasDevloper,
+                //         project,
+                //       ],
+                //     });
+                //   } else {
+                //     await updateuserprojects('projectsasDevloper', {
+                //       email: user?.user?.email,
+                //       endUserAddress: user?.user?.endUserAddress,
+                //       projectAddress: [project],
+                //     });
+                //   }
 
-                setliveLoader(true);
-              } else {
-                setliveLoader(false);
+                //   setliveLoader(true);
+                // } else {
+                //   setliveLoader(false);
+                // }
               }
+
+              // const result = await createProjectonDetail({
+              //   endUserAddress: user?.user?.endUserAddress,
+              //   projectHolder: user?.user?.accountAddress,
+              //   beneficiaries: addProject.beneficiaries?.users
+              //     ?.map((data) => data.address)
+              //     .filter((data1) => !!data1),
+              // });
+              // if (result.status === 200) {
+              //   const reprojectAddresss = await getSigner(
+              //     user.web3auth,
+              //     result.data?.domain,
+              //     {
+              //       ForwardRequest: result.data?.ForwardRequest,
+              //     },
+              //     result.data?.request,
+              //     'project'
+              //   );
+              //   const project = await updateProjectasDaft({
+              //     status: 'complete',
+              //     projectAddress: reprojectAddresss,
+              //     draftId: addProject?.draft?._id,
+              //   });
+              //   if (user.user?.projectsasDevloper) {
+              //     await updateuserprojects('projectsasDevloper', {
+              //       email: user?.user?.email,
+              //       endUserAddress: user?.user?.endUserAddress,
+              //       projectAddress: [
+              //         ...user.user?.projectsasDevloper,
+              //         reprojectAddresss,
+              //       ],
+              //     });
+              //   } else {
+              //     await updateuserprojects('projectsasDevloper', {
+              //       email: user?.user?.email,
+              //       endUserAddress: user?.user?.endUserAddress,
+              //       projectAddress: [reprojectAddresss],
+              //     });
+              //   }
+
+              //   setliveLoader(true);
+              // } else {
+              //   setliveLoader(false);
+              // }
             }}
           />
         </div>
@@ -140,7 +225,7 @@ const SmartContract = () => {
         </div>
       </div>
       <div className="w-full overflow-auto bg-garbg h-full md:h-[530px] rounded-xl flex items-center justify-center">
-        <Quixote />
+        {/* <Quixote /> */}
       </div>
     </div>
   );
@@ -158,7 +243,8 @@ const Quixote = () => (
       <Image
         style={styles.image}
         src="/images/hemergy_logo.svg"
-        width={24} height={24}
+        width={24}
+        height={24}
       />
       <Text style={styles.subtitle}>
         Capítulo I: Que trata de la condición y ejercicio del famoso hidalgo D.
@@ -318,9 +404,11 @@ const Quixote = () => (
         encaminaba. Diose priesa a caminar, y llegó a ella a tiempo que
         anochecía.
       </Text>
-      <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
-        `${pageNumber} / ${totalPages}`
-      )} fixed />
+      <Text
+        style={styles.pageNumber}
+        render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
+        fixed
+      />
     </Page>
   </Document>
 );

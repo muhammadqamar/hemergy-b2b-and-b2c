@@ -30,7 +30,7 @@ const SideBar = () => {
           />
         </Link>
         <Link
-          href="/checkout"
+          href=""
           className={
             currentRoute === '/checkout' ? 'menu-item active' : 'menu-item'
           }

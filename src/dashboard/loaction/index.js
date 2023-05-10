@@ -63,7 +63,7 @@ const Index = () => {
               btnLink={`./projects/${item._id}`}
               w
               projectImage={
-                item?.details?.information?.image || './images/bgslider.png'
+                item?.details?.information?.image || '/images/not-img.png'
               }
               hemergyIcon="/images/air.svg"
               user={{

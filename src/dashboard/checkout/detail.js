@@ -7,7 +7,9 @@ const Detail = ({ projectData }) => {
     <div className="w-full laptop:w-[369px] flex-shrink-0 bg-white">
       <ProjectCardThumbnail
         h="198px"
-        bgimg={projectData?.details?.information?.image}
+        bgimg={
+          projectData?.details?.information?.image || '/images/not-img.png'
+        }
         hot
         stock="435"
         stockdirection

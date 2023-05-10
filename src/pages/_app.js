@@ -58,18 +58,19 @@ const AppPass = ({ Component, pageProps }) => {
     const web3auth = new Web3Auth({
       clientId: process.env.NEXT_PUBLIC_CLIENTID_WEB3AUTH,
       chainConfig: {
-        chainNamespace: CHAIN_NAMESPACES.OTHER, // SOLANA, OTHER
-        chainId: "31337",
-        rpcTarget: "http://34.162.229.194:8545",
-        displayName: "Ethereum Mainnet",
+        chainNamespace: CHAIN_NAMESPACES.EIP155, // SOLANA, OTHER
+        chainId: '0x7a69',
+        rpcTarget: 'http://34.162.229.194:8545',
+        displayName: 'Ethereum Mainnet',
 
-        ticker: "ETH",
-        tickerName: "Ethereum",
+        ticker: 'ETH',
+        tickerName: 'Ethereum',
       },
       uiConfig: {
         theme: 'light',
         loginMethodsOrder: ['facebook', 'google'],
-        appLogo: 'https://web3auth.io/images/w3a-L-Favicon-1.svg', // Your App Logo Here
+        appLogo: 'https://hemergy-seven.vercel.app/images/hemergy-logo.svg', // Your App Logo Here
+        loginMethodsOrder:["google", "linkedin", "twitter","apple", "reddit", "discord", "twitch", , "line", "github", "kakao", "linkedin", "weibo", "wechat", "email_passwordless"]
       },
       defaultLanguage: 'en',
       modalZIndex: '99998',
@@ -89,18 +90,19 @@ const AppPass = ({ Component, pageProps }) => {
     web3auth.configureAdapter(openloginAdapter);
     await web3auth.initModal();
 
-    if (web3auth?.status == 'connected') {
-      // const web3authProvider = await web3auth.connect();
-      // const ethersProvider = new ethers.providers.Web3Provider(
-      //   web3authProvider
-      // );
-      // const signer =  ethersProvider.getSigner();
 
-      // const address = await signer?.getAddress();
-      // console.log('address on ethers', address)
+    if (web3auth?.status == 'connected') {
+      const web3authProvider = await web3auth.connect();
+      const ethersProvider = new ethers.providers.Web3Provider(
+        web3authProvider
+      );
+      const signer = await  ethersProvider.getSigner();
+      console.log(signer)
+      const address = await signer?.getAddress();
+      console.log('address on ethers', address)
 
       // const account = await hemergy?.createAccount();
-      // console.log('account infotmation', account)
+      // console.log('account information', account)
 
 
     }

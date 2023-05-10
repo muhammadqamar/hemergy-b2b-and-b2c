@@ -1,9 +1,7 @@
 import Tokens from './tokens';
 import TabInfo from '@/utils/tabInfo';
 import UserCard from '@/utils/userCard';
-
 import { useState } from 'react';
-
 import CheckoutPage from '@/dashboard/checkout';
 
 const Index = ({ projectData }) => {
@@ -20,7 +18,10 @@ const Index = ({ projectData }) => {
               <div
                 className="detail-banner-img "
                 style={{
-                  background: `url(${projectData?.details?.information?.image})`,
+                  background: `url(${
+                    projectData?.details?.information?.image ||
+                    '/images/not-img.png'
+                  })`,
                   backgroundRepeat: 'no-repeat',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',

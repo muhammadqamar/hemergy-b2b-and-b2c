@@ -13,7 +13,7 @@ const SideBar = () => {
 
   return (
     <div
-      className={`flex-row laptop:flex-col  side-nav-bar  expand-flex-box fixed h-full`}
+      className={`flex-row laptop:flex-col   side-nav-bar  expand-flex-box fixed h-full`}
     >
       <Link href="/" className="hemergy-logo-link">
         <Image
@@ -106,7 +106,7 @@ const SideBar = () => {
           <Image src="/images/help.svg" alt="logo" width={20} height={20} />
           <h3 className="expand-side-bar-text">Get in touch</h3>
         </Link>
-        <div className="flex items-center gap-3 justify-between">
+        <div className="flex items-center justify-between gap-3">
           <Link
             href="/profile"
             className={
@@ -117,7 +117,7 @@ const SideBar = () => {
           >
             <div className="flex items-center gap-3 ">
               <img
-                className="rounded-xl w-8 h-8 object-cover"
+                className="object-cover w-8 h-8 rounded-xl"
                 src={user?.user?.detail?.profileImage}
                 alt="logo"
               />

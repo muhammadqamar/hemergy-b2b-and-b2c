@@ -89,7 +89,7 @@ const LinkAssets = ({ setActive }) => {
             status: 'draft',
           });
           if (projectInfo.status == 200) {
-            setActive(5);
+            setActive(4);
             dispatch(setlLinkAssets(values));
           }
         }}
@@ -187,7 +187,7 @@ const LinkAssets = ({ setActive }) => {
           )}
               <Button
                 text="Skip for now"
-                onClick={() => setActive(5)}
+                onClick={() => setActive(4)}
                 type="button"
                 bg="bg-white"
                 border

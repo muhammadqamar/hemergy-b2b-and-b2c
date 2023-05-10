@@ -3,8 +3,11 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getSigner } from '@/components/helpers/signer';
+
 import Hemergy from '@hemergy/core-sdk';
 import { ethers } from 'ethers';
+import { toast } from 'react-toastify';
+import { updateuserprojects } from '@/services/user';
 
 const CreditCard = ({ projectData }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -201,50 +204,67 @@ const CreditCard = ({ projectData }) => {
       <button
         className="p-lg text-weight-medium text-white rounded-xl px-2 py-3 w-full bg-red600"
         onClick={async () => {
+          setIsLoading(true);
+          const e = await state.user.web3auth.connect();
+
+          const ethersProvider = new ethers.providers.Web3Provider(e);
+          const signer = await ethersProvider.getSigner();
+          console.log('signer address', await signer.getAddress());
+          const hemergy = new Hemergy({
+            baseURL: 'https://dev-core.hemergy.com',
+            signer,
+          });
+
           try {
-            setIsLoading(true);
-            const e = await state.user.web3auth.connect();
-            console.log(e);
-            const ethersProvider = new ethers.providers.Web3Provider(e);
-            const signer = ethersProvider.getSigner();
-            const hemergy = new Hemergy({
-              baseURL: 'https://dev-core.hemergy.com',
-              signer,
+            await hemergy.mint(state.user.user?.accountAddress);
+            const invest = await hemergy.investInProject(
+              projectData?.projectAddress,
+              state.user.user?.accountAddress,
+              1000
+            );
+            if (state.user.user?.projectsasInvestor) {
+              await updateuserprojects('projectsasInvestor', {
+                email: state.user?.user?.email,
+                endUserAddress: state.user?.user?.endUserAddress,
+                projectAddress: [
+                  ...state.user.user?.projectsasInvestor,
+                  {
+                    projectAddress: projectData?.projectAddress,
+                    amount: '123',
+                    time: new Date(),
+                  },
+                ],
+              });
+            } else {
+              await updateuserprojects('projectsasInvestor', {
+                email: state.user?.user?.email,
+                endUserAddress: state.user?.user?.endUserAddress,
+                projectAddress: [
+                  {
+                    projectAddress: projectData?.projectAddress,
+                    amount: '123',
+                    time: new Date(),
+                  },
+                ],
+              });
+            }
+            setIsLoading(false);
+            toast.success('You have successfully Invested in this Project', {
+              position: 'bottom-right',
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'light',
             });
-            console.log(hemergy);
-            hemergy.investInProject(projectData?.projectAddress);
-          } catch (error) {
-            console.error('error', error);
-          } finally {
+          } catch (e) {
             setIsLoading(false);
           }
-          // try {
-          // const getMint = await requestMint();
-          // const signerInformation = await investProject({
-          //   endUserAddress: state.user.user?.endUserAddress,
-          //   projectAddress: projectData?.projectAddress,
-          //   amount: 10000,
-          //   investorAccountAddress: state.user.user?.accountAddress,
-          // });
-
-          // const investaddress = await getSigner(
-          //   state.user.web3auth,
-          //   signerInformation.data?.domain,
-          //   {
-          //     ForwardRequest: signerInformation.data?.ForwardRequest,
-          //   },
-          //   signerInformation.data?.request,
-          //   'project'
-          // );
-          // console.log('investaddress,', investaddress);
-          // } catch (error) {
-          //   console.error('error', error);
-          // } finally {
-          //   setIsLoading(false);
-          // }
         }}
       >
-        {isLoading ? 'Loading...' : 'Buy now'}
+        {isLoading ? <img src="/images/loader.svg" /> : 'Buy now'}
       </button>
     </div>
   );

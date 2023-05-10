@@ -10,6 +10,15 @@ const updateUser = async (data) => {
   }
 };
 
+const updateuserprojects = async (type,data) => {
+  try {
+    return await http.put(`/user/updateuserprojects?type=${type}`, data);
+  } catch (error) {
+    ShowError(error?.response?.data?.status);
+    // return error
+  }
+};
+
 const updateQuestionair = async (data) => {
   try {
     return await http.put(`/user/questionair`, data);
@@ -61,4 +70,5 @@ export {
   updatekyc,
   updateBusinessdetails,
   updateCollectionmethod,
+  updateuserprojects
 };

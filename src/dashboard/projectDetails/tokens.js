@@ -20,7 +20,7 @@ const Tokens = ({ showTokenInfo, onClick, projectData }) => {
         onClick={onClick}
         className="w-full md:w-[280px] mx-auto mb-4 sm:mb-6 btn secondary"
       >
-        {'Invest now'}
+        Invest now
       </button>
 
       <div className="mb-2 sm:mb-4">
