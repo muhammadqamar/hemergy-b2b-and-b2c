@@ -4,7 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const CardArea = ({
-  usdc,
   usdcDate,
   areaHeading,
   areaDesc,
@@ -55,7 +54,7 @@ const CardArea = ({
                 tokenLabel={tokenLabel}
                 btn2={btn2}
                 bgGreen={bgGreen}
-                usdc={usdc}
+                usdc={item?.amount}
                 usdcDate={usdcDate}
                 hot={hot}
                 // userName={item?.details?.beneficiaries?.users[0]?.firstName}
