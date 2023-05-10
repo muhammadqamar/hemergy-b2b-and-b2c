@@ -1,8 +1,30 @@
 import PowerCarbon from "@/utils/powerCarbon";
 import TrasactionCard from "@/utils/TransactionCard";
 import NoTransaction from "../common/noTransaction";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import Hemergy from "@hemergy/core-sdk"
+import { ethers } from 'ethers';
 
 const Insights = () => {
+  const  state =  useSelector(state=>state)
+  useEffect(()=>{
+    (async ()=>{
+      const e = await state.user.web3auth.connect();
+
+      const ethersProvider = new ethers.providers.Web3Provider(e);
+      const signer = await ethersProvider.getSigner();
+      console.log('signer address', await signer.getAddress());
+      const hemergy = new Hemergy({
+        baseURL: 'https://dev-core.hemergy.com',
+        signer,
+      });
+      const balance  = await hemergy.getBalance(state?.user.user?.accountAddress)
+      console.log("balance", balance)
+
+    })()
+
+  },[state?.user])
   return (
     <div className="insight-card w-full laptop:w-[38%] t-b-raidus bg-textcolor z-[1]">
       <div className="mb-8">

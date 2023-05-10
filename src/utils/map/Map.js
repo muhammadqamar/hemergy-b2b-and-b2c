@@ -270,7 +270,6 @@ const MapContainer = (props) => {
     const bounds = new window.google.maps.LatLngBounds(center);
     map.fitBounds(bounds);
 
-    console.log(map)
     map.setOptions({
       styles: mapStyle,
     });
