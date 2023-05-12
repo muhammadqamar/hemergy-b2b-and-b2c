@@ -2,30 +2,29 @@ import Map from './Map';
 import { positions } from './positionData';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import ReactCountryFlag from "react-country-flag"
+import ReactCountryFlag from 'react-country-flag';
 
-const getImage =(type)=>{
-  let imgtype=""
-  console.log(type)
-  switch(type) {
+const getImage = (type) => {
+  let imgtype = '';
+  console.log(type);
+  switch (type) {
     case 'Solar':
-     imgtype="/images/map/marker_1.svg"
-     break;
-     case 'Wind':
-      imgtype="/images/map/marker_2.svg"
+      imgtype = '/images/map/marker_1.svg';
       break;
-      case 'Gas':
-        imgtype="/images/map/marker_3.svg"
-        break;
-        case 'Water':
-          imgtype="/images/map/marker_3.svg"
-          break;
-   default:
-    imgtype="/images/map/marker_3.svg"
-
+    case 'Wind':
+      imgtype = '/images/map/marker_2.svg';
+      break;
+    case 'Gas':
+      imgtype = '/images/map/marker_3.svg';
+      break;
+    case 'Water':
+      imgtype = '/images/map/marker_3.svg';
+      break;
+    default:
+      imgtype = '/images/map/marker_3.svg';
   }
-  return imgtype
-}
+  return imgtype;
+};
 const MainMap = ({ mapHeading, b2bHeading, userProject, setSearchData }) => {
   const [upDate, setUpDate] = useState('');
   const [positionData, setPositionData] = useState([]);
@@ -53,7 +52,7 @@ const MainMap = ({ mapHeading, b2bHeading, userProject, setSearchData }) => {
           lng: item?.details?.information?.lang,
         },
         icon: getImage(item?.details?.linkAssets?.assetType),
-        type: item?.details?.linkAssets?.assetType
+        type: item?.details?.linkAssets?.assetType,
       };
     });
 
@@ -71,7 +70,7 @@ const MainMap = ({ mapHeading, b2bHeading, userProject, setSearchData }) => {
           mapHeading ? 'hidden md:block' : 'hidden lg:block'
         }`}
       >
-        <Map positionCoords={positionData} />
+        {/* <Map positionCoords={positionData} /> */}
       </div>
 
       {mapHeading && (
@@ -103,24 +102,21 @@ const MainMap = ({ mapHeading, b2bHeading, userProject, setSearchData }) => {
             />
           </div>
           <div className="input-field">
-          <div class="relative inline-block text-left">
-
-
-</div>
+            <div class="relative inline-block text-left"></div>
             <select className="p-sm">
               <option value="">Location</option>
               {userProject?.map((item, i) => (
                 <option key={i} value={item?.details?.information?.country}>
                   <div>
-                  <ReactCountryFlag
-                countryCode={item?.details?.information?.country}
-                svg
-                cdnUrl="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.4.3/flags/1x1/"
-                cdnSuffix="svg"
-                title={item?.details?.information?.country}
-            />
+                    <ReactCountryFlag
+                      countryCode={item?.details?.information?.country}
+                      svg
+                      cdnUrl="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.4.3/flags/1x1/"
+                      cdnSuffix="svg"
+                      title={item?.details?.information?.country}
+                    />
 
-                  {item?.details?.information?.country}
+                    {item?.details?.information?.country}
                   </div>
                 </option>
               ))}

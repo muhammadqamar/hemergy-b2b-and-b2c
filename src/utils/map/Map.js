@@ -266,11 +266,11 @@ const MapContainer = (props) => {
 
   const onLoad = React.useCallback(function callback(map) {
     // This is just an example of getting and using the map instance!!! don't just blindly copy!
-    map.setZoom(1.8)
+    map?.setZoom(1.8)
     const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
+    map?.fitBounds(bounds);
 
-    map.setOptions({
+    map?.setOptions({
       styles: mapStyle,
     });
 
