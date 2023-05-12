@@ -19,18 +19,18 @@ const InvestorProfile = ({ setStep, userDetail, profileRoute }) => {
           ['Are you an accredited investor?']:
             user?.questionnaire.filter(
               (data) => data.question === 'Are you an accredited investor?'
-            )[0]?.selectedAnswers || false,
+            )?.[0]?.selectedAnswers || false,
           ['Are you familiar with cryptocurrencies?']:
             user?.questionnaire.filter(
               (data) =>
                 data.question === 'Are you familiar with cryptocurrencies?'
-            )[0]?.selectedAnswers || false,
+            )?.[0]?.selectedAnswers || false,
           ['Do you have knowledge about finance / financial products?']:
             user?.questionnaire.filter(
               (data) =>
                 data.question ===
                 'Do you have knowledge about finance / financial products?'
-            )[0]?.selectedAnswers || false,
+            )?.[0]?.selectedAnswers || false,
         }}
         validate={(values) => {
           const errors = {};
@@ -73,9 +73,9 @@ const InvestorProfile = ({ setStep, userDetail, profileRoute }) => {
           isSubmitting,
           /* and other goodies */
         }) => (
-          <form className="form-cantainer gap-6" onSubmit={handleSubmit}>
+          <form className="gap-6 form-cantainer" onSubmit={handleSubmit}>
             <div
-              className="form-cantainer gap-6"
+              className="gap-6 form-cantainer"
               role="group"
               aria-labelledby="checkbox-group"
             >

@@ -14,7 +14,7 @@ const Index = ({ partners }) => {
               onClick={() => setOpenTab(index)}
               className={openTab === index ? "user-tab-card active" : "user-tab-card"}
             >
-              <img src={item.fields.logo[0].fields.file.url} alt="user" className="user-img" />
+              <img src={item.fields.logo?.[0].fields.file.url} alt="user" className="user-img" />
               <div className="user-detail">
                 <h4 className="user-tab-name">{item.fields.userName}</h4>
                 <h5 className="user-tab-cate">{item.fields.userCate}</h5>

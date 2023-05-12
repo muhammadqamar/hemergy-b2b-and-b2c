@@ -41,7 +41,7 @@ const ProjectDetails = ({ setActive }) => {
   const fileinput = useRef();
 
   const handleImageUpload = (event) => {
-    const file = event.target.files[0];
+    const file = event.target.files?.[0];
     setImageData(file);
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -63,13 +63,13 @@ const ProjectDetails = ({ setActive }) => {
               city:
                 addressFinder?.address_components?.filter((data) =>
                   data?.types?.includes('administrative_area_level_1')
-                )[0]?.long_name ||
+                )?.[0]?.long_name ||
                 projectDetails.city ||
                 '',
               country:
                 addressFinder?.address_components?.filter((data) =>
                   data?.types?.includes('country')
-                )[0]?.short_name ||
+                )?.[0]?.short_name ||
                 projectDetails?.country ||
                 '',
               lat:
@@ -92,12 +92,12 @@ const ProjectDetails = ({ setActive }) => {
               city:
                 addressFinder?.address_components?.filter((data) =>
                   data?.types?.includes('administrative_area_level_1')
-                )[0]?.long_name || city,
+                )?.[0]?.long_name || city,
               postalCode: projectPostal,
               country:
                 addressFinder?.address_components?.filter((data) =>
                   data?.types?.includes('country')
-                )[0]?.short_name || selected,
+                )?.[0]?.short_name || selected,
               image: upload || '',
               lat: addressFinder?.geometry?.location?.lat() || '',
               lang: addressFinder?.geometry?.location?.lng() || '',

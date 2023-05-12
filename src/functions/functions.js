@@ -108,7 +108,7 @@ export const connectCoinBaseWallet = async () => {
       DEFAULT_CHAIN_ID
     );
     let response = await ethereum.request({ method: "eth_requestAccounts" });
-    return { provider: "coinbase", value: response[0] };
+    return { provider: "coinbase", value: response?.[0] };
   } catch (error) {
     console.log(error);
   }

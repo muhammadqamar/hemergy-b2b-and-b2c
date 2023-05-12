@@ -218,7 +218,7 @@ const Beneficiaries = ({ setActive }) => {
                     signer,
                   });
                   const isKYCed = await hemergy.isKYCed(
-                    values.users.filter((data) => !data.isKYCed)[0]?.address
+                    values.users.filter((data) => !data.isKYCed)?.[0]?.address
                   );
 
                   setFieldValue(

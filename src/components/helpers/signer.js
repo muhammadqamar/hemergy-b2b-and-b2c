@@ -36,7 +36,7 @@ export const getSigner = async (
     );
     const accountEvent = parseEvent(
       accountsFactoryContract,
-      relayInfo.data.logs[0]
+      relayInfo.data.logs?.[0]
     );
 
     const accountAddress = accountEvent.args.account;
@@ -50,7 +50,7 @@ export const getSigner = async (
     );
     const accountEvent = parseEvent(
       accountsFactoryContract,
-      relayInfo.data.logs[0]
+      relayInfo.data.logs?.[0]
     );
 
     const accountAddress = accountEvent.args.project;

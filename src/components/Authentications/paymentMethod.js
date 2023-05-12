@@ -19,11 +19,11 @@ const PaymentMethod = ({ setStep, userDetail, profileRoute }) => {
         </h3>
       </div>
       <div className="flex items-center justify-center gap-2">
-        <button className="p-sm-semi text-weight-medium paybtn  text-blue700 bg-blue100 ">
+        <button className="p-sm-semi text-weight-medium paybtn text-blue700 bg-blue100 ">
           Bank account
         </button>
         {profileRoute && (
-          <button className="p-sm-semi text-weight-medium paybtn text-textblack bg-white">
+          <button className="bg-white p-sm-semi text-weight-medium paybtn text-textblack">
             Connect cryptowallet
           </button>
         )}
@@ -64,7 +64,7 @@ const PaymentMethod = ({ setStep, userDetail, profileRoute }) => {
               user?.questionnaire.filter(
                 (data) =>
                   data.question === 'Are you familiar with cryptocurrencies?'
-              )[0]?.selectedAnswers
+              )?.[0]?.selectedAnswers
             ) {
               profileRoute && setStep(4);
             } else {
@@ -83,7 +83,7 @@ const PaymentMethod = ({ setStep, userDetail, profileRoute }) => {
           isSubmitting,
           /* and other goodies */
         }) => (
-          <form className="form-cantainer gap-6" onSubmit={handleSubmit}>
+          <form className="gap-6 form-cantainer" onSubmit={handleSubmit}>
             <div className="input-box">
               <div className="flex items-center gap-2">
                 <label className="p-sm text-weight-medium">BIC / Swift</label>

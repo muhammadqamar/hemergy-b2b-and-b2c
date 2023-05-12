@@ -28,7 +28,7 @@ const WalletCard = (props) => {
               { provider: "Metamusk", value: result[0] },
             ];
           } else {
-            resulter = [{ provider: "MetaMask", value: result[0] }];
+            resulter = [{ provider: "MetaMask", value: result?.[0] }];
           }
           // try {
           const updateWallet = await axios.post(
@@ -39,9 +39,9 @@ const WalletCard = (props) => {
           //   } catch (error) {
 
           //   }
-          accountChangedHandler(result[0]);
+          accountChangedHandler(result?.[0]);
           setConnButtonText("Wallet Connected");
-          getAccountBalance(result[0]);
+          getAccountBalance(result?.[0]);
         })
         .catch((error) => {
           setErrorMessage(error.message);

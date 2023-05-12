@@ -66,7 +66,7 @@ const BusinessDetails = ({ setStep, userDetail, profileRoute }) => {
               user?.questionnaire.filter(
                 (data) =>
                   data.question === 'Are you familiar with cryptocurrencies?'
-              )[0]?.selectedAnswers
+              )?.[0]?.selectedAnswers
             ) {
               profileRoute && setStep(4);
             } else {
@@ -85,7 +85,7 @@ const BusinessDetails = ({ setStep, userDetail, profileRoute }) => {
           isSubmitting,
           /* and other goodies */
         }) => (
-          <form className="form-cantainer gap-6" onSubmit={handleSubmit}>
+          <form className="gap-6 form-cantainer" onSubmit={handleSubmit}>
             <div className="input-box">
               <label className="p-sm text-weight-medium">Business name</label>
 
