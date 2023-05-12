@@ -70,7 +70,7 @@ const MainMap = ({ mapHeading, b2bHeading, userProject, setSearchData }) => {
           mapHeading ? 'hidden md:block' : 'hidden lg:block'
         }`}
       >
-        {/* <Map positionCoords={positionData} /> */}
+        <Map positionCoords={positionData} />
       </div>
 
       {mapHeading && (
