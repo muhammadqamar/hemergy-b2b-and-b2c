@@ -65,9 +65,9 @@ const CardArea = ({
       </div>
       {browBtn && (
         <div className="flex-box mt-11">
-          <button className="bg-white btn-border fit-width secondary">
+          <Link href="/" className="bg-white btn-border fit-width secondary">
             Browse all projects
-          </button>
+          </Link>
         </div>
       )}
 
