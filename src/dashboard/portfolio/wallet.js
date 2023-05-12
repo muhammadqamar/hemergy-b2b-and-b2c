@@ -30,15 +30,15 @@ const Wallet = () => {
       let hexNumber = balance._hex;
       const bigIntNumber = BigInt(hexNumber);
       const number = Number(bigIntNumber);
-      setBalance(number);
+      setBalance(number/Math.pow(10,18));
     })();
   }, [state?.user]);
 
   return (
     <div className="insight-card w-full laptop:w-[32%] bg-blue800 ">
       <div className="mb-8">
-        <h2 className="p-xl text-white mb-3">Wallet</h2>
-        <p className="p-sm text-white">
+        <h2 className="mb-3 text-white p-xl">Wallet</h2>
+        <p className="text-white p-sm">
           Your earnings are automatically saved.
         </p>
       </div>
@@ -46,14 +46,14 @@ const Wallet = () => {
         <Progress balance={balance} />
       </div>
       <div className="flex flex-col items-center justify-center gap-2 mb-8">
-        <button className="secondary flex items-center justify-center rounded-xl text-white bg-blue700">
+        <button className="flex items-center justify-center text-white secondary rounded-xl bg-blue700">
           Connect Cryptowallet
         </button>
         <button className="btn secondary">Withdraw</button>
       </div>
 
       <div className="mb-6">
-        <h3 className="p-lg text-white mb-2">Latest returns</h3>
+        <h3 className="mb-2 text-white p-lg">Latest returns</h3>
       </div>
       <div className="gradient-bg h-[354px] scrollbar-hide">
         <div className="transac-bg ">
