@@ -35,8 +35,8 @@ const Footer = () => {
           <Image src="/images/f-in.svg" alt="icon" width={44} height={44} />
         </div>
       </div>
-      <div className="flex items-center justify-center flex-wrap gap-6 sm:gap-8 text-textcolor my-8">
-        {pages.map((item, index) => (
+      <div className="flex flex-wrap items-center justify-center gap-6 my-8 sm:gap-8 text-textcolor">
+        {pages?.map((item, index) => (
           <Link
             key={index}
             href={item.path}
@@ -46,7 +46,7 @@ const Footer = () => {
           </Link>
         ))}
       </div>
-      <p className="footer-text mb-6">© Hemergy. All rights reserved.</p>
+      <p className="mb-6 footer-text">© Hemergy. All rights reserved.</p>
       <Link href="/" className="flex items-center justify-center">
         <Image src="/images/logo_cue.svg" alt="icon" width={32} height={32} />
       </Link>

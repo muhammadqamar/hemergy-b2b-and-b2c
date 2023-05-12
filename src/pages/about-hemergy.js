@@ -37,16 +37,16 @@ const AboutHemergy = () => {
               About Hemergy
             </h1>
 
-            <div className="flex gap-8 flex-col sm:flex-row ">
+            <div className="flex flex-col gap-8 sm:flex-row ">
               <div className="flex flex-col gap-8 ">
-                <p className="p-lg text-weight-normal  text-herotext">
+                <p className="p-lg text-weight-normal text-herotext">
                   Hemergy is a technology provider and a marketplace aiming to
                   create harmony and transparency between different actors
                   involved in the renewable energy transition.
                   <span className="text-weight-semibold"> Read more</span>
                 </p>
                 <div>
-                  <h3 className="p-xl text-white mb-4">The Challenge</h3>
+                  <h3 className="mb-4 text-white p-xl">The Challenge</h3>
                   <p className="p-sm text-herotext">
                     Decentralization is a major force that energy transition
                     will fully rely on. Blockchain is gaining momentum and come
@@ -56,7 +56,7 @@ const AboutHemergy = () => {
                   </p>
                 </div>
                 <div>
-                  <h3 className="p-xl text-white mb-4">The Idea</h3>
+                  <h3 className="mb-4 text-white p-xl">The Idea</h3>
                   <p className="p-sm text-herotext">
                     Hemergy’s ambition is to provide a fully compliant
                     crypto-solution that irrigates finance and energy value
@@ -69,7 +69,7 @@ const AboutHemergy = () => {
 
               <div className="p-6 bg-blue600 rounded-[20px] flex flex-col gap-6 ">
                 <div>
-                  <h4 className="p-md text-white mb-4">Use case </h4>
+                  <h4 className="mb-4 text-white p-md">Use case </h4>
                   <p className="p-sm text-herotext">
                     A local renewable energy actor may propose to install PV
                     panels on a school rooftop. They are accredited to sign PPA
@@ -82,7 +82,7 @@ const AboutHemergy = () => {
                   </p>
                 </div>
                 <div>
-                  <h3 className="p-lg mb-2 flex items-center gap-2 text-white">
+                  <h3 className="flex items-center gap-2 mb-2 text-white p-lg">
                     <span>
                       <Image
                         src="/images/check.svg"
@@ -98,7 +98,7 @@ const AboutHemergy = () => {
                   </p>
                 </div>
                 <div>
-                  <h3 className="p-lg mb-2 flex items-center gap-2 text-white">
+                  <h3 className="flex items-center gap-2 mb-2 text-white p-lg">
                     <span>
                       <Image
                         src="/images/check.svg"
@@ -115,7 +115,7 @@ const AboutHemergy = () => {
                   </p>
                 </div>
                 <div>
-                  <h3 className="p-lg mb-2 flex items-center gap-2 text-white">
+                  <h3 className="flex items-center gap-2 mb-2 text-white p-lg">
                     <span>
                       <Image
                         src="/images/check.svg"
@@ -135,12 +135,12 @@ const AboutHemergy = () => {
           </div>
 
           <div className="flex flex-col gap-6">
-            {aboutCard.map((item, index) => (
+            {aboutCard?.map((item, index) => (
               <div
                 key={index}
-                className="bg-white p-6 rounded-xl flex flex-col gap-6 shadow-mdshadow"
+                className="flex flex-col gap-6 p-6 bg-white rounded-xl shadow-mdshadow"
               >
-                <h2 className="p-md text-black">{item.heading}</h2>
+                <h2 className="text-black p-md">{item.heading}</h2>
                 <p className="p-sm text-gray800">{item.about}</p>
                 <Button color bg="bg-textcolor" text={item.btn} />
               </div>

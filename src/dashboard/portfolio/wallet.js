@@ -57,7 +57,7 @@ const Wallet = () => {
       </div>
       <div className="gradient-bg h-[354px] scrollbar-hide">
         <div className="transac-bg ">
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((item, index) => (
+          {[1, 2, 3, 4, 5, 6, 7, 8]?.map((item, index) => (
             <div key={index}>
               <TrasactionCard
                 txShort="Tx"

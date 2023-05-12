@@ -123,7 +123,7 @@ const NewProject = () => {
             </div>
             <div className="flex flex-col items-start justify-between gap-8 md:flex-row ">
               <div className=" w-full md:w-[276px] flex flex-row flex-shrink-0 flex-wrap md:flex-col gap-2 ">
-                {tabs.map((item, i) => (
+                {tabs?.map((item, i) => (
                   <button
                     key={i}
                     className={`tab-btn  p-sm text-weight-medium ${

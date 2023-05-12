@@ -37,7 +37,7 @@ const RegisterSlider = () => {
   return (
     <div className="register-slider">
       <Slider {...settings}>
-        {data.map((item, index) => (
+        {data?.map((item, index) => (
           <div key={index} className="register-slider-card">
             <div className="r-card-img">
               <img src={item.img} alt="register" />

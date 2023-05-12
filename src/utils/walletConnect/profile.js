@@ -52,15 +52,15 @@ export default function Profile({ setviewAllWallet, viewAllWallet, setisMaskConn
       walletMask = "/images/ledger.svg";
     }
     return (
-      <div className="flex justify-between items-center">
-        <div className="flex gap-4 items-center">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
           <Image src={walletMask} alt="logo" width={64} height={64} />
           <div className="truncate w-28">{ensName ? `${ensName} (${address})` : address}</div>
         </div>
 
         {/* <div>Connected to {connector?.name}</div> */}
         <button
-          className="p-sm-semi  text-textcolor"
+          className="p-sm-semi text-textcolor"
           onClick={() => {
             disconnect();
             setisMaskConnected(false);
@@ -92,7 +92,7 @@ export default function Profile({ setviewAllWallet, viewAllWallet, setisMaskConn
       {/* {error && <div>{error.message}</div>} */}
 
       <div className="flex flex-wrap gap-5">
-        {connectors.map((connector) => {
+        {connectors?.map((connector) => {
           var walletMask;
           if (connector.id === "metaMask") {
             walletMask = "/images/metamask.svg";
@@ -111,7 +111,7 @@ export default function Profile({ setviewAllWallet, viewAllWallet, setisMaskConn
               onClick={() => connect({ connector })}
             >
               <Image src={walletMask} alt="logo" width={64} height={64} />
-              <p className="p-sm-semi font-medium text-textblack">{connector.name}</p>
+              <p className="font-medium p-sm-semi text-textblack">{connector.name}</p>
             </div>
           );
         })}
@@ -124,7 +124,7 @@ export default function Profile({ setviewAllWallet, viewAllWallet, setisMaskConn
             }}
           >
             <Image src="/images/allWallet.svg" alt="logo" width={64} height={64} />
-            <p className="p-sm-semi font-medium text-textblack">View all</p>
+            <p className="font-medium p-sm-semi text-textblack">View all</p>
           </div>
         )}
       </div>

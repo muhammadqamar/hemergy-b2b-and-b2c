@@ -32,17 +32,17 @@ const Index = ({ projectData }) => {
     <section className="dashboard-container">
       <div className="project-detail bg-blue700">
         <Detail projectData={projectData} />
-        <div className="w-full flex flex-col md:flex-row justify-between gap-6 p-6 laptop:p-8">
+        <div className="flex flex-col justify-between w-full gap-6 p-6 md:flex-row laptop:p-8">
           <div className="flex flex-col gap-6 max-w-[617px]">
             <h2 className="p-md">What you need to know</h2>
 
-            {data.map((item, index) => (
+            {data?.map((item, index) => (
               <div key={index}>
                 <div className="flex items-center gap-4 mb-2">
                   <div className="w-8 h-8 flex items-center justify-center bg-textcolor rounded-[50%]">
                     <img src={item.icon} alt="logo" className="w-auto h-auto" />
                   </div>
-                  <h4 className="p-sm text-weight-semibold text-white">
+                  <h4 className="text-white p-sm text-weight-semibold">
                     {item.title}
                   </h4>
                 </div>
@@ -51,7 +51,7 @@ const Index = ({ projectData }) => {
             ))}
           </div>
           <div className="w-full md:w-[538px] p-6 bg-blue600 rounded-xl">
-            <div className="flex justify-center items-center gap-3 mb-4">
+            <div className="flex items-center justify-center gap-3 mb-4">
               <Image
                 src="/images/token.png"
                 className="shadow-xsmshadow rounded-[50%]"
@@ -59,7 +59,7 @@ const Index = ({ projectData }) => {
                 width={32}
                 height={32}
               />
-              <h3 className="p-md text-white ">1 token = 1 USDC</h3>
+              <h3 className="text-white p-md ">1 token = 1 USDC</h3>
             </div>
 
             <div className="flex items-center gap-2 mb-4">
@@ -71,7 +71,7 @@ const Index = ({ projectData }) => {
                   Tokens to buy
                 </p>
               </div>
-              <div className="w-full p-4 rounded-lg text-right bg-textcolor">
+              <div className="w-full p-4 text-right rounded-lg bg-textcolor">
                 <h1 className="font-Poppins text-[64px] leading-[64px] font-semibold text-blue300 mb-1">
                   200
                 </h1>
@@ -95,11 +95,11 @@ const Index = ({ projectData }) => {
               />
             </div>
             <div>
-              <h3 className="p-md text-white text-center mb-6">
+              <h3 className="mb-6 text-center text-white p-md">
                 Total to pay &nbsp; € 143.56
               </h3>
 
-              <div className="flex items-center flex-wrap justify-center gap-2 mb-6">
+              <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
                 <button
                   onClick={() => setActive('card')}
                   className={`secondary flex items-center justify-center rounded-xl text-white ${

@@ -38,7 +38,7 @@ const InvestorProfile = ({ setStep, userDetail, profileRoute }) => {
           return errors;
         }}
         onSubmit={async (values, { setSubmitting }) => {
-          const result = Object.keys(values).map((data) => {
+          const result = Object.keys(values)?.map((data) => {
             return {
               question: data,
               selectedAnswers: values[data],

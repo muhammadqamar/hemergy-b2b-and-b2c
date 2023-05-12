@@ -10,7 +10,7 @@ const Select = (props) => {
           <option className="text-white500" value="">
             {placeholder}
           </option>
-          {data.map((item, index) => (
+          {data?.map((item, index) => (
             <option key={index} value={item.value}>
               {item.option}
             </option>
