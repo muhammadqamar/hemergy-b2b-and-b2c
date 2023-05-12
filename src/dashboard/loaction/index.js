@@ -9,7 +9,6 @@ const Index = () => {
   const [userProject, setUserProject] = useState([]);
   const [searchData, setSearchData] = useState('');
 
-  console.log('userProject', userProject);
 
   //  search project
   const filteredItems = userProject?.filter((item) =>
@@ -50,12 +49,12 @@ const Index = () => {
         noproject={undefined}
       />
       <div className="map-location-box">
-        <MainMap
+        {/* <MainMap
           b2bHeading
           userProject={userProject}
           setSearchData={setSearchData}
           mapHeading={undefined}
-        />
+        /> */}
         <div className="map-cards">
           {filteredItems?.map((item, index) => (
             <LocationCard
