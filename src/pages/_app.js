@@ -60,7 +60,7 @@ const AppPass = ({ Component, pageProps }) => {
       chainConfig: {
         chainNamespace: CHAIN_NAMESPACES.EIP155, // SOLANA, OTHER
         chainId: '0x7a69',
-        rpcTarget: 'http://34.162.229.194:8545',
+        rpcTarget: 'https://dev-node.hemergy.com',
         displayName: 'Ethereum Mainnet',
 
         ticker: 'ETH',
