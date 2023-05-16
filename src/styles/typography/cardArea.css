@@ -1,5 +1,5 @@
 .card-area {
-  @apply w-full laptop:w-[40%] min-h-max laptop:min-h-screen pt-[130px] md:pt-20 pb-[70px] md:pb-8 px-6 md:px-20 laptop:pt-12 laptop:pr-6 laptop:pb-8 laptop:pl-28 relative z-[2] rounded-br-[40px] laptop:rounded-br-[60px] laptop:rounded-bl-none rounded-bl-[40px]  rounded-tr-none laptop:rounded-tr-[60px] bg-cardbg;
+  @apply w-full laptop:w-[40%] min-h-max laptop:min-h-screen pt-[130px] md:pt-20 pb-[70px] md:pb-8 px-6 md:px-20 laptop:pt-12 laptop:pr-6 laptop:pb-8 laptop:pl-[90px] relative z-[2] rounded-br-[40px] laptop:rounded-br-[60px] laptop:rounded-bl-none rounded-bl-[40px]  rounded-tr-none laptop:rounded-tr-[60px] bg-cardbg;
 }
 
 .insight-card {
@@ -8,7 +8,7 @@
 
 .insight-card::before {
   @apply absolute bottom-0 right-0 w-full min-h-[100px] z-[1];
-  content: "";
+  content: '';
   background: linear-gradient(
     180deg,
     rgba(78, 98, 238, 0) 42.19%,
@@ -30,7 +30,7 @@
 
 .gradient-bg::before {
   @apply absolute top-0 right-0 w-full h-[50px];
-  content: "";
+  content: '';
   background: linear-gradient(
     180deg,
     rgba(78, 98, 238, 0) 42.19%,
@@ -65,8 +65,8 @@
 
 .info-bg::before {
   @apply w-full h-[93px] md:h-[233px] bg-repeat-x  bg-bottom  bg-auto absolute bottom-0 left-0;
-  content: "";
-  background-image: url("/images/Intersect2.svg");
+  content: '';
+  background-image: url('/images/Intersect2.svg');
   -webkit-background-repeat-y: no-repeat;
   background-repeat-y: no-repeat;
 }

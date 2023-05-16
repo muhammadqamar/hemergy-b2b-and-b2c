@@ -13,9 +13,12 @@ const SideBar = () => {
 
   return (
     <div
-      className={`flex-row laptop:flex-col   side-nav-bar  expand-flex-box fixed h-full`}
+      className={`flex-row laptop:flex-col  side-nav-bar  expand-flex-box fixed h-full`}
     >
-      <Link href="/" className="hemergy-logo-link">
+      <Link
+        href="https://hemergy-seven.vercel.app/"
+        className="hemergy-logo-link"
+      >
         <Image
           src="/images/hemergy_logo.svg"
           className="hidden xl:block"

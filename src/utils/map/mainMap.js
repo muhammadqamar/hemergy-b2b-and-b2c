@@ -25,11 +25,60 @@ const getImage = (type) => {
   }
   return imgtype;
 };
+
+const loactionArea = [
+  {
+    id: 'Africa',
+    lat: -8.7832,
+    lng: 34.5085,
+  },
+  {
+    id: 'Asia',
+    lat: 34.0479,
+    lng: 100.6197,
+  },
+  {
+    id: 'Europe',
+    lat: 54.526,
+    lng: 15.2551,
+  },
+  {
+    id: 'Americas',
+    lat: 37.0902,
+    lng: -95.7129,
+  },
+  {
+    id: 'Australia',
+    lat: -25.2744,
+    lng: 133.7751,
+  },
+];
+
 const MainMap = ({ mapHeading, b2bHeading, userProject, setSearchData }) => {
   const [upDate, setUpDate] = useState('');
   const [positionData, setPositionData] = useState([]);
+  const [positionData2, setPositionData2] = useState();
+  const [location, setLocation] = useState([]);
 
-  // console.log(upDate);
+  const [zoom, setZoom] = useState();
+  // const [center, setCenter] = useState();
+
+  // const handleContinentClick = (continent) => {
+  //   const lang = loactionArea?.filter((item) => item.id.includes(continent));
+
+  //   const late = lang?.map((item) => item?.lat);
+  //   const lange = lang?.map((item) => item?.lng);
+  //   console.log('continent', continent);
+  //   setCenter({
+  //     lat: late || 0,
+  //     lng: lange || 0,
+  //   });
+  //   if (continent === '') {
+  //     setZoom(2);
+  //   } else {
+  //     setZoom(3);
+  //   }
+  // };
 
   // useEffect(() => {
   //   const intervil = setInterval(() => {
@@ -40,6 +89,19 @@ const MainMap = ({ mapHeading, b2bHeading, userProject, setSearchData }) => {
   //   }, 2000);
   //   return () => clearInterval(intervil);
   // }, [upDate]);
+
+  // useEffect(() => {
+  //   const dataLoction = {
+  //     coords: {
+  //       lat: center?.lat[0],
+  //       lng: center?.lng[0],
+  //     },
+
+  //     icon: '/images/map/marker_3.svg',
+  //     type: '',
+  //   };
+  //   setPositionData2(dataLoction);
+  // }, [center]);
 
   useEffect(() => {
     // const lat = userProject?.map((item) => item?.details?.information?.lat);
@@ -66,11 +128,15 @@ const MainMap = ({ mapHeading, b2bHeading, userProject, setSearchData }) => {
   return (
     <div className="w-full map-box">
       <div
-        className={`max-w-[1005px] mx-auto ${
+        className={`max-w-full mx-auto ${
           mapHeading ? 'hidden md:block' : 'hidden lg:block'
         }`}
       >
-        <Map positionCoords={positionData} />
+        <Map
+          zoom={zoom}
+          positionData2={positionData2}
+          positionCoords={positionData}
+        />
       </div>
 
       {mapHeading && (
@@ -103,9 +169,18 @@ const MainMap = ({ mapHeading, b2bHeading, userProject, setSearchData }) => {
           </div>
           <div className="input-field">
             <div class="relative inline-block text-left"></div>
-            <select className="p-sm">
+            <select
+              onChange={(event) => handleContinentClick(event.target.value)}
+              className="p-sm"
+            >
               <option value="">Location</option>
-              {userProject?.map((item, i) => (
+              <option value="Africa">Africa</option>
+              <option value="Asia">Asia</option>
+              <option value="Europe">Europe</option>
+              <option value="Americas">Americas</option>
+              <option value="Australia">Australia</option>
+
+              {/* {userProject?.map((item, i) => (
                 <option key={i} value={item?.details?.information?.country}>
                   <div>
                     <ReactCountryFlag
@@ -119,7 +194,7 @@ const MainMap = ({ mapHeading, b2bHeading, userProject, setSearchData }) => {
                     {item?.details?.information?.country}
                   </div>
                 </option>
-              ))}
+              ))} */}
             </select>
           </div>
         </div>

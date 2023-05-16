@@ -1,24 +1,7 @@
 import { Formik } from 'formik';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { getSigner } from '@/components/helpers/signer';
-
-import Hemergy from '@hemergy/core-sdk';
-import { ethers } from 'ethers';
-import { toast } from 'react-toastify';
-import { updateuserprojects } from '@/services/user';
 
 const CreditCard = ({ projectData }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const state = useSelector((state) => state);
-  var hemergy;
-
-  useEffect(async () => {
-    if (state.user.web3auth) {
-    }
-  }, [state.user.web3auth]);
-
   return (
     <div className="token-form">
       <Formik
@@ -201,71 +184,6 @@ const CreditCard = ({ projectData }) => {
           </form>
         )}
       </Formik>
-      <button
-        className="p-lg text-weight-medium text-white rounded-xl px-2 py-3 w-full bg-red600"
-        onClick={async () => {
-          setIsLoading(true);
-          const e = await state.user.web3auth.connect();
-
-          const ethersProvider = new ethers.providers.Web3Provider(e);
-          const signer = await ethersProvider.getSigner();
-          console.log('signer address', await signer.getAddress());
-          const hemergy = new Hemergy({
-            baseURL: 'https://dev-core.hemergy.com',
-            signer,
-          });
-
-          try {
-            await hemergy.mint(state.user.user?.accountAddress);
-            const invest = await hemergy.investInProject(
-              projectData?.projectAddress,
-              state.user.user?.accountAddress,
-              1000
-            );
-            if (state.user.user?.projectsasInvestor) {
-              await updateuserprojects('projectsasInvestor', {
-                email: state.user?.user?.email,
-                endUserAddress: state.user?.user?.endUserAddress,
-                projectAddress: [
-                  ...state.user.user?.projectsasInvestor,
-                  {
-                    projectAddress: projectData?.projectAddress,
-                    amount: '123',
-                    time: new Date(),
-                  },
-                ],
-              });
-            } else {
-              await updateuserprojects('projectsasInvestor', {
-                email: state.user?.user?.email,
-                endUserAddress: state.user?.user?.endUserAddress,
-                projectAddress: [
-                  {
-                    projectAddress: projectData?.projectAddress,
-                    amount: '123',
-                    time: new Date(),
-                  },
-                ],
-              });
-            }
-            setIsLoading(false);
-            toast.success('You have successfully Invested in this Project', {
-              position: 'bottom-right',
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: 'light',
-            });
-          } catch (e) {
-            setIsLoading(false);
-          }
-        }}
-      >
-        {isLoading ? <img src="/images/loader.svg" /> : 'Buy now'}
-      </button>
     </div>
   );
 };

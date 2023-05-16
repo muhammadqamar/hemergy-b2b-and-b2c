@@ -1,5 +1,10 @@
 import React from 'react';
-import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
+import {
+  GoogleMap,
+  useJsApiLoader,
+  InfoWindow,
+  Marker,
+} from '@react-google-maps/api';
 import { positions } from './positionData';
 
 const mapStyle = [
@@ -241,20 +246,21 @@ const mapStyle = [
     ],
   },
 ];
-const OPTIONS = {
-  minZoom: 2,
-  maxZoom: 2,
-}
+
 const containerStyle = {
   width: '100%',
   height: '100%',
 };
+const OPTIONS = {
+  minZoom: 2,
+  maxZoom: 2,
+};
 const center = {
   lat: 39.745,
-  lng: 75.523
+  lng: 75.523,
 };
 const MapContainer = (props) => {
-  const { h, positionCoords } = props;
+  const { h, zoom, positionData2, positionCoords } = props;
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -266,7 +272,8 @@ const MapContainer = (props) => {
 
   const onLoad = React.useCallback(function callback(map) {
     // This is just an example of getting and using the map instance!!! don't just blindly copy!
-    map?.setZoom(1.8)
+
+    map?.setZoom(1.8);
     const bounds = new window.google.maps.LatLngBounds(center);
     map?.fitBounds(bounds);
 
@@ -276,22 +283,31 @@ const MapContainer = (props) => {
 
     setMap(map);
   }, []);
+
   return (
     <div className={`relative w-full ${h ? 'h-[547px]' : 'h-[439px]'}`}>
       {isLoaded && (
         <GoogleMap
           mapContainerStyle={containerStyle}
-          zoom={1.8}
+          zoom={zoom || 1.8}
           initialCenter={coords}
           streetViewControl={false}
           mapTypeControl={false}
           fullscreenControl={false}
-          zoomControl={false}
+          zoomControl={true}
           onLoad={onLoad}
           styles={mapStyle}
-          options = {OPTIONS}
-
+          options={OPTIONS}
+          // center={positionData2.coords}
         >
+          {/* {positionData2 && (
+            <Marker
+              icon={{
+                url: positionData2.icon,
+              }}
+              position={positionData2.coords}
+            />
+          )} */}
           {positionCoords?.map((data) => {
             return (
               <Marker

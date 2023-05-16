@@ -9,7 +9,6 @@ const Index = () => {
   const [userProject, setUserProject] = useState([]);
   const [searchData, setSearchData] = useState('');
 
-
   //  search project
   const filteredItems = userProject?.filter((item) =>
     item?.details?.information?.projectName
@@ -37,8 +36,6 @@ const Index = () => {
         h
         areaHeading="Featured projects"
         areaDesc="These are hot projects lorem ipsum etc"
-        btn1="Details"
-        btn2="Invest"
         token="200"
         tokenLabel="Available"
         hot
@@ -66,10 +63,10 @@ const Index = () => {
               }
               hemergyIcon="/images/air.svg"
               user={{
-                // name: item?.details?.beneficiaries?.users[0]?.firstName,
+                name: item?.user?.detail?.name,
                 designation: 'Project Manager',
                 bio: '',
-                avatar: '/images/user.png',
+                avatar: item?.user?.detail?.profileImage,
               }}
               viewDetailbtn
               location={item?.details?.information?.addressLine1}

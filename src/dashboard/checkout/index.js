@@ -1,7 +1,16 @@
 import Image from 'next/image';
 import Detail from './detail';
 import CreditCard from './creditCard';
-import { useState } from 'react';
+
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { getSigner } from '@/components/helpers/signer';
+
+import Hemergy from '@hemergy/core-sdk';
+import { ethers } from 'ethers';
+import { toast } from 'react-toastify';
+import { updateuserprojects } from '@/services/user';
+import Input from '@/utils/inputFields/input';
 
 const data = [
   {
@@ -28,9 +37,19 @@ const data = [
 
 const Index = ({ projectData }) => {
   const [active, setActive] = useState('card');
+  const [tokenInput, setTokenInput] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const state = useSelector((state) => state);
+  var hemergy;
+
+  useEffect(async () => {
+    if (state.user.web3auth) {
+    }
+  }, [state.user.web3auth]);
+
   return (
     <section className="dashboard-container">
-      <div className="project-detail bg-blue700">
+      <div className="project-detail bg-blue700 min-h-[90vh]">
         <Detail projectData={projectData} />
         <div className="flex flex-col justify-between w-full gap-6 p-6 md:flex-row laptop:p-8">
           <div className="flex flex-col gap-6 max-w-[617px]">
@@ -59,10 +78,12 @@ const Index = ({ projectData }) => {
                 width={32}
                 height={32}
               />
-              <h3 className="text-white p-md ">1 token = 1 USDC</h3>
+              <h3 className="text-white p-md ">
+                1 token = {projectData?.details?.tokens?.tokenPrice} USDC
+              </h3>
             </div>
 
-            <div className="flex items-center gap-2 mb-4">
+            {/* <div className="flex items-center gap-2 mb-4">
               <div className="w-full p-4 rounded-lg bg-textcolor">
                 <h1 className="font-Poppins text-[64px] leading-[64px] font-semibold text-white mb-1">
                   150
@@ -79,8 +100,8 @@ const Index = ({ projectData }) => {
                   Equity tokens available
                 </p>
               </div>
-            </div>
-            <div className="mb-8">
+            </div> */}
+            {/* <div className="mb-8">
               <input
                 type="range"
                 min="10"
@@ -93,13 +114,22 @@ const Index = ({ projectData }) => {
                   backgroundSize: '80%,100%',
                 }}
               />
-            </div>
+            </div> */}
             <div>
               <h3 className="mb-6 text-center text-white p-md">
-                Total to pay &nbsp; € 143.56
+                Total to pay &nbsp; $
+                {tokenInput * projectData?.details?.tokens?.tokenPrice || 0}
               </h3>
 
-              <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
+              <div className="">
+                <Input
+                  inputType="number"
+                  onChange={(e) => setTokenInput(e.target.value)}
+                  placeholder="type tokens"
+                />
+              </div>
+
+              {/* <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
                 <button
                   onClick={() => setActive('card')}
                   className={`secondary flex items-center justify-center rounded-xl text-white ${
@@ -124,13 +154,82 @@ const Index = ({ projectData }) => {
                 >
                   Cryptowallet
                 </button>
-              </div>
-              {active === 'card' && (
+              </div> */}
+              {/* {active === 'card' && (
                 <div>
                   <CreditCard projectData={projectData} />
                 </div>
-              )}
+              )}  */}
             </div>
+
+            <button
+              className="p-lg text-weight-medium text-white rounded-xl px-2 py-3 w-full bg-red600"
+              onClick={async () => {
+                setIsLoading(true);
+                const e = await state.user.web3auth.connect();
+
+                const ethersProvider = new ethers.providers.Web3Provider(e);
+                const signer = await ethersProvider.getSigner();
+                console.log('signer address', await signer.getAddress());
+                const hemergy = new Hemergy({
+                  baseURL: 'https://dev-core.hemergy.com',
+                  signer,
+                });
+
+                try {
+                  await hemergy.mint(state.user.user?.accountAddress);
+                  const invest = await hemergy.investInProject(
+                    projectData?.projectAddress,
+                    state.user.user?.accountAddress,
+                    1000
+                  );
+                  if (state.user.user?.projectsasInvestor) {
+                    await updateuserprojects('projectsasInvestor', {
+                      email: state.user?.user?.email,
+                      endUserAddress: state.user?.user?.endUserAddress,
+                      projectAddress: [
+                        ...state.user.user?.projectsasInvestor,
+                        {
+                          projectAddress: projectData?.projectAddress,
+                          amount: '123',
+                          time: new Date(),
+                        },
+                      ],
+                    });
+                  } else {
+                    await updateuserprojects('projectsasInvestor', {
+                      email: state.user?.user?.email,
+                      endUserAddress: state.user?.user?.endUserAddress,
+                      projectAddress: [
+                        {
+                          projectAddress: projectData?.projectAddress,
+                          amount: '123',
+                          time: new Date(),
+                        },
+                      ],
+                    });
+                  }
+                  setIsLoading(false);
+                  toast.success(
+                    'You have successfully Invested in this Project',
+                    {
+                      position: 'bottom-right',
+                      autoClose: 5000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: 'light',
+                    }
+                  );
+                } catch (e) {
+                  setIsLoading(false);
+                }
+              }}
+            >
+              {isLoading ? <img src="/images/loader.svg" /> : 'Buy now'}
+            </button>
           </div>
         </div>
       </div>

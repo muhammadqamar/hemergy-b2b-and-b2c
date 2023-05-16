@@ -7,19 +7,42 @@ import { useSelector } from 'react-redux';
 const SideBar = () => {
   const { user } = useSelector((state) => state);
   const [menu, setMenu] = useState(false);
+  const [expendable, setExpendable] = useState(false);
   const router = useRouter();
   const currentRoute = router.pathname;
 
   return (
-    <div className="flex-row flex-box laptop:flex-col side-nav-bar">
-      <Link href="/">
-        <Image src="/images/logo_cue.svg" alt="logo" width={32} height={32} />
+    <div
+      onMouseEnter={() => setExpendable(true)}
+      onMouseLeave={() => setExpendable(false)}
+      className={`flex-row flex-box laptop:flex-col side-nav-bar ${
+        expendable && 'expand-flex-box'
+      }`}
+    >
+      <Link href="https://hemergy-seven.vercel.app/">
+        {expendable ? (
+          <Image
+            src="/images/hemergy_logo.svg"
+            className="hidden xl:block"
+            alt="logo"
+            width={187}
+            height={40}
+          />
+        ) : (
+          <Image src="/images/logo_cue.svg" alt="logo" width={32} height={32} />
+        )}
       </Link>
       <div className="flex-row gap-4 flex-box laptop:flex-col ">
         <Link
           href="/portfolio"
           className={
-            currentRoute === '/projects' ? 'menu-item active' : 'menu-item'
+            expendable
+              ? currentRoute === '/portfolio'
+                ? 'expand-menu-item active hide-links'
+                : 'expand-menu-item hide-links'
+              : currentRoute === '/portfolio'
+              ? 'menu-item active'
+              : 'menu-item'
           }
         >
           <Image
@@ -28,53 +51,85 @@ const SideBar = () => {
             width={20}
             height={20}
           />
+          {expendable && <h3 className="expand-side-bar-text">Portfolio</h3>}
         </Link>
         <Link
-          href=""
+          href="/"
           className={
-            currentRoute === '/checkout' ? 'menu-item active' : 'menu-item'
+            expendable
+              ? currentRoute === '/'
+                ? 'expand-menu-item active hide-links'
+                : 'expand-menu-item hide-links'
+              : currentRoute === '/'
+              ? 'menu-item active'
+              : 'menu-item'
           }
         >
           <Image src="/images/apps.svg" alt="logo" width={20} height={20} />
+          {expendable && <h3 className="expand-side-bar-text">Projects</h3>}
         </Link>
         <Link
-          href={`/about-hemergy`}
+          href="/about-hemergy"
           className={
-            currentRoute === '/about-hemergy' ? 'menu-item active' : 'menu-item'
+            expendable
+              ? currentRoute === '/about-hemergy'
+                ? 'expand-menu-item active hide-links'
+                : 'expand-menu-item hide-links'
+              : currentRoute === '/about-hemergy'
+              ? 'menu-item active'
+              : 'menu-item'
           }
         >
           <Image src="/images/hemergy.svg" alt="logo" width={20} height={20} />
+          {expendable && (
+            <h3 className="expand-side-bar-text">About Hemergy</h3>
+          )}
         </Link>
       </div>
       <div className="flex-row gap-4 flex-box laptop:flex-col">
         <a
           target="_blank"
           href="https://twitter.com/HemergyTech"
-          className="menu-item hide-links"
+          className={
+            expendable ? 'expand-menu-item hide-links' : 'menu-item hide-links'
+          }
         >
           <Image src="/images/twitter.svg" alt="logo" width={20} height={20} />
+          {expendable && <h3 className="expand-side-bar-text">Twitter</h3>}
         </a>
         <a
           target="_blank"
           href="https://medium.com/hemergy"
-          className="menu-item hide-links"
+          className={
+            expendable ? 'expand-menu-item hide-links' : 'menu-item hide-links'
+          }
         >
           <Image src="/images/medium.svg" alt="logo" width={20} height={20} />
+          {expendable && <h3 className="expand-side-bar-text">Medium</h3>}
         </a>
         <Link
           href="/contact"
           className={
-            currentRoute === '/contact'
-              ? 'menu-item hide-links active'
-              : 'menu-item hide-links'
+            expendable
+              ? currentRoute === '/contact'
+                ? 'expand-menu-item active hide-links'
+                : 'expand-menu-item hide-links'
+              : currentRoute === '/contact'
+              ? 'menu-item active'
+              : 'menu-item'
           }
         >
           <Image src="/images/help.svg" alt="logo" width={20} height={20} />
+          {expendable && <h3 className="expand-side-bar-text">Get in touch</h3>}
         </Link>
         <Link
           href="/profile"
           className={
-            currentRoute === '/profile'
+            expendable
+              ? currentRoute === '/profile'
+                ? 'expand-menu-item active hide-links'
+                : 'expand-menu-item hide-links'
+              : currentRoute === '/profile'
               ? 'dash-user-img insite-border '
               : 'dash-user-img '
           }
@@ -84,7 +139,11 @@ const SideBar = () => {
             alt="logo"
             width={20}
             height={20}
+            className="object-cover w-8 h-8 rounded-full"
           />
+          {expendable && (
+            <h3 className="expand-side-bar-text">{user?.user?.detail?.name}</h3>
+          )}
         </Link>
         <a
           onClick={async () => {
@@ -93,9 +152,12 @@ const SideBar = () => {
             await user?.web3auth?.logout();
             router.push('/login');
           }}
-          className="menu-item hide-links"
+          className={
+            expendable ? 'expand-menu-item hide-links' : 'menu-item hide-links'
+          }
         >
           <Image src="/images/logout.svg" alt="logo" width={20} height={20} />
+          {expendable && <h3 className="expand-side-bar-text">Log Out</h3>}
         </a>
         <button
           onClick={() => {
