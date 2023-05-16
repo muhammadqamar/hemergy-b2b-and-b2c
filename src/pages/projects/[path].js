@@ -2,6 +2,8 @@ import SideBar from '@/dashboard/sideBar';
 import ProjectDetails from '@/dashboard/projectDetails';
 import { projectDetailId } from '@/services/project';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import BalanceCom from '@/components/balance';
 
 const ProjectDetail = ({ projectId }) => {
   const [projectData, setProjectData] = useState();
@@ -10,6 +12,7 @@ const ProjectDetail = ({ projectId }) => {
 
   useEffect(() => {
     (async () => {
+
       const response = await projectDetailId(projectId?.path);
       setProjectData(response?.data?.projectDetail);
     })();
@@ -18,6 +21,7 @@ const ProjectDetail = ({ projectId }) => {
     <div>
       <SideBar />
       <ProjectDetails projectData={projectData} />
+      <BalanceCom />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import CardArea from '../common/cardArea';
 import Insights from './insights';
 import Wallet from './wallet';
-
+import BalanceCom from "@/components/balance"
 const Index = ({ userProject }) => {
   return (
     <div className="flex flex-col laptop:flex-row">
@@ -20,6 +20,8 @@ const Index = ({ userProject }) => {
 
       <Insights />
       <Wallet />
+      <BalanceCom />
+
     </div>
   );
 };

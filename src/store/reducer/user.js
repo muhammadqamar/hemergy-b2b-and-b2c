@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   user: null,
   web3auth:null,
-  signer:null
+  signer:null,
+  balance:null
 }
 
 export const userReducer = createSlice({
@@ -19,12 +20,15 @@ export const userReducer = createSlice({
     setSignerToRedux: (state, action) => {
       state.signer = action.payload
     },
+    setAccountBalance: (state, action) => {
+      state.balance = action.payload
+    },
 
 
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { addUser, setweb3authReducer, setSignerToRedux } = userReducer.actions
+export const { addUser, setweb3authReducer, setSignerToRedux, setAccountBalance } = userReducer.actions
 
 export default userReducer.reducer

@@ -37,15 +37,24 @@ const data = [
 
 const Index = ({ projectData }) => {
   const [active, setActive] = useState('card');
-  const [tokenInput, setTokenInput] = useState();
+  const [tokenInput, setTokenInput] = useState(10);
   const [isLoading, setIsLoading] = useState(false);
   const state = useSelector((state) => state);
-  var hemergy;
 
-  useEffect(async () => {
-    if (state.user.web3auth) {
-    }
-  }, [state.user.web3auth]);
+  // useEffect(async () => {
+  //   const e = await state.user.web3auth.connect();
+
+  //   const ethersProvider = new ethers.providers.Web3Provider(e);
+  //   const signer = await ethersProvider.getSigner();
+  //   const usdc = new ethers.Contract(
+  //     'TestUSDC',
+  //     '0x5FbDB2315678afecb367f032d93F642f64180aa3',
+  //     signer
+  //   );
+
+  //   totalInvestedInProject = await usdc.balanceOf(projectData.projectAddress);
+  //   console.log(totalInvestedInProject);
+  // }, [projectData]);
 
   return (
     <section className="dashboard-container">
@@ -122,13 +131,16 @@ const Index = ({ projectData }) => {
               </h3>
 
               <div className="">
+                <label className="text-[#fff] ">Enter Token Amount</label>
                 <Input
                   inputType="number"
                   onChange={(e) => setTokenInput(e.target.value)}
-                  placeholder="type tokens"
+                  placeholder="Enter amount"
+                  value={tokenInput}
+
                 />
               </div>
-
+             <br />
               {/* <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
                 <button
                   onClick={() => setActive('card')}
@@ -177,11 +189,13 @@ const Index = ({ projectData }) => {
                 });
 
                 try {
-                  await hemergy.mint(state.user.user?.accountAddress);
+                  if (!state.user.balance) {
+                    await hemergy.mint(state.user.user?.accountAddress);
+                  }
                   const invest = await hemergy.investInProject(
                     projectData?.projectAddress,
                     state.user.user?.accountAddress,
-                    1000
+                    tokenInput
                   );
                   if (state.user.user?.projectsasInvestor) {
                     await updateuserprojects('projectsasInvestor', {

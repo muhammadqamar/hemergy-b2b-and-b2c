@@ -14,7 +14,7 @@ import { addUser, setSignerToRedux } from '@/store/reducer/user';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { ADAPTER_EVENTS } from '@web3auth/base';
-import { setweb3authReducer } from '@/store/reducer/user';
+import { setweb3authReducer, setAccountBalance } from '@/store/reducer/user';
 import Hemergy from '@hemergy/core-sdk'
 
 import '@/styles/globals.css';
@@ -91,29 +91,40 @@ const AppPass = ({ Component, pageProps }) => {
     await web3auth.initModal();
 
 
-    if (web3auth?.status == 'connected') {
-      const web3authProvider = await web3auth.connect();
-      const ethersProvider = new ethers.providers.Web3Provider(
-        web3authProvider
-      );
-      const signer = await  ethersProvider.getSigner();
-      console.log(signer)
-      const address = await signer?.getAddress();
-      console.log('address on ethers', address)
 
-      // const account = await hemergy?.createAccount();
-      // console.log('account information', account)
-
-
-    }
     dispatch(setweb3authReducer(web3auth));
     dispatch(addUser());
 
     if (web3auth.status === 'connected') {
+      const web3authProvider = await web3auth.connect();
+
+
+      const ethersProvider = new ethers.providers.Web3Provider(
+        web3authProvider
+      );
+      const signer = await  ethersProvider.getSigner();
+
+
+      const hemergy = new Hemergy({
+        baseURL: 'https://dev-core.hemergy.com',
+        signer,
+      });
+
       const checkToken = await me();
       setReady(true);
       if (checkToken.status == 200) {
         dispatch(addUser(checkToken.data.user));
+        const balance = await hemergy.getBalance(
+          checkToken.data.user.accountAddress
+        );
+
+
+        let hexNumber = balance._hex;
+        const bigIntNumber = BigInt(hexNumber);
+        const number = Number(bigIntNumber);
+
+        dispatch(setAccountBalance(number/Math.pow(10,18)));
+
 
         if (routes.pathname === '/login') {
           routes.push('/');

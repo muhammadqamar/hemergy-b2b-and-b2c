@@ -41,35 +41,26 @@ function App() {
       console.log('web3auth not initialized yet');
       return;
     }
-    console.log(web3auth);
+
     formikValidation.current?.setSubmitting(true);
     const web3authProvider = await web3auth.connect();
 
-    //   const ethersProvider = new ethers.providers.Web3Provider(
-    //     web3authProvider
-    //   );
-    //   const ethSigner = ethersProvider.getSigner();
-    //   console.log(ethSigner)
-    //   const address = await ethSigner.getAddress();
-    //   console.log('address on ethers', address)
-    //   const hemergy =  new Hemergy({ baseURL: 'https://dev-core.hemergy.com', ethSigner });
-    //   console.log('sdk hemergy', hemergy)
-    //   // const account = await hemergy.createAccount();
-    //   // console.log('account infotmation', account)
-    //  // dispatch(setSignerToRedux(hemergy))
-    //   console.log('ethSigner', ethSigner)
-    //   setProvider(web3authProvider);
-
+     console.log(web3authProvider)
+      let endUserAddress
+      if(web3authProvider.selectedAddress) {
+        endUserAddress=web3authProvider.selectedAddress
+      }else {
     const privateKey = await web3authProvider.request({
       method: 'private_key',
     });
     const getBuffer = (str) => Buffer.from(str, 'hex');
 
-    const endUserAddress =
+     endUserAddress =
       '0x' + privateToAddress(getBuffer(privateKey)).toString('hex');
-
+  }
     const user = await web3auth.getUserInfo();
-    if (user?.email && endUserAddress) {
+    console.log("user",user)
+    if (user?.email || endUserAddress) {
       const checkLogin = await investorLoginWeb3Auth({
         email: user.email,
         endUserAddress: endUserAddress,
@@ -100,7 +91,7 @@ function App() {
             ForwardRequest: signerInformation.data?.ForwardRequest,
           },
           signerInformation.data?.request,
-          privateKey,
+          "",
           endUserAddress,
           user
         );

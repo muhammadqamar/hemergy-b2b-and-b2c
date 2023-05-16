@@ -4,6 +4,7 @@ import MainMap from '@/utils/map/mainMap';
 import { projectDetail } from '@/services/project';
 import { useEffect, useState } from 'react';
 import React from 'react';
+import BalanceCom from "@/components/balance"
 
 const Index = () => {
   const [userProject, setUserProject] = useState([]);
@@ -78,6 +79,7 @@ const Index = () => {
             />
           ))}
         </div>
+        <BalanceCom />
       </div>
     </div>
   );
