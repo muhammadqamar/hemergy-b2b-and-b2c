@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import { privateToAddress } from 'ethereumjs-util';
 import { getSigner } from '../helpers/signer';
-import { addUser } from '@/store/reducer/user';
+import { addUser, setAccountBalance } from '@/store/reducer/user';
 import {
   investorLoginWeb3Auth,
   investorRegister,
@@ -44,29 +44,46 @@ function App() {
 
     formikValidation.current?.setSubmitting(true);
     const web3authProvider = await web3auth.connect();
+    let endUserAddress
+    if (web3authProvider.selectedAddress) {
+      endUserAddress = web3authProvider.selectedAddress;
+    } else {
+      const privateKey = await web3authProvider.request({
+        method: 'private_key',
+      });
+      const getBuffer = (str) => Buffer.from(str, 'hex');
 
-     console.log(web3authProvider)
-      let endUserAddress
-      if(web3authProvider.selectedAddress) {
-        endUserAddress=web3authProvider.selectedAddress
-      }else {
-    const privateKey = await web3authProvider.request({
-      method: 'private_key',
-    });
-    const getBuffer = (str) => Buffer.from(str, 'hex');
-
-     endUserAddress =
-      '0x' + privateToAddress(getBuffer(privateKey)).toString('hex');
-  }
+      endUserAddress =
+        '0x' + privateToAddress(getBuffer(privateKey)).toString('hex');
+    }
     const user = await web3auth.getUserInfo();
-    console.log("user",user)
+    console.log('user', user);
     if (user?.email || endUserAddress) {
       const checkLogin = await investorLoginWeb3Auth({
         email: user.email,
         endUserAddress: endUserAddress,
       });
       if (checkLogin.status === 200) {
-        console.log(checkLogin);
+
+        const ethersProvider = new ethers.providers.Web3Provider(
+          web3authProvider
+        );
+        const signer = await ethersProvider.getSigner();
+
+        const hemergy = new Hemergy({
+          baseURL: 'https://dev-core.hemergy.com',
+          signer,
+        });
+
+        const balance = await hemergy.getBalance(
+          checkLogin.data.user.accountAddress
+        );
+
+        let hexNumber = balance._hex;
+        const bigIntNumber = BigInt(hexNumber);
+        const number = Number(bigIntNumber);
+
+        dispatch(setAccountBalance(number / Math.pow(10, 18)));
         formikValidation.current?.setSubmitting(false);
         localStorage.setItem('hemergy-email', checkLogin?.data?.user?.email);
         localStorage.setItem('hemergy-token', checkLogin?.data?.token);
@@ -91,7 +108,7 @@ function App() {
             ForwardRequest: signerInformation.data?.ForwardRequest,
           },
           signerInformation.data?.request,
-          "",
+          '',
           endUserAddress,
           user
         );
@@ -114,6 +131,25 @@ function App() {
       message,
       'account'
     );
+    const web3authProvider = await web3auth.connect();
+    const ethersProvider = new ethers.providers.Web3Provider(
+      web3authProvider
+    );
+    const signer1 = await ethersProvider.getSigner();
+    const hemergy = new Hemergy({
+      baseURL: 'https://dev-core.hemergy.com',
+      signer:signer1,
+    });
+
+    const balance = await hemergy.getBalance(
+      accountAddress
+    );
+    await hemergy.mint(accountAddress);
+
+    dispatch(setAccountBalance(number / Math.pow(10, 18)));
+    let hexNumber = balance._hex;
+    const bigIntNumber = BigInt(hexNumber);
+    const number = Number(bigIntNumber);
 
     const result = await investorRegister({
       email: user1.email,

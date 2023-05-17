@@ -2,7 +2,8 @@ import Image from 'next/image';
 import TabInfo from '@/utils/tabInfo';
 import UserCard from '@/utils/userCard';
 import Link from 'next/link';
-
+import { getBalance } from '@/components/helpers/balance';
+import { useEffect, useState } from 'react';
 const Index = ({
   usdc,
   usdcDate,
@@ -21,7 +22,15 @@ const Index = ({
   assetsName,
   btnLink = '',
   userImage,
+  item,
 }) => {
+  const [money, setMoney] = useState();
+  useEffect(() => {
+    (async () => {
+      const result = await getBalance(item.projectAddress);
+      setMoney(result);
+    })();
+  }, [item]);
   return (
     <div className="project-card-box">
       <Link href={btnLink} className="w-full">
@@ -105,9 +114,9 @@ const Index = ({
                   height={32}
                 />
                 <div>
-                  <h5 className="p-xl text-textcolor mb-1">{token}</h5>
+                  <h5 className="p-xl text-textcolor mb-1">{money}</h5>
                   <p className="p-x-sm font-medium text-gray900">
-                    {tokenLabel}
+                    USDC available
                   </p>
                 </div>
               </div>

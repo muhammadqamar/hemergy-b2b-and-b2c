@@ -59,6 +59,7 @@ const CardArea = ({
                 hot={hot}
                 userName={item?.user?.detail?.name}
                 userImage={item?.user?.detail?.profileImage}
+                item={item}
               />
             </div>
           ))}

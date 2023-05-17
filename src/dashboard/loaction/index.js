@@ -76,6 +76,7 @@ const Index = () => {
               stock="675.5"
               hemergyType={item?.details?.linkAssets?.assetType}
               name={item?.details?.information?.projectName}
+              item={item}
             />
           ))}
         </div>

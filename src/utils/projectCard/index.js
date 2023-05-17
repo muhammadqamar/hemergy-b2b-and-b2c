@@ -1,7 +1,10 @@
+import { useState, useEffect } from 'react';
 import TabInfo from '@/utils/tabInfo';
 import UserCard from '@/utils/userCard';
 import ProjectCardThumbnail from '@/utils/projectCardThumbnail';
 import Link from 'next/link';
+import Image from 'next/image';
+import {getBalance} from "@/components/helpers/balance"
 
 export default function ProjectCard(props) {
   const {
@@ -21,7 +24,16 @@ export default function ProjectCard(props) {
     location,
     projectImage,
     btnLink = '',
+    item
   } = props;
+
+  const [money, setMoney] = useState()
+  useEffect(() => {
+    (async () => {
+      const result = await getBalance(item.projectAddress);
+      setMoney(result);
+    })();
+  }, [item]);
   return (
     <div
       className={`hemergy-project-card rounded-[20px] h-max overflow-hidden text-left ${
@@ -96,6 +108,22 @@ export default function ProjectCard(props) {
             {bio}
           </p>
         )}
+        {true && (
+              <div className="flex gap-[10px] mb-[15px] items-center">
+                <img
+                  src="/images/token.png"
+                  alt="token"
+                  className="w-[32px] h-[32px]"
+
+                />
+                <div>
+                  <h5 className="p-sm text-textcolor mb-1">{money}</h5>
+                  <p className="p-x-sm font-medium text-gray900">
+                    USDC available
+                  </p>
+                </div>
+              </div>
+            )}
         {user && (
           <div className="mb-[16px]">
             <UserCard

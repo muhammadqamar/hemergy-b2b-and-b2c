@@ -11,7 +11,8 @@ import { ethers } from 'ethers';
 import { toast } from 'react-toastify';
 import { updateuserprojects } from '@/services/user';
 import Input from '@/utils/inputFields/input';
-
+import {  setAccountBalance } from '@/store/reducer/user';
+import { useDispatch } from 'react-redux';
 const data = [
   {
     icon: '/images/token.png',
@@ -40,6 +41,7 @@ const Index = ({ projectData }) => {
   const [tokenInput, setTokenInput] = useState(10);
   const [isLoading, setIsLoading] = useState(false);
   const state = useSelector((state) => state);
+  const dispatch = useDispatch()
 
   // useEffect(async () => {
   //   const e = await state.user.web3auth.connect();
@@ -126,8 +128,8 @@ const Index = ({ projectData }) => {
             </div> */}
             <div>
               <h3 className="mb-6 text-center text-white p-md">
-                Total to pay &nbsp; $
-                {tokenInput * projectData?.details?.tokens?.tokenPrice || 0}
+                Total to pay &nbsp;
+                {tokenInput * projectData?.details?.tokens?.tokenPrice || 0} USDC
               </h3>
 
               <div className="">
@@ -182,21 +184,50 @@ const Index = ({ projectData }) => {
 
                 const ethersProvider = new ethers.providers.Web3Provider(e);
                 const signer = await ethersProvider.getSigner();
-                console.log('signer address', await signer.getAddress());
+
                 const hemergy = new Hemergy({
                   baseURL: 'https://dev-core.hemergy.com',
                   signer,
                 });
 
                 try {
+
                   if (!state.user.balance) {
                     await hemergy.mint(state.user.user?.accountAddress);
                   }
+                  const amountConvert =  (tokenInput* projectData?.details?.tokens?.tokenPrice)*Math.pow(10,18)
+
+                  console.log('amountConvert', amountConvert)
+                  await hemergy.approveAccountAmount(state.user.user?.accountAddress, projectData?.projectAddress, '0x5FbDB2315678afecb367f032d93F642f64180aa3', amountConvert)
+
                   const invest = await hemergy.investInProject(
                     projectData?.projectAddress,
                     state.user.user?.accountAddress,
-                    tokenInput
+                    amountConvert
                   );
+
+
+
+                  const balance = await hemergy.getBalance(
+                    state.user.user?.accountAddress,
+                  );
+                  console.log("balance", balance)
+                  let hexNumber = balance._hex;
+                  const bigIntNumber = BigInt(hexNumber);
+                  const number = Number(bigIntNumber);
+                  console.log("number", number)
+
+
+                  const balanceProject = await hemergy.getBalance(
+                    projectData?.projectAddress,
+                  );
+                  console.log("balanceProject", balanceProject)
+                  let hexNumberProject = balanceProject._hex;
+                  const bigIntNumberProject = BigInt(hexNumberProject);
+                  const numberProject = Number(bigIntNumberProject);
+                  console.log("numberProject", numberProject)
+
+                  dispatch(setAccountBalance(number / Math.pow(10, 18)));
                   if (state.user.user?.projectsasInvestor) {
                     await updateuserprojects('projectsasInvestor', {
                       email: state.user?.user?.email,
@@ -237,8 +268,8 @@ const Index = ({ projectData }) => {
                       theme: 'light',
                     }
                   );
-                } catch (e) {
-                  setIsLoading(false);
+                 } catch (e) {
+                   setIsLoading(false);
                 }
               }}
             >

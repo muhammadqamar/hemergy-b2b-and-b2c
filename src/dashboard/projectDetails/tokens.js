@@ -1,21 +1,32 @@
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import PowerCarbon from '@/utils/powerCarbon';
+import {getBalance} from "@/components/helpers/balance"
+const Tokens = ({ showTokenInfo, onClick, projectData, address }) => {
 
-const Tokens = ({ showTokenInfo, onClick, projectData }) => {
+
+  const [money, setMoney] = useState();
+  useEffect(() => {
+    (async () => {
+      const result = await getBalance(address);
+      setMoney(result);
+    })();
+
+  }, [address]);
   return (
     <div className="tokens-wrapper">
       {showTokenInfo && (
         <h6 className="text-center mb-6 sm:mb-[57px] p-md ">
-          {projectData?.tokens?.numberOfTokens} issued
+          {money} USDC
         </h6>
       )}
-      <div className="available-token mb-6 sm:mb-[57px]">
+      {/* <div className="available-token mb-6 sm:mb-[57px]">
         <Image src="/images/token.png" alt="token" width={32} height={32} />
         <div className="text-center">
           <h1 className="mb-1 p-2xl"> {projectData?.tokens?.tokenPrice}</h1>
-          <p className="text-white p-sm-semi">Equity tokens available</p>
+          <p className="text-white p-sm-semi">tokens price</p>
         </div>
-      </div>
+      </div> */}
       <button
         onClick={onClick}
         className="w-full md:w-[280px] mx-auto mb-4 sm:mb-6 btn secondary"

@@ -107,6 +107,7 @@ const Index = ({ projectData }) => {
             <Tokens
               showTokenInfo
               projectData={projectData?.details}
+              address={projectData?.projectAddress}
               onClick={() => setIsChange(true)}
             />
           </div>
