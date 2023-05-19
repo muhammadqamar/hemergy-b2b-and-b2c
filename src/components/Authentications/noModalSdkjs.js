@@ -44,7 +44,7 @@ function App() {
 
     formikValidation.current?.setSubmitting(true);
     const web3authProvider = await web3auth.connect();
-    let endUserAddress
+    var endUserAddress;
     if (web3authProvider.selectedAddress) {
       endUserAddress = web3authProvider.selectedAddress;
     } else {
@@ -57,14 +57,13 @@ function App() {
         '0x' + privateToAddress(getBuffer(privateKey)).toString('hex');
     }
     const user = await web3auth.getUserInfo();
-    console.log('user', user);
-    if (user?.email || endUserAddress) {
+    console.log("sdfsdf", endUserAddress)
+    if ( endUserAddress) {
       const checkLogin = await investorLoginWeb3Auth({
-        email: user.email,
+        //email: user.email,
         endUserAddress: endUserAddress,
       });
       if (checkLogin.status === 200) {
-
         const ethersProvider = new ethers.providers.Web3Provider(
           web3authProvider
         );
@@ -98,81 +97,54 @@ function App() {
           setOptions(true);
         }
       } else {
-        const signerInformation = await createCoreAccount({
-          endUserAddress: endUserAddress,
-        });
-
-        signer(
-          signerInformation.data?.domain,
-          {
-            ForwardRequest: signerInformation.data?.ForwardRequest,
-          },
-          signerInformation.data?.request,
-          '',
-          endUserAddress,
-          user
+        const ethersProvider = new ethers.providers.Web3Provider(
+          web3authProvider
         );
-      }
-    }
-  };
+        const signer = await ethersProvider.getSigner();
 
-  const signer = async (
-    domain,
-    types,
-    message,
-    privateKey,
-    providerDetail,
-    user1
-  ) => {
-    const accountAddress = await getSigner(
-      user?.web3auth,
-      domain,
-      types,
-      message,
-      'account'
-    );
-    const web3authProvider = await web3auth.connect();
-    const ethersProvider = new ethers.providers.Web3Provider(
-      web3authProvider
-    );
-    const signer1 = await ethersProvider.getSigner();
-    const hemergy = new Hemergy({
-      baseURL: 'https://dev-core.hemergy.com',
-      signer:signer1,
-    });
+        const hemergy = new Hemergy({
+          baseURL: 'https://dev-core.hemergy.com',
+          signer,
+        });
+        const createAccount = await hemergy.createAccount();
 
-    const balance = await hemergy.getBalance(
-      accountAddress
-    );
-    await hemergy.mint(accountAddress);
+        if (createAccount) {
+          await hemergy.mint(createAccount);
+          const balance = await hemergy.getBalance(
+            createAccount
+          );
 
-    dispatch(setAccountBalance(number / Math.pow(10, 18)));
-    let hexNumber = balance._hex;
-    const bigIntNumber = BigInt(hexNumber);
-    const number = Number(bigIntNumber);
+          let hexNumber = balance._hex;
+          const bigIntNumber = BigInt(hexNumber);
+          const number = Number(bigIntNumber);
 
-    const result = await investorRegister({
-      email: user1.email,
-      detail: user1,
-      provider: providerDetail,
-      address: accountAddress,
-      //   isInvestor:router.query.type?.toLowerCase()!=="developer"? true : undefined,
-      //   isDeveloper:router.query.type?.toLowerCase()==="developer"? true : undefined
-    });
-    if (result.status == 200) {
-      formikValidation.current?.setSubmitting(false);
-      localStorage.setItem('hemergy-email', result?.data?.user?.email);
-      localStorage.setItem('hemergy-token', result?.data?.token);
-      dispatch(addUser(result.data.user));
+          dispatch(setAccountBalance(number / Math.pow(10, 18)));
+          const result = await investorRegister({
+            email: user?.email,
+            detail: user,
+            provider: endUserAddress,
+            address: createAccount,
+          });
+          if (result.status == 200) {
+            formikValidation.current?.setSubmitting(false);
+            localStorage.setItem('hemergy-email', result?.data?.user?.email);
+            localStorage.setItem('hemergy-token', result?.data?.token);
+            dispatch(addUser(result.data.user));
 
-      if (
-        router.query.type?.toLowerCase() === 'developer' ||
-        router.query.type?.toLowerCase() === 'investor'
-      ) {
-        localStorage.setItem('user-type', router.query.type?.toLowerCase());
-        router.push('/');
-      } else {
-        setOptions(true);
+            if (
+              router.query.type?.toLowerCase() === 'developer' ||
+              router.query.type?.toLowerCase() === 'investor'
+            ) {
+              localStorage.setItem(
+                'user-type',
+                router.query.type?.toLowerCase()
+              );
+              router.push('/');
+            } else {
+              setOptions(true);
+            }
+          }
+        }
       }
     }
   };

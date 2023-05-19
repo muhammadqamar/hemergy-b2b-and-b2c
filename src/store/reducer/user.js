@@ -21,7 +21,7 @@ export const userReducer = createSlice({
       state.signer = action.payload
     },
     setAccountBalance: (state, action) => {
-      state.balance = action.payload
+      state.balance = action.payload?.toFixed(2)
     },
 
 
