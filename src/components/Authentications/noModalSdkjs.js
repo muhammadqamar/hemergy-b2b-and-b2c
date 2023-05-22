@@ -57,7 +57,7 @@ function App() {
         '0x' + privateToAddress(getBuffer(privateKey)).toString('hex');
     }
     const user = await web3auth.getUserInfo();
-    console.log("sdfsdf", endUserAddress)
+
     if ( endUserAddress) {
       const checkLogin = await investorLoginWeb3Auth({
         //email: user.email,
@@ -82,7 +82,7 @@ function App() {
         const bigIntNumber = BigInt(hexNumber);
         const number = Number(bigIntNumber);
 
-        dispatch(setAccountBalance(number / Math.pow(10, 18)));
+        dispatch(setAccountBalance(number / Math.pow(10, 2)));
         formikValidation.current?.setSubmitting(false);
         localStorage.setItem('hemergy-email', checkLogin?.data?.user?.email);
         localStorage.setItem('hemergy-token', checkLogin?.data?.token);
@@ -118,7 +118,7 @@ function App() {
           const bigIntNumber = BigInt(hexNumber);
           const number = Number(bigIntNumber);
 
-          dispatch(setAccountBalance(number / Math.pow(10, 18)));
+          dispatch(setAccountBalance(number / Math.pow(10, 2)));
           const result = await investorRegister({
             email: user?.email,
             detail: user,

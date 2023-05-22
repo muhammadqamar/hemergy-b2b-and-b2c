@@ -15,7 +15,7 @@ export const getBalance = async (address) => {
     const balance = await hemergy.getBalance(address);
     let hexNumber = balance._hex;
     const bigIntNumber = BigInt(hexNumber);
-    number = Number(bigIntNumber)/Math.pow(10,18);
+    number = Number(bigIntNumber)/Math.pow(10,2);
   }
   return number?.toFixed(3);
 };

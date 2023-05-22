@@ -181,28 +181,43 @@ const Index = ({ projectData }) => {
                   }
                   const amountConvert = tokenInput * projectData?.details?.tokens?.tokenPrice;
 
-                  console.log("amountConvert", amountConvert);
+
                   const metainfo = await meta();
-                  console.log(metainfo);
+
                   await hemergy.approveAccountAmount(state.user.user?.accountAddress, projectData?.projectAddress, metainfo.data.usdcContractAddress, amountConvert);
-
-                  const invest = await hemergy.investInProject(projectData?.projectAddress, state.user.user?.accountAddress, amountConvert);
-
                   const balance = await hemergy.getBalance(state.user.user?.accountAddress);
-                  console.log("balance", balance);
+
                   let hexNumber = balance._hex;
                   const bigIntNumber = BigInt(hexNumber);
                   const number = Number(bigIntNumber);
-                  console.log("number", number);
+                  console.log('before investing', number)
+
+                  const balanceProjectbefore = await hemergy.getBalance(projectData?.projectAddress);
+
+                  let hexNumberProjectbefore = balanceProjectbefore._hex;
+                  const bigIntNumberProjectbefore = BigInt(hexNumberProjectbefore);
+                  const numberProjectbefore = Number(bigIntNumberProjectbefore);
+
+                  console.log('project balance before', numberProjectbefore)
+                  const invest = await hemergy.investInProject(projectData?.projectAddress, state.user.user?.accountAddress, amountConvert);
+
+                  const balanceAfter = await hemergy.getBalance(state.user.user?.accountAddress);
+
+                  let hexNumberAfter = balanceAfter._hex;
+                  const bigIntNumberAfter = BigInt(hexNumberAfter);
+                  const numberAfter = Number(bigIntNumberAfter);
+                  console.log('after investing', numberAfter)
+
 
                   const balanceProject = await hemergy.getBalance(projectData?.projectAddress);
-                  console.log("balanceProject", balanceProject);
+
                   let hexNumberProject = balanceProject._hex;
                   const bigIntNumberProject = BigInt(hexNumberProject);
                   const numberProject = Number(bigIntNumberProject);
-                  console.log("numberProject", numberProject);
 
-                  dispatch(setAccountBalance(number / Math.pow(10, 18)));
+                  console.log('project balance after innvesting', numberProject)
+
+                  dispatch(setAccountBalance(numberAfter / Math.pow(10, 2)));
                   if (state.user.user?.projectsasInvestor) {
                     await updateuserprojects("projectsasInvestor", {
                       email: state.user?.user?.email,

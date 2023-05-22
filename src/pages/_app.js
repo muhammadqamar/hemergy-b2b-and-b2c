@@ -123,7 +123,7 @@ const AppPass = ({ Component, pageProps }) => {
         const bigIntNumber = BigInt(hexNumber);
         const number = Number(bigIntNumber);
 
-        dispatch(setAccountBalance(number/Math.pow(10,18)));
+        dispatch(setAccountBalance(number/Math.pow(10,2)));
 
 
         if (routes.pathname === '/login') {
